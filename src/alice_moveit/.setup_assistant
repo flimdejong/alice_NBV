@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: alice_description
+    relative_path: urdf/alice_v1.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/alice.srdf
+  CONFIG:
+    author_name: Flim de Jong
+    author_email: flimdejong@proton.me
+    generated_timestamp: 1715091889

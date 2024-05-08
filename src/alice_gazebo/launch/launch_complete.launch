@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<launch>
+    <param name="robot_description" command="cat '$(find alice_description)/urdf/alice_v1.xacro'" />
+
+    <!-- To activat sim time -->
+    <param name="/use_sim_time" value="true" />
+
+    <!-- <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"
+    name="joint_state_publisher_gui"/> -->
+    <!-- <node pkg="robot_state_publisher" type="robot_state_publisher"
+    name="robot_state_publisher"/> -->
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find alice_gazebo)/worlds/single_box.world" />
+        <arg name="paused" value="false" />
+        <arg name="use_sim_time" value="true" />
+        <arg name="gui" value="true" />
+        <arg name="headless" value="false" />
+        <arg name="debug" value="false" />
+    </include>
+
+    <node pkg="gazebo_ros" type="spawn_model" name="spawning_urdf"
+        args="-urdf -z 0.03 -J shoulder_joint 2 -model alice -param robot_description -unpause"
+        output="screen" />
+
+    <include file="$(find alice_control)/launch/ros_controller.launch">
+    </include>
+
+
+
+</launch>

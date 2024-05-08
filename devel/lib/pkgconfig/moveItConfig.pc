@@ -1,0 +1,8 @@
+prefix=/home/flimdejong/catkin_ws/devel
+
+Name: moveItConfig
+Description: Description of moveItConfig
+Version: 0.3.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
