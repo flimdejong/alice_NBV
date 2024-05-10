@@ -1,12 +1,25 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(alice_octomap)
 
+add_compile_options(-std=c++11)
+
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/opt/ros/noetic/share/octomap/")
+
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
   octomap_msgs
-  octomap
+  #octomap
+)
+
+find_package(octomap REQUIRED)
+
+catkin_package(
+ INCLUDE_DIRS include
+ LIBRARIES alice_octomap
+ CATKIN_DEPENDS roscpp rospy std_msgs
+ DEPENDS system_lib
 )
 
 include_directories(
@@ -19,7 +32,10 @@ add_executable(octomap_srv_call src/octomap_srv_call.cpp)
 target_link_libraries(octomap_srv_call
   ${catkin_LIBRARIES}
   ${OCTOMAP_LIBRARIES}
+  ${OCTOMAP_MSGS_LIBRARIES}
+  ${ROS_LIBRARIES}
 )
+
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -103,18 +119,18 @@ target_link_libraries(octomap_srv_call
 ###################################
 ## catkin specific configuration ##
 ###################################
-## The catkin_package macro generates cmake config files for your package
-## Declare things to be passed to dependent projects
-## INCLUDE_DIRS: uncomment this if your package contains header files
-## LIBRARIES: libraries you create in this project that dependent projects also need
-## CATKIN_DEPENDS: catkin_packages dependent projects also need
-## DEPENDS: system dependencies of this project that dependent projects also need
-catkin_package(
+# The catkin_package macro generates cmake config files for your package
+# Declare things to be passed to dependent projects
+# INCLUDE_DIRS: uncomment this if your package contains header files
+# LIBRARIES: libraries you create in this project that dependent projects also need
+# CATKIN_DEPENDS: catkin_packages dependent projects also need
+# DEPENDS: system dependencies of this project that dependent projects also need
+# catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES alice_octomap
 #  CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
-)
+# )
 
 ###########
 ## Build ##
@@ -122,10 +138,10 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(
-# include
-  ${catkin_INCLUDE_DIRS}
-)
+# include_directories(
+# # include
+#   ${catkin_INCLUDE_DIRS}
+# )
 
 
 ## Declare a C++ library

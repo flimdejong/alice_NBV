@@ -1,0 +1,4 @@
+<launch>
+    <!-- Launch the octomap_srv_call node -->
+    <node name="octomap_srv_call" pkg="alice_octomap" type="octomap_srv_call" output="screen" />
+</launch>

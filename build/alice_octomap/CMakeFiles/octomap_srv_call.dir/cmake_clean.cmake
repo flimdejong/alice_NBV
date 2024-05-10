@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
+  "/home/flimdejong/catkin_ws/devel/lib/alice_octomap/octomap_srv_call"
+  "/home/flimdejong/catkin_ws/devel/lib/alice_octomap/octomap_srv_call.pdb"
   "CMakeFiles/octomap_srv_call.dir/src/octomap_srv_call.cpp.o"
-  "octomap_srv_call"
-  "octomap_srv_call.pdb"
 )
 
 # Per-language clean rules from dependency scanning.
