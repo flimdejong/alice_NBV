@@ -1,0 +1,35 @@
+<launch>
+
+    <!-- Specify the URDF file -->
+    <param name="robot_description" command="cat '$(find alice_description)/urdf/alice_v1.xacro'" />
+
+    <!-- To activate sim time -->
+    <param name="/use_sim_time" value="true" />
+
+    <!-- Load joint controller configurations from YAML file to parameter server -->
+    <rosparam file="$(find alice_control)/config/ros_controller_JPC.yaml" command="load" />
+
+    <!-- load the controllers -->
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen"
+        args="base_joint_controller shoulder_joint_controller elbow_joint_controller wrist_pitch_joint_controller joint_state_controller"
+        ns="alice" />
+
+    <!-- Start the joint state publisher -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <param name="use_gui" value="false" />
+        <rosparam param="source_list">[/joint_states]</rosparam>
+    </node>
+
+    <!-- Launch joint_state_publisher_gui -->
+    <!-- <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="joint_state_publisher_gui">
+        <remap from="/joint_states" to="/alice/joint_states" />
+    </node> -->
+
+    <!-- convert joint states to TF transforms for rviz, etc -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+        <!-- The remap is to make sure robot_state-publisher is receiving information from /alice/joint_states (change of namespace) -->
+        <remap from="/joint_states" to="/alice/joint_states" />
+    </node>
+
+</launch>

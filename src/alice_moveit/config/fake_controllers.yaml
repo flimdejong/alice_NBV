@@ -6,12 +6,6 @@ controller_list:
       - shoulder_joint
       - elbow_joint
       - wrist_pitch_joint
-  - name: fake_base_controller
-    type: $(arg fake_execution_type)
-    joints:
-      - base_joint
 initial:  # Define initial robot poses per group
   - group: arm
-    pose: Left
-  - group: base
-    pose: left_base
+    pose: Middle

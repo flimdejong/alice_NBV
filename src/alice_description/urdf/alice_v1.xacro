@@ -4,11 +4,10 @@
     <!-- For gazebo ros control -->
     <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-            <robotNamespace>/alice</robotNamespace>
         </plugin>
     </gazebo>
 
-    <gazebo reference="base_cyllinder">
+    <!-- <gazebo reference="base_cyllinder">
         <turnGravityOff>true</turnGravityOff>
     </gazebo>
 
@@ -30,8 +29,10 @@
 
     <gazebo reference="camera_link">
         <turnGravityOff>true</turnGravityOff>
-    </gazebo>
+    </gazebo> -->
 
+    <!-- The rescaling of 0.001 is necessary because gazebo takes all inputs as meters -->
+    <!-- Meaning 100mm will be seen as 100m, hence rescaling is needed -->
 
     <!-- The base link is the cyllinder at the bottom-->
     <link name="base_cyllinder">
@@ -42,21 +43,18 @@
             <material name="black" />
             <origin rpy="0 0 0" xyz="0 0 0" />
         </visual>
-
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0" />
-            <mass value="2" />
-            <inertia ixx="0.015" ixy="0" ixz="0" iyy="0.00666666666667" iyz="0"
-                izz="0.0216666666667" />
+            <mass value="100" />
+            <inertia ixx="0.0702" ixy="0" ixz="0" iyy="0.0702" iyz="0"
+                izz="0.1404" />
         </inertial>
-
         <collision>
             <geometry>
                 <cylinder length="0.001" radius="0.053" />
             </geometry>
-            <origin rpy="0 0 0" xyz="0 0 0" />
+            <origin rpy="0 0 0" xyz="0 0 0" /> 
         </collision>
-
     </link>
         
     <link name="rotating_base">
@@ -77,9 +75,9 @@
         </collision>
         <inertial>
             <origin rpy="0 0 3.1416" xyz="0 0.004 0" />
-            <mass value="1" />
-            <inertia ixx="0.015" ixy="0" ixz="0" iyy="0.00666666666667" iyz="0"
-                izz="0.0216666666667" />
+            <mass value="0.262" />
+            <inertia ixx="4.0242e-04" ixy="0" ixz="0" iyy="4.0242e-04" iyz="0"
+                izz="3.6797e-04" />
         </inertial>
     </link>
     <link name="shoulder_link">
@@ -100,9 +98,9 @@
         </collision>
         <inertial>
             <origin rpy="0 0 0" xyz="-0.0045 0.0055 -0.026" />
-            <mass value="0.1" />
-            <inertia ixx="0.000348958333333" ixy="0" ixz="0" iyy="0.000348958333333" iyz="0"
-                izz="3.125e-05" />
+            <mass value="0.126" />
+            <inertia ixx="0.0003385" ixy="0" ixz="0" iyy="0.0003173" iyz="0"
+                izz="0.00004818" />
         </inertial>
     </link>
     <link name="elbow_link">
@@ -123,9 +121,9 @@
         </collision>
         <inertial>
             <origin rpy="0 0 0" xyz="-0.0045 0.005 -0.025" />
-            <mass value="0.1" />
-            <inertia ixx="0.000348958333333" ixy="0" ixz="0" iyy="0.000348958333333" iyz="0"
-                izz="3.125e-05" />
+            <mass value="0.119" />
+            <inertia ixx="0.0003385" ixy="0" ixz="0" iyy="0.0003173" iyz="0"
+                izz="0.00004818" />
         </inertial>
     </link>
     <link name="wrist_link">
@@ -146,9 +144,9 @@
         </collision>
         <inertial>
             <origin rpy="0 0 0" xyz="0.003 -0.0004 -0.024" />
-            <mass value="0.1" />
-            <inertia ixx="0.000348958333333" ixy="0" ixz="0" iyy="0.000348958333333" iyz="0"
-                izz="3.125e-05" />
+            <mass value="0.059" />
+            <inertia ixx="1.5897e-05" ixy="0" ixz="0" iyy="2.5056e-05" iyz="0"
+                izz="1.4021e-05" />
         </inertial>
     </link>
 
@@ -168,9 +166,9 @@
             </geometry>
         </collision>
         <inertial>
-            <mass value="0.1" />
-            <inertia ixx="0.000348958333333" ixy="0" ixz="0" iyy="0.000348958333333" iyz="0"
-                izz="3.125e-05" />
+            <mass value="0.072" />
+            <inertia ixx="0.0" ixy="0" ixz="0" iyy="0" iyz="0"
+                izz="0" />
         </inertial>
     </link>
 

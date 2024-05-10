@@ -1,5 +1,5 @@
 controller_list:
-  - name: alice/arm_controller
+  - name: arm_controller
     action_ns: follow_joint_trajectory
     type: FollowJointTrajectory
     default: True

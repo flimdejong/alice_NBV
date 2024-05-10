@@ -1,18 +1,25 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(alice_octomap)
 
-## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
-
-## Find catkin macros and libraries
-## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
-## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  octomap_msgs
+  octomap
 )
 
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+  ${OCTOMAP_INCLUDE_DIRS}
+)
+
+add_executable(octomap_srv_call src/octomap_srv_call.cpp)
+
+target_link_libraries(octomap_srv_call
+  ${catkin_LIBRARIES}
+  ${OCTOMAP_LIBRARIES}
+)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -120,6 +127,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/alice_octomap.cpp
@@ -133,7 +141,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/alice_octomap_node.cpp)
+
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

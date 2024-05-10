@@ -13,4 +13,5 @@
     <include file="$(find alice_moveit)/launch/moveit_rviz.launch">
     </include>
 
+
 </launch>

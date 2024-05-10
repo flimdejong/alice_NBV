@@ -31,17 +31,22 @@ alice:
         d: 0.0
         
     constraints:
-      goal_time: 0.5
-      stopped_velocity_tolerance: 0.02
+      goal_time: 1
+      stopped_velocity_tolerance: 0.5
+
       base_joint:
-        trajectory: 0.05
-        goal: 0.02
+        trajectory: 2
+        goal: 0.2
       shoulder_joint:
-        trajectory: 0.05
-        goal: 0.02
+        trajectory: 2
+        goal: 0.2
       elbow_joint:
-        trajectory: 0.05
-        goal: 0.02
+        trajectory: 2
+        goal: 0.2
       wrist_pitch_joint:
-        trajectory: 0.05
-        goal: 0.02
+        trajectory: 2
+        goal: 0.2
+
+    stop_trajectory_duration: 0.5
+    state_publish_rate:  50
+    

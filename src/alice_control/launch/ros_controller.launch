@@ -1,5 +1,7 @@
 <launch>
 
+    <!-- This file spawns the controllers, joint state publishers and robot state publishers -->
+
     <!-- Specify the URDF file -->
     <param name="robot_description" command="cat '$(find alice_description)/urdf/alice_v1.xacro'" />
 
@@ -11,7 +13,7 @@
 
     <!-- load the controllers -->
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-        output="screen" ns="/alice" args="arm_controller joint_state_controller" />
+        output="screen" args="arm_controller joint_state_controller" ns="alice" />
 
     <!-- Start the joint state publisher -->
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
@@ -19,9 +21,15 @@
         <rosparam param="source_list">[/joint_states]</rosparam>
     </node>
 
+    <!-- Launch joint_state_publisher_gui -->
+    <!-- <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="joint_state_publisher_gui">
+        <remap from="/joint_states" to="/alice/joint_states" />
+    </node> -->
+
     <!-- convert joint states to TF transforms for rviz, etc -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
-        <!-- <remap from="/joint_states" to="/alice/joint_states" /> -->
+        <!-- The remap is to make sure robot_state-publisher is receiving information from /alice/joint_states (change of namespace) -->
+        <remap from="/joint_states" to="/alice/joint_states" />
     </node>
 
 </launch>

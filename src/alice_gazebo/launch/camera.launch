@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-    <param name="robot_description" command="cat '$(find alice_description)/urdf/realsense_camera.xacro'" />
+    <param name="robot_description" command="cat '$(find alice_description)/urdf/camera_only.xacro'" />
 
     <!-- To activat sim time -->
     <param name="/use_sim_time" value="true" />

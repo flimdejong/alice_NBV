@@ -1,2 +1,2 @@
-alice_control:alice_description:alice_gazebo:alice_moveit:alice_octomap
+alice_control:alice_description:alice_gazebo:alice_moveit:alice_octomap:alice_scripts
 -DCATKIN_DEVEL_PREFIX=/home/flimdejong/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/flimdejong/catkin_ws/install -G Unix Makefiles
