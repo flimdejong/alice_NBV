@@ -1,0 +1,8 @@
+prefix=/home/flimdejong/catkin_ws/devel
+
+Name: alice_rl
+Description: Description of alice_rl
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

@@ -58,6 +58,7 @@ all: alice_moveit/all
 all: alice_control/all
 all: alice_gazebo/all
 all: alice_octomap/all
+all: alice_rl/all
 all: alice_scripts/all
 all: alice_description/all
 
@@ -69,6 +70,7 @@ preinstall: alice_moveit/preinstall
 preinstall: alice_control/preinstall
 preinstall: alice_gazebo/preinstall
 preinstall: alice_octomap/preinstall
+preinstall: alice_rl/preinstall
 preinstall: alice_scripts/preinstall
 preinstall: alice_description/preinstall
 
@@ -85,6 +87,7 @@ clean: alice_moveit/clean
 clean: alice_control/clean
 clean: alice_gazebo/clean
 clean: alice_octomap/clean
+clean: alice_rl/clean
 clean: alice_scripts/clean
 clean: alice_description/clean
 
@@ -250,6 +253,24 @@ alice_octomap/clean: alice_octomap/CMakeFiles/geometry_msgs_generate_messages_cp
 alice_octomap/clean: alice_octomap/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/clean
 
 .PHONY : alice_octomap/clean
+
+#=============================================================================
+# Directory level rules for directory alice_rl
+
+# Recursive "all" directory target.
+alice_rl/all:
+
+.PHONY : alice_rl/all
+
+# Recursive "preinstall" directory target.
+alice_rl/preinstall:
+
+.PHONY : alice_rl/preinstall
+
+# Recursive "clean" directory target.
+alice_rl/clean:
+
+.PHONY : alice_rl/clean
 
 #=============================================================================
 # Directory level rules for directory alice_scripts

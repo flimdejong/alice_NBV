@@ -30,35 +30,44 @@ int main(int argc, char **argv)
         octomap::OcTree *octree = dynamic_cast<octomap::OcTree *>(abstract_octree);
 
         // Checks if the pointer variable octree is not a NULL pointer (so conversion is )
-        if (octree)
-        {
+        if (octree) {
             int totalVoxels = 0;
             int seenVoxels = 0;
 
-            for (octomap::OcTree::iterator it = octree->begin(), end = octree->end(); it != end; ++it)
+            for (octomap::OcTree::leaf_iterator it = octree->begin_leafs(), end = octree->end_leafs(); it != end; ++it)
             {
+
+                // access node, eg:
+                // std::cout << "Node center: " << it.getCoordinate();
+                // std::cout << "value: " << it->getValue() << "\n";
+
                 totalVoxels++;
+
                 if (octree->isNodeOccupied(*it))
                 {
                     seenVoxels++;
                 }
+        
             }
 
-            double seenPercentage = (seenVoxels / (totalVoxels)) * 100.0;
-            std::cout << "Percentage of voxels seen: " << seenPercentage << "%" << std::endl;
+            std::cout << "amount of voxels: " << totalVoxels;
+            std::cout << "amount of occupied voxels: " << seenVoxels;
+
+            // double seenPercentage = (seenVoxels / (totalVoxels)) * 100.0;
+            // std::cout << "Percentage of voxels seen: " << seenPercentage << "%" << std::endl;
 
             delete octree;
         }
     }
 
-    else {
-        
-        // Service call failed
-        ROS_ERROR("Failed to call GetOctomap service");
+        else {
+            
+            // Service call failed
+            ROS_ERROR("Failed to call GetOctomap service");
     }
 
-    ros::spin();
+        ros::spin();
 
-    return 0;
+        return 0;
 }
 

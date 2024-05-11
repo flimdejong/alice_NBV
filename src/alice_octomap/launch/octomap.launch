@@ -8,6 +8,9 @@
         <!-- maximum range to integrate (speedup!) -->
         <param name="sensor_model/max_range" value="4.0" />
 
+        <!-- Height thresholds to not map the floor -->
+        <param name="pointcloud_min_z" value="0.01" />
+
         <!-- data source to integrate (PointCloud2) -->
         <remap from="cloud_in" to="/camera/depth/points" />
 

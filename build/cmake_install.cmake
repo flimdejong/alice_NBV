@@ -135,6 +135,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/flimdejong/catkin_ws/build/alice_control/cmake_install.cmake")
   include("/home/flimdejong/catkin_ws/build/alice_gazebo/cmake_install.cmake")
   include("/home/flimdejong/catkin_ws/build/alice_octomap/cmake_install.cmake")
+  include("/home/flimdejong/catkin_ws/build/alice_rl/cmake_install.cmake")
   include("/home/flimdejong/catkin_ws/build/alice_scripts/cmake_install.cmake")
   include("/home/flimdejong/catkin_ws/build/alice_description/cmake_install.cmake")
 

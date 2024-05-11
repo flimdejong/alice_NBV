@@ -431,6 +431,12 @@ alice_octomap_BINARY_DIR:STATIC=/home/flimdejong/catkin_ws/build/alice_octomap
 alice_octomap_SOURCE_DIR:STATIC=/home/flimdejong/catkin_ws/src/alice_octomap
 
 //Value Computed by CMake
+alice_rl_BINARY_DIR:STATIC=/home/flimdejong/catkin_ws/build/alice_rl
+
+//Value Computed by CMake
+alice_rl_SOURCE_DIR:STATIC=/home/flimdejong/catkin_ws/src/alice_rl
+
+//Value Computed by CMake
 alice_scripts_BINARY_DIR:STATIC=/home/flimdejong/catkin_ws/build/alice_scripts
 
 //Value Computed by CMake
@@ -747,7 +753,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=10
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=11
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
