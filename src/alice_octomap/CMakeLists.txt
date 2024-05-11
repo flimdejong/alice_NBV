@@ -28,6 +28,7 @@ include_directories(
 )
 
 add_executable(octomap_srv_call src/octomap_srv_call.cpp)
+add_executable(octo_binary_pub src/octo_binary_pub.cpp)
 
 target_link_libraries(octomap_srv_call
   ${catkin_LIBRARIES}
@@ -35,6 +36,15 @@ target_link_libraries(octomap_srv_call
   ${OCTOMAP_MSGS_LIBRARIES}
   ${ROS_LIBRARIES}
 )
+
+
+target_link_libraries(octo_binary_pub
+  ${catkin_LIBRARIES}
+  ${OCTOMAP_LIBRARIES}
+  ${OCTOMAP_MSGS_LIBRARIES}
+  ${ROS_LIBRARIES}
+)
+
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)

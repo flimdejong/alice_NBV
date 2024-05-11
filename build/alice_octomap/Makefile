@@ -68,6 +68,28 @@ install/strip/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
 # Special rule for the target list_install_components
 list_install_components:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
@@ -112,28 +134,6 @@ test:
 test/fast: test
 
 .PHONY : test/fast
-
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -332,6 +332,48 @@ geometry_msgs_generate_messages_nodejs/fast:
 	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/build.make alice_octomap/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/build
 .PHONY : geometry_msgs_generate_messages_nodejs/fast
 
+# Convenience name for target.
+alice_octomap/CMakeFiles/octo_binary_pub.dir/rule:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/octo_binary_pub.dir/rule
+.PHONY : alice_octomap/CMakeFiles/octo_binary_pub.dir/rule
+
+# Convenience name for target.
+octo_binary_pub: alice_octomap/CMakeFiles/octo_binary_pub.dir/rule
+
+.PHONY : octo_binary_pub
+
+# fast build rule for target.
+octo_binary_pub/fast:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octo_binary_pub.dir/build.make alice_octomap/CMakeFiles/octo_binary_pub.dir/build
+.PHONY : octo_binary_pub/fast
+
+src/octo_binary_pub.o: src/octo_binary_pub.cpp.o
+
+.PHONY : src/octo_binary_pub.o
+
+# target to build an object file
+src/octo_binary_pub.cpp.o:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octo_binary_pub.dir/build.make alice_octomap/CMakeFiles/octo_binary_pub.dir/src/octo_binary_pub.cpp.o
+.PHONY : src/octo_binary_pub.cpp.o
+
+src/octo_binary_pub.i: src/octo_binary_pub.cpp.i
+
+.PHONY : src/octo_binary_pub.i
+
+# target to preprocess a source file
+src/octo_binary_pub.cpp.i:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octo_binary_pub.dir/build.make alice_octomap/CMakeFiles/octo_binary_pub.dir/src/octo_binary_pub.cpp.i
+.PHONY : src/octo_binary_pub.cpp.i
+
+src/octo_binary_pub.s: src/octo_binary_pub.cpp.s
+
+.PHONY : src/octo_binary_pub.s
+
+# target to generate assembly for a file
+src/octo_binary_pub.cpp.s:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octo_binary_pub.dir/build.make alice_octomap/CMakeFiles/octo_binary_pub.dir/src/octo_binary_pub.cpp.s
+.PHONY : src/octo_binary_pub.cpp.s
+
 src/octomap_srv_call.o: src/octomap_srv_call.cpp.o
 
 .PHONY : src/octomap_srv_call.o
@@ -366,6 +408,8 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... install/strip"
+	@echo "... rebuild_cache"
+	@echo "... edit_cache"
 	@echo "... list_install_components"
 	@echo "... octomap_msgs_generate_messages_nodejs"
 	@echo "... octomap_srv_call"
@@ -380,9 +424,11 @@ help:
 	@echo "... octomap_msgs_generate_messages_eus"
 	@echo "... geometry_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_nodejs"
+	@echo "... octo_binary_pub"
 	@echo "... test"
-	@echo "... rebuild_cache"
-	@echo "... edit_cache"
+	@echo "... src/octo_binary_pub.o"
+	@echo "... src/octo_binary_pub.i"
+	@echo "... src/octo_binary_pub.s"
 	@echo "... src/octomap_srv_call.o"
 	@echo "... src/octomap_srv_call.i"
 	@echo "... src/octomap_srv_call.s"

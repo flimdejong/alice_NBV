@@ -636,6 +636,19 @@ geometry_msgs_generate_messages_nodejs/fast:
 .PHONY : geometry_msgs_generate_messages_nodejs/fast
 
 #=============================================================================
+# Target rules for targets named octo_binary_pub
+
+# Build rule for target.
+octo_binary_pub: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 octo_binary_pub
+.PHONY : octo_binary_pub
+
+# fast build rule for target.
+octo_binary_pub/fast:
+	$(MAKE) -f alice_octomap/CMakeFiles/octo_binary_pub.dir/build.make alice_octomap/CMakeFiles/octo_binary_pub.dir/build
+.PHONY : octo_binary_pub/fast
+
+#=============================================================================
 # Target rules for targets named trajectory_msgs_generate_messages_py
 
 # Build rule for target.
@@ -1308,6 +1321,7 @@ help:
 	@echo "... octomap_msgs_generate_messages_eus"
 	@echo "... geometry_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_nodejs"
+	@echo "... octo_binary_pub"
 	@echo "... trajectory_msgs_generate_messages_py"
 	@echo "... trajectory_msgs_generate_messages_lisp"
 	@echo "... gazebo_msgs_generate_messages_lisp"
