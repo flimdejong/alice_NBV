@@ -6,7 +6,7 @@
         <param name="frame_id" type="string" value="base_cyllinder" />
 
         <!-- maximum range to integrate (speedup!) -->
-        <param name="sensor_model/max_range" value="4.0" />
+        <param name="sensor_model/max_range" value="5.0" />
 
         <!-- Height thresholds to not map the floor -->
         <param name="pointcloud_min_z" value="0.01" />
@@ -15,4 +15,10 @@
         <remap from="cloud_in" to="/camera/depth/points" />
 
     </node>
+
+
+    <!-- Launch the octomap_srv_client.cpp node -->
+    <node pkg="alice_octomap" type="octomap_srv_client" name="octomap_srv_client" output="screen"
+        launch-prefix="bash -c 'sleep 1; $0 $@' " />
+
 </launch>

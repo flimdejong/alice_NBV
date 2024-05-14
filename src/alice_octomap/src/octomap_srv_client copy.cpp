@@ -1,25 +1,31 @@
 #include <ros/ros.h>
 #include <octomap/octomap.h>
+#include <octomap_msgs/Octomap.h>
 #include <octomap_msgs/conversions.h>
 #include <octomap_msgs/GetOctomap.h>
 
 int main(int argc, char **argv)
 {
     // Initialize node
-    ros::init(argc, argv, "octomap_client");
+    ros::init(argc, argv, "octomap_service_client");
 
     // Create a global ROS handle (nh)
     ros::NodeHandle nh;
 
     //Create a client that calls to service node "Octomap_binary"
-    ros::ServiceClient octomap_binary_client = nh.serviceClient<octomap_msgs::GetOctomap> ("octomap_binary");
+    ros::ServiceClient octomap_binary_client = nh.serviceClient<octomap_msgs::GetOctomap>("octomap_binary");
 
-    // Createa a service call to retrieve octomap information
+    // Create a service call to retrieve octomap information
     octomap_msgs::GetOctomap srv;
+
+    ROS_INFO("Attempting to call service");
 
     // Call the GetOctomap service
     if (octomap_binary_client.call(srv))
     {
+        //If the call succeeded
+        ROS_INFO("Service call succeeded");
+
         // Service call succeeded, process the received octomap
         // octomap now contains the (full) octomap from the service call
         octomap_msgs::Octomap octomap = srv.response.map;
@@ -63,7 +69,7 @@ int main(int argc, char **argv)
         else {
             
             // Service call failed
-            ROS_ERROR("Failed to call GetOctomap service");
+            ROS_ERROR("Failed to call GetOctomap service. Error: %s", octomap_binary_client.getService().c_str());
     }
 
         ros::spin();

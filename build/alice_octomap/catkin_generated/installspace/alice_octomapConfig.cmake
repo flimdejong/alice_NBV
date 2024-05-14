@@ -177,7 +177,7 @@ foreach(library ${libraries})
   endif()
 endforeach()
 
-set(alice_octomap_EXPORTED_TARGETS "")
+set(alice_octomap_EXPORTED_TARGETS "alice_octomap_generate_messages_cpp;alice_octomap_generate_messages_eus;alice_octomap_generate_messages_lisp;alice_octomap_generate_messages_nodejs;alice_octomap_generate_messages_py")
 # create dummy targets for exported code generation targets to make life of users easier
 foreach(t ${alice_octomap_EXPORTED_TARGETS})
   if(NOT TARGET ${t})
@@ -214,7 +214,7 @@ foreach(depend ${depends})
   _list_append_deduplicate(alice_octomap_EXPORTED_TARGETS ${${alice_octomap_dep}_EXPORTED_TARGETS})
 endforeach()
 
-set(pkg_cfg_extras "")
+set(pkg_cfg_extras "alice_octomap-msg-extras.cmake")
 foreach(extra ${pkg_cfg_extras})
   if(NOT IS_ABSOLUTE ${extra})
     set(extra ${alice_octomap_DIR}/${extra})

@@ -1,19 +1,30 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(alice_octomap)
 
-add_compile_options(-std=c++11)
-
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/opt/ros/noetic/share/octomap/")
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
-  octomap_msgs
+  #octomap_msgs
   #octomap
+  message_generation
 )
 
 find_package(octomap REQUIRED)
+find_package(octomap_msgs REQUIRED)
+
+add_service_files(
+  FILES
+  octomap_srv_client.srv
+)
+
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
 
 catkin_package(
  INCLUDE_DIRS include
@@ -27,10 +38,10 @@ include_directories(
   ${OCTOMAP_INCLUDE_DIRS}
 )
 
-add_executable(octomap_srv_call src/octomap_srv_call.cpp)
+add_executable(octomap_srv_client src/octomap_srv_client.cpp)
 add_executable(octo_binary_pub src/octo_binary_pub.cpp)
 
-target_link_libraries(octomap_srv_call
+target_link_libraries(octomap_srv_client
   ${catkin_LIBRARIES}
   ${OCTOMAP_LIBRARIES}
   ${OCTOMAP_MSGS_LIBRARIES}
@@ -86,12 +97,7 @@ target_link_libraries(octo_binary_pub
 #   Message2.msg
 # )
 
-## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+# Generate services in the 'srv' folder
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -100,11 +106,8 @@ target_link_libraries(octo_binary_pub
 #   Action2.action
 # )
 
-## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+# Generate added messages and services with any dependencies listed here
+
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##

@@ -1,8 +1,10 @@
+#! /usr/bin/env python
+
 from stable_baselines3 import PPO
-from env import env
+from env import RobotArmEnv
 
 # Create an instance of your custom Gym environment
-env = env()
+env = RobotArmEnv()
 
 # Create an instance of the PPO algorithm
 model = PPO("MlpPolicy", env, verbose=1)
