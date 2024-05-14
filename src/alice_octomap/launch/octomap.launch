@@ -18,7 +18,7 @@
 
 
     <!-- Launch the octomap_srv_client.cpp node -->
-    <node pkg="alice_octomap" type="octomap_srv_client" name="octomap_srv_client" output="screen"
+    <node pkg="alice_octomap" type="octoStateServer" name="octoStateServer" output="screen"
         launch-prefix="bash -c 'sleep 1; $0 $@' " />
 
 </launch>

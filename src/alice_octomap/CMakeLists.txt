@@ -17,9 +17,8 @@ find_package(octomap_msgs REQUIRED)
 
 add_service_files(
   FILES
-  octomap_srv_client.srv
+  octomap.srv
 )
-
 
 generate_messages(
   DEPENDENCIES
@@ -29,7 +28,7 @@ generate_messages(
 catkin_package(
  INCLUDE_DIRS include
  LIBRARIES alice_octomap
- CATKIN_DEPENDS roscpp rospy std_msgs
+ CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
  DEPENDS system_lib
 )
 
@@ -38,18 +37,9 @@ include_directories(
   ${OCTOMAP_INCLUDE_DIRS}
 )
 
-add_executable(octomap_srv_client src/octomap_srv_client.cpp)
-add_executable(octo_binary_pub src/octo_binary_pub.cpp)
+add_executable(octoStateServer src/octoStateServer.cpp)
 
-target_link_libraries(octomap_srv_client
-  ${catkin_LIBRARIES}
-  ${OCTOMAP_LIBRARIES}
-  ${OCTOMAP_MSGS_LIBRARIES}
-  ${ROS_LIBRARIES}
-)
-
-
-target_link_libraries(octo_binary_pub
+target_link_libraries(octoStateServer
   ${catkin_LIBRARIES}
   ${OCTOMAP_LIBRARIES}
   ${OCTOMAP_MSGS_LIBRARIES}

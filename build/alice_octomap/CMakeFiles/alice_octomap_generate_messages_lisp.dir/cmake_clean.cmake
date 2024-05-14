@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "/home/flimdejong/catkin_ws/devel/share/common-lisp/ros/alice_octomap/srv/octomap_srv_client.lisp"
+  "/home/flimdejong/catkin_ws/devel/share/common-lisp/ros/alice_octomap/srv/octomap.lisp"
   "CMakeFiles/alice_octomap_generate_messages_lisp"
 )
 

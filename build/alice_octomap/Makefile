@@ -68,6 +68,18 @@ install/strip/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
@@ -80,17 +92,26 @@ install/local/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
 
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
 
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -113,27 +134,6 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
-
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -181,6 +181,36 @@ alice_octomap_generate_messages_cpp: alice_octomap/CMakeFiles/alice_octomap_gene
 alice_octomap_generate_messages_cpp/fast:
 	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/alice_octomap_generate_messages_cpp.dir/build.make alice_octomap/CMakeFiles/alice_octomap_generate_messages_cpp.dir/build
 .PHONY : alice_octomap_generate_messages_cpp/fast
+
+# Convenience name for target.
+alice_octomap/CMakeFiles/_alice_octomap_generate_messages_check_deps_octomap.dir/rule:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/_alice_octomap_generate_messages_check_deps_octomap.dir/rule
+.PHONY : alice_octomap/CMakeFiles/_alice_octomap_generate_messages_check_deps_octomap.dir/rule
+
+# Convenience name for target.
+_alice_octomap_generate_messages_check_deps_octomap: alice_octomap/CMakeFiles/_alice_octomap_generate_messages_check_deps_octomap.dir/rule
+
+.PHONY : _alice_octomap_generate_messages_check_deps_octomap
+
+# fast build rule for target.
+_alice_octomap_generate_messages_check_deps_octomap/fast:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/_alice_octomap_generate_messages_check_deps_octomap.dir/build.make alice_octomap/CMakeFiles/_alice_octomap_generate_messages_check_deps_octomap.dir/build
+.PHONY : _alice_octomap_generate_messages_check_deps_octomap/fast
+
+# Convenience name for target.
+alice_octomap/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
+.PHONY : alice_octomap/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+geometry_msgs_generate_messages_py: alice_octomap/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
+
+.PHONY : geometry_msgs_generate_messages_py
+
+# fast build rule for target.
+geometry_msgs_generate_messages_py/fast:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make alice_octomap/CMakeFiles/geometry_msgs_generate_messages_py.dir/build
+.PHONY : geometry_msgs_generate_messages_py/fast
 
 # Convenience name for target.
 alice_octomap/CMakeFiles/alice_octomap_generate_messages.dir/rule:
@@ -243,21 +273,6 @@ octomap_msgs_generate_messages_eus/fast:
 .PHONY : octomap_msgs_generate_messages_eus/fast
 
 # Convenience name for target.
-alice_octomap/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
-.PHONY : alice_octomap/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-geometry_msgs_generate_messages_py: alice_octomap/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
-
-.PHONY : geometry_msgs_generate_messages_py
-
-# fast build rule for target.
-geometry_msgs_generate_messages_py/fast:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make alice_octomap/CMakeFiles/geometry_msgs_generate_messages_py.dir/build
-.PHONY : geometry_msgs_generate_messages_py/fast
-
-# Convenience name for target.
 alice_octomap/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule:
 	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
 .PHONY : alice_octomap/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
@@ -271,6 +286,21 @@ geometry_msgs_generate_messages_lisp: alice_octomap/CMakeFiles/geometry_msgs_gen
 geometry_msgs_generate_messages_lisp/fast:
 	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make alice_octomap/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build
 .PHONY : geometry_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/rule:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/rule
+.PHONY : alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/rule
+
+# Convenience name for target.
+alice_octomap_generate_messages_py: alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/rule
+
+.PHONY : alice_octomap_generate_messages_py
+
+# fast build rule for target.
+alice_octomap_generate_messages_py/fast:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/build.make alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/build
+.PHONY : alice_octomap_generate_messages_py/fast
 
 # Convenience name for target.
 alice_octomap/CMakeFiles/octomap_msgs_generate_messages_py.dir/rule:
@@ -333,51 +363,6 @@ octomap_msgs_generate_messages_lisp/fast:
 .PHONY : octomap_msgs_generate_messages_lisp/fast
 
 # Convenience name for target.
-alice_octomap/CMakeFiles/_alice_octomap_generate_messages_check_deps_octomap_srv_client.dir/rule:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/_alice_octomap_generate_messages_check_deps_octomap_srv_client.dir/rule
-.PHONY : alice_octomap/CMakeFiles/_alice_octomap_generate_messages_check_deps_octomap_srv_client.dir/rule
-
-# Convenience name for target.
-_alice_octomap_generate_messages_check_deps_octomap_srv_client: alice_octomap/CMakeFiles/_alice_octomap_generate_messages_check_deps_octomap_srv_client.dir/rule
-
-.PHONY : _alice_octomap_generate_messages_check_deps_octomap_srv_client
-
-# fast build rule for target.
-_alice_octomap_generate_messages_check_deps_octomap_srv_client/fast:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/_alice_octomap_generate_messages_check_deps_octomap_srv_client.dir/build.make alice_octomap/CMakeFiles/_alice_octomap_generate_messages_check_deps_octomap_srv_client.dir/build
-.PHONY : _alice_octomap_generate_messages_check_deps_octomap_srv_client/fast
-
-# Convenience name for target.
-alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/rule:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/rule
-.PHONY : alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-alice_octomap_generate_messages_nodejs: alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/rule
-
-.PHONY : alice_octomap_generate_messages_nodejs
-
-# fast build rule for target.
-alice_octomap_generate_messages_nodejs/fast:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/build.make alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/build
-.PHONY : alice_octomap_generate_messages_nodejs/fast
-
-# Convenience name for target.
-alice_octomap/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/rule
-.PHONY : alice_octomap/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-octomap_msgs_generate_messages_nodejs: alice_octomap/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/rule
-
-.PHONY : octomap_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-octomap_msgs_generate_messages_nodejs/fast:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/build.make alice_octomap/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/build
-.PHONY : octomap_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
 alice_octomap/CMakeFiles/alice_octomap_gencpp.dir/rule:
 	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/alice_octomap_gencpp.dir/rule
 .PHONY : alice_octomap/CMakeFiles/alice_octomap_gencpp.dir/rule
@@ -438,34 +423,19 @@ alice_octomap_geneus/fast:
 .PHONY : alice_octomap_geneus/fast
 
 # Convenience name for target.
-alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/rule:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/rule
-.PHONY : alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/rule
+alice_octomap/CMakeFiles/alice_octomap_gennodejs.dir/rule:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/alice_octomap_gennodejs.dir/rule
+.PHONY : alice_octomap/CMakeFiles/alice_octomap_gennodejs.dir/rule
 
 # Convenience name for target.
-alice_octomap_generate_messages_py: alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/rule
+alice_octomap_gennodejs: alice_octomap/CMakeFiles/alice_octomap_gennodejs.dir/rule
 
-.PHONY : alice_octomap_generate_messages_py
+.PHONY : alice_octomap_gennodejs
 
 # fast build rule for target.
-alice_octomap_generate_messages_py/fast:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/build.make alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/build
-.PHONY : alice_octomap_generate_messages_py/fast
-
-# Convenience name for target.
-alice_octomap/CMakeFiles/octo_binary_pub.dir/rule:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/octo_binary_pub.dir/rule
-.PHONY : alice_octomap/CMakeFiles/octo_binary_pub.dir/rule
-
-# Convenience name for target.
-octo_binary_pub: alice_octomap/CMakeFiles/octo_binary_pub.dir/rule
-
-.PHONY : octo_binary_pub
-
-# fast build rule for target.
-octo_binary_pub/fast:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octo_binary_pub.dir/build.make alice_octomap/CMakeFiles/octo_binary_pub.dir/build
-.PHONY : octo_binary_pub/fast
+alice_octomap_gennodejs/fast:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/alice_octomap_gennodejs.dir/build.make alice_octomap/CMakeFiles/alice_octomap_gennodejs.dir/build
+.PHONY : alice_octomap_gennodejs/fast
 
 # Convenience name for target.
 alice_octomap/CMakeFiles/alice_octomap_generate_messages_lisp.dir/rule:
@@ -483,36 +453,6 @@ alice_octomap_generate_messages_lisp/fast:
 .PHONY : alice_octomap_generate_messages_lisp/fast
 
 # Convenience name for target.
-alice_octomap/CMakeFiles/alice_octomap_gennodejs.dir/rule:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/alice_octomap_gennodejs.dir/rule
-.PHONY : alice_octomap/CMakeFiles/alice_octomap_gennodejs.dir/rule
-
-# Convenience name for target.
-alice_octomap_gennodejs: alice_octomap/CMakeFiles/alice_octomap_gennodejs.dir/rule
-
-.PHONY : alice_octomap_gennodejs
-
-# fast build rule for target.
-alice_octomap_gennodejs/fast:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/alice_octomap_gennodejs.dir/build.make alice_octomap/CMakeFiles/alice_octomap_gennodejs.dir/build
-.PHONY : alice_octomap_gennodejs/fast
-
-# Convenience name for target.
-alice_octomap/CMakeFiles/octomap_srv_client.dir/rule:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/octomap_srv_client.dir/rule
-.PHONY : alice_octomap/CMakeFiles/octomap_srv_client.dir/rule
-
-# Convenience name for target.
-octomap_srv_client: alice_octomap/CMakeFiles/octomap_srv_client.dir/rule
-
-.PHONY : octomap_srv_client
-
-# fast build rule for target.
-octomap_srv_client/fast:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octomap_srv_client.dir/build.make alice_octomap/CMakeFiles/octomap_srv_client.dir/build
-.PHONY : octomap_srv_client/fast
-
-# Convenience name for target.
 alice_octomap/CMakeFiles/alice_octomap_genlisp.dir/rule:
 	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/alice_octomap_genlisp.dir/rule
 .PHONY : alice_octomap/CMakeFiles/alice_octomap_genlisp.dir/rule
@@ -527,59 +467,77 @@ alice_octomap_genlisp/fast:
 	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/alice_octomap_genlisp.dir/build.make alice_octomap/CMakeFiles/alice_octomap_genlisp.dir/build
 .PHONY : alice_octomap_genlisp/fast
 
-src/octo_binary_pub.o: src/octo_binary_pub.cpp.o
+# Convenience name for target.
+alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/rule:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/rule
+.PHONY : alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/rule
 
-.PHONY : src/octo_binary_pub.o
+# Convenience name for target.
+alice_octomap_generate_messages_nodejs: alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/rule
+
+.PHONY : alice_octomap_generate_messages_nodejs
+
+# fast build rule for target.
+alice_octomap_generate_messages_nodejs/fast:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/build.make alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/build
+.PHONY : alice_octomap_generate_messages_nodejs/fast
+
+# Convenience name for target.
+alice_octomap/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/rule:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/rule
+.PHONY : alice_octomap/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+octomap_msgs_generate_messages_nodejs: alice_octomap/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/rule
+
+.PHONY : octomap_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+octomap_msgs_generate_messages_nodejs/fast:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/build.make alice_octomap/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/build
+.PHONY : octomap_msgs_generate_messages_nodejs/fast
+
+# Convenience name for target.
+alice_octomap/CMakeFiles/octoStateServer.dir/rule:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_octomap/CMakeFiles/octoStateServer.dir/rule
+.PHONY : alice_octomap/CMakeFiles/octoStateServer.dir/rule
+
+# Convenience name for target.
+octoStateServer: alice_octomap/CMakeFiles/octoStateServer.dir/rule
+
+.PHONY : octoStateServer
+
+# fast build rule for target.
+octoStateServer/fast:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octoStateServer.dir/build.make alice_octomap/CMakeFiles/octoStateServer.dir/build
+.PHONY : octoStateServer/fast
+
+src/octoStateServer.o: src/octoStateServer.cpp.o
+
+.PHONY : src/octoStateServer.o
 
 # target to build an object file
-src/octo_binary_pub.cpp.o:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octo_binary_pub.dir/build.make alice_octomap/CMakeFiles/octo_binary_pub.dir/src/octo_binary_pub.cpp.o
-.PHONY : src/octo_binary_pub.cpp.o
+src/octoStateServer.cpp.o:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octoStateServer.dir/build.make alice_octomap/CMakeFiles/octoStateServer.dir/src/octoStateServer.cpp.o
+.PHONY : src/octoStateServer.cpp.o
 
-src/octo_binary_pub.i: src/octo_binary_pub.cpp.i
+src/octoStateServer.i: src/octoStateServer.cpp.i
 
-.PHONY : src/octo_binary_pub.i
-
-# target to preprocess a source file
-src/octo_binary_pub.cpp.i:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octo_binary_pub.dir/build.make alice_octomap/CMakeFiles/octo_binary_pub.dir/src/octo_binary_pub.cpp.i
-.PHONY : src/octo_binary_pub.cpp.i
-
-src/octo_binary_pub.s: src/octo_binary_pub.cpp.s
-
-.PHONY : src/octo_binary_pub.s
-
-# target to generate assembly for a file
-src/octo_binary_pub.cpp.s:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octo_binary_pub.dir/build.make alice_octomap/CMakeFiles/octo_binary_pub.dir/src/octo_binary_pub.cpp.s
-.PHONY : src/octo_binary_pub.cpp.s
-
-src/octomap_srv_client.o: src/octomap_srv_client.cpp.o
-
-.PHONY : src/octomap_srv_client.o
-
-# target to build an object file
-src/octomap_srv_client.cpp.o:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octomap_srv_client.dir/build.make alice_octomap/CMakeFiles/octomap_srv_client.dir/src/octomap_srv_client.cpp.o
-.PHONY : src/octomap_srv_client.cpp.o
-
-src/octomap_srv_client.i: src/octomap_srv_client.cpp.i
-
-.PHONY : src/octomap_srv_client.i
+.PHONY : src/octoStateServer.i
 
 # target to preprocess a source file
-src/octomap_srv_client.cpp.i:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octomap_srv_client.dir/build.make alice_octomap/CMakeFiles/octomap_srv_client.dir/src/octomap_srv_client.cpp.i
-.PHONY : src/octomap_srv_client.cpp.i
+src/octoStateServer.cpp.i:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octoStateServer.dir/build.make alice_octomap/CMakeFiles/octoStateServer.dir/src/octoStateServer.cpp.i
+.PHONY : src/octoStateServer.cpp.i
 
-src/octomap_srv_client.s: src/octomap_srv_client.cpp.s
+src/octoStateServer.s: src/octoStateServer.cpp.s
 
-.PHONY : src/octomap_srv_client.s
+.PHONY : src/octoStateServer.s
 
 # target to generate assembly for a file
-src/octomap_srv_client.cpp.s:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octomap_srv_client.dir/build.make alice_octomap/CMakeFiles/octomap_srv_client.dir/src/octomap_srv_client.cpp.s
-.PHONY : src/octomap_srv_client.cpp.s
+src/octoStateServer.cpp.s:
+	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_octomap/CMakeFiles/octoStateServer.dir/build.make alice_octomap/CMakeFiles/octoStateServer.dir/src/octoStateServer.cpp.s
+.PHONY : src/octoStateServer.cpp.s
 
 # Help Target
 help:
@@ -588,42 +546,38 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... install/strip"
-	@echo "... install/local"
 	@echo "... alice_octomap_generate_messages_cpp"
+	@echo "... _alice_octomap_generate_messages_check_deps_octomap"
+	@echo "... geometry_msgs_generate_messages_py"
 	@echo "... alice_octomap_generate_messages"
 	@echo "... alice_octomap_genpy"
 	@echo "... geometry_msgs_generate_messages_cpp"
 	@echo "... octomap_msgs_generate_messages_eus"
-	@echo "... geometry_msgs_generate_messages_py"
 	@echo "... geometry_msgs_generate_messages_lisp"
 	@echo "... install"
+	@echo "... alice_octomap_generate_messages_py"
+	@echo "... install/local"
 	@echo "... octomap_msgs_generate_messages_py"
 	@echo "... octomap_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... octomap_msgs_generate_messages_lisp"
-	@echo "... _alice_octomap_generate_messages_check_deps_octomap_srv_client"
-	@echo "... edit_cache"
-	@echo "... rebuild_cache"
-	@echo "... alice_octomap_generate_messages_nodejs"
-	@echo "... octomap_msgs_generate_messages_nodejs"
 	@echo "... list_install_components"
 	@echo "... alice_octomap_gencpp"
 	@echo "... geometry_msgs_generate_messages_nodejs"
 	@echo "... alice_octomap_generate_messages_eus"
 	@echo "... alice_octomap_geneus"
-	@echo "... alice_octomap_generate_messages_py"
-	@echo "... octo_binary_pub"
-	@echo "... alice_octomap_generate_messages_lisp"
 	@echo "... alice_octomap_gennodejs"
-	@echo "... octomap_srv_client"
+	@echo "... alice_octomap_generate_messages_lisp"
 	@echo "... test"
 	@echo "... alice_octomap_genlisp"
-	@echo "... src/octo_binary_pub.o"
-	@echo "... src/octo_binary_pub.i"
-	@echo "... src/octo_binary_pub.s"
-	@echo "... src/octomap_srv_client.o"
-	@echo "... src/octomap_srv_client.i"
-	@echo "... src/octomap_srv_client.s"
+	@echo "... alice_octomap_generate_messages_nodejs"
+	@echo "... octomap_msgs_generate_messages_nodejs"
+	@echo "... octoStateServer"
+	@echo "... edit_cache"
+	@echo "... rebuild_cache"
+	@echo "... src/octoStateServer.o"
+	@echo "... src/octoStateServer.i"
+	@echo "... src/octoStateServer.s"
 .PHONY : help
 
 

@@ -53,18 +53,18 @@ CMAKE_BINARY_DIR = /home/flimdejong/catkin_ws/build
 # Include the progress variables for this target.
 include alice_octomap/CMakeFiles/alice_octomap_generate_messages_cpp.dir/progress.make
 
-alice_octomap/CMakeFiles/alice_octomap_generate_messages_cpp: /home/flimdejong/catkin_ws/devel/include/alice_octomap/octomap_srv_client.h
+alice_octomap/CMakeFiles/alice_octomap_generate_messages_cpp: /home/flimdejong/catkin_ws/devel/include/alice_octomap/octomap.h
 
 
-/home/flimdejong/catkin_ws/devel/include/alice_octomap/octomap_srv_client.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
-/home/flimdejong/catkin_ws/devel/include/alice_octomap/octomap_srv_client.h: /home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv
-/home/flimdejong/catkin_ws/devel/include/alice_octomap/octomap_srv_client.h: /opt/ros/noetic/share/gencpp/msg.h.template
-/home/flimdejong/catkin_ws/devel/include/alice_octomap/octomap_srv_client.h: /opt/ros/noetic/share/gencpp/srv.h.template
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/flimdejong/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from alice_octomap/octomap_srv_client.srv"
-	cd /home/flimdejong/catkin_ws/src/alice_octomap && /home/flimdejong/catkin_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p alice_octomap -o /home/flimdejong/catkin_ws/devel/include/alice_octomap -e /opt/ros/noetic/share/gencpp/cmake/..
+/home/flimdejong/catkin_ws/devel/include/alice_octomap/octomap.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/home/flimdejong/catkin_ws/devel/include/alice_octomap/octomap.h: /home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv
+/home/flimdejong/catkin_ws/devel/include/alice_octomap/octomap.h: /opt/ros/noetic/share/gencpp/msg.h.template
+/home/flimdejong/catkin_ws/devel/include/alice_octomap/octomap.h: /opt/ros/noetic/share/gencpp/srv.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/flimdejong/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from alice_octomap/octomap.srv"
+	cd /home/flimdejong/catkin_ws/src/alice_octomap && /home/flimdejong/catkin_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p alice_octomap -o /home/flimdejong/catkin_ws/devel/include/alice_octomap -e /opt/ros/noetic/share/gencpp/cmake/..
 
 alice_octomap_generate_messages_cpp: alice_octomap/CMakeFiles/alice_octomap_generate_messages_cpp
-alice_octomap_generate_messages_cpp: /home/flimdejong/catkin_ws/devel/include/alice_octomap/octomap_srv_client.h
+alice_octomap_generate_messages_cpp: /home/flimdejong/catkin_ws/devel/include/alice_octomap/octomap.h
 alice_octomap_generate_messages_cpp: alice_octomap/CMakeFiles/alice_octomap_generate_messages_cpp.dir/build.make
 
 .PHONY : alice_octomap_generate_messages_cpp

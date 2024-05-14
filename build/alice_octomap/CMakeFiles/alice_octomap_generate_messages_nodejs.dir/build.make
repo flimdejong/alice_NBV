@@ -53,16 +53,16 @@ CMAKE_BINARY_DIR = /home/flimdejong/catkin_ws/build
 # Include the progress variables for this target.
 include alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/progress.make
 
-alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs: /home/flimdejong/catkin_ws/devel/share/gennodejs/ros/alice_octomap/srv/octomap_srv_client.js
+alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs: /home/flimdejong/catkin_ws/devel/share/gennodejs/ros/alice_octomap/srv/octomap.js
 
 
-/home/flimdejong/catkin_ws/devel/share/gennodejs/ros/alice_octomap/srv/octomap_srv_client.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/home/flimdejong/catkin_ws/devel/share/gennodejs/ros/alice_octomap/srv/octomap_srv_client.js: /home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/flimdejong/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from alice_octomap/octomap_srv_client.srv"
-	cd /home/flimdejong/catkin_ws/build/alice_octomap && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p alice_octomap -o /home/flimdejong/catkin_ws/devel/share/gennodejs/ros/alice_octomap/srv
+/home/flimdejong/catkin_ws/devel/share/gennodejs/ros/alice_octomap/srv/octomap.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/home/flimdejong/catkin_ws/devel/share/gennodejs/ros/alice_octomap/srv/octomap.js: /home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/flimdejong/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from alice_octomap/octomap.srv"
+	cd /home/flimdejong/catkin_ws/build/alice_octomap && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p alice_octomap -o /home/flimdejong/catkin_ws/devel/share/gennodejs/ros/alice_octomap/srv
 
 alice_octomap_generate_messages_nodejs: alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs
-alice_octomap_generate_messages_nodejs: /home/flimdejong/catkin_ws/devel/share/gennodejs/ros/alice_octomap/srv/octomap_srv_client.js
+alice_octomap_generate_messages_nodejs: /home/flimdejong/catkin_ws/devel/share/gennodejs/ros/alice_octomap/srv/octomap.js
 alice_octomap_generate_messages_nodejs: alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/build.make
 
 .PHONY : alice_octomap_generate_messages_nodejs

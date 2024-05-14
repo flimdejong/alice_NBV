@@ -17,9 +17,9 @@ add_custom_target(alice_octomap_generate_messages ALL)
 
 
 
-get_filename_component(_filename "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv" NAME_WE)
+get_filename_component(_filename "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv" NAME_WE)
 add_custom_target(_alice_octomap_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "alice_octomap" "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv" ""
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "alice_octomap" "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv" ""
 )
 
 #
@@ -31,7 +31,7 @@ add_custom_target(_alice_octomap_generate_messages_check_deps_${_filename}
 
 ### Generating Services
 _generate_srv_cpp(alice_octomap
-  "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv"
+  "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/alice_octomap
@@ -49,7 +49,7 @@ add_custom_target(alice_octomap_generate_messages_cpp
 add_dependencies(alice_octomap_generate_messages alice_octomap_generate_messages_cpp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv" NAME_WE)
+get_filename_component(_filename "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv" NAME_WE)
 add_dependencies(alice_octomap_generate_messages_cpp _alice_octomap_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -64,7 +64,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS alice_octomap_generate_messages_cpp
 
 ### Generating Services
 _generate_srv_eus(alice_octomap
-  "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv"
+  "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/alice_octomap
@@ -82,7 +82,7 @@ add_custom_target(alice_octomap_generate_messages_eus
 add_dependencies(alice_octomap_generate_messages alice_octomap_generate_messages_eus)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv" NAME_WE)
+get_filename_component(_filename "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv" NAME_WE)
 add_dependencies(alice_octomap_generate_messages_eus _alice_octomap_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -97,7 +97,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS alice_octomap_generate_messages_eus
 
 ### Generating Services
 _generate_srv_lisp(alice_octomap
-  "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv"
+  "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/alice_octomap
@@ -115,7 +115,7 @@ add_custom_target(alice_octomap_generate_messages_lisp
 add_dependencies(alice_octomap_generate_messages alice_octomap_generate_messages_lisp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv" NAME_WE)
+get_filename_component(_filename "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv" NAME_WE)
 add_dependencies(alice_octomap_generate_messages_lisp _alice_octomap_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -130,7 +130,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS alice_octomap_generate_messages_lis
 
 ### Generating Services
 _generate_srv_nodejs(alice_octomap
-  "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv"
+  "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/alice_octomap
@@ -148,7 +148,7 @@ add_custom_target(alice_octomap_generate_messages_nodejs
 add_dependencies(alice_octomap_generate_messages alice_octomap_generate_messages_nodejs)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv" NAME_WE)
+get_filename_component(_filename "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv" NAME_WE)
 add_dependencies(alice_octomap_generate_messages_nodejs _alice_octomap_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -163,7 +163,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS alice_octomap_generate_messages_nod
 
 ### Generating Services
 _generate_srv_py(alice_octomap
-  "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv"
+  "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/alice_octomap
@@ -181,7 +181,7 @@ add_custom_target(alice_octomap_generate_messages_py
 add_dependencies(alice_octomap_generate_messages alice_octomap_generate_messages_py)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv" NAME_WE)
+get_filename_component(_filename "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv" NAME_WE)
 add_dependencies(alice_octomap_generate_messages_py _alice_octomap_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

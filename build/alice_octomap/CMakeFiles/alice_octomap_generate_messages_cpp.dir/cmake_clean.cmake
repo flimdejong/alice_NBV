@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "/home/flimdejong/catkin_ws/devel/include/alice_octomap/octomap_srv_client.h"
+  "/home/flimdejong/catkin_ws/devel/include/alice_octomap/octomap.h"
   "CMakeFiles/alice_octomap_generate_messages_cpp"
 )
 

@@ -4,7 +4,10 @@
 #include <octomap_msgs/conversions.h>
 #include <octomap_msgs/GetOctomap.h>
 
-bool getMapState(){
+int main(int argc, char **argv)
+{
+    // Initialize node
+    ros::init(argc, argv, "octomap_service_client");
 
     // Create a global ROS handle (nh)
     ros::NodeHandle nh;
@@ -60,7 +63,6 @@ bool getMapState(){
             // std::cout << "Percentage of voxels seen: " << seenPercentage << "%" << std::endl;
 
             delete octree;
-            return true;
         }
     }
 
@@ -68,24 +70,9 @@ bool getMapState(){
     {
 
         // Service call failed
-        ROS_ERROR("Failed to call GetOctomap service");
-        return false;
+        ROS_ERROR("Failed to call GetOctomap service. Error: %s", octomap_binary_client.getService().c_str());
     }
 
-    return 0;
-}
-
-int main(int argc, char **argv){
-    
-    // Initialize node
-    ros::init(argc, argv, "octomap_service_client");
-    ros::NodeHandle nh;
-
-    // Create a service server
-    ros::ServiceServer voxel_state_server = nh.advertiseService("get_voxel_stats", getVoxelState);
-
-    ROS_INFO("Ready to provide voxel statistics.");
-    
     ros::spin();
 
     return 0;

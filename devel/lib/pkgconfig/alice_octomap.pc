@@ -5,4 +5,4 @@ Description: Description of alice_octomap
 Version: 0.0.0
 Cflags: -I/home/flimdejong/catkin_ws/devel/include -I/home/flimdejong/catkin_ws/src/alice_octomap/include
 Libs: -L${prefix}/lib -lalice_octomap
-Requires: roscpp rospy std_msgs
+Requires: roscpp rospy std_msgs message_runtime

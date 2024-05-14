@@ -38,7 +38,7 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/alice_octomap/srv" TYPE FILE FILES "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/alice_octomap/srv" TYPE FILE FILES "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)

@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "/home/flimdejong/catkin_ws/devel/share/gennodejs/ros/alice_octomap/srv/octomap_srv_client.js"
+  "/home/flimdejong/catkin_ws/devel/share/gennodejs/ros/alice_octomap/srv/octomap.js"
   "CMakeFiles/alice_octomap_generate_messages_nodejs"
 )
 

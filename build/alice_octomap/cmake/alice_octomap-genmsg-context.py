@@ -1,7 +1,7 @@
 # generated from genmsg/cmake/pkg-genmsg.context.in
 
 messages_str = ""
-services_str = "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv"
+services_str = "/home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv"
 pkg_name = "alice_octomap"
 dependencies_str = "std_msgs"
 langs = "gencpp;geneus;genlisp;gennodejs;genpy"

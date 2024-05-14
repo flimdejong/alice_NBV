@@ -1,1 +1,1 @@
-from ._octomap_srv_client import *
+from ._octomap import *

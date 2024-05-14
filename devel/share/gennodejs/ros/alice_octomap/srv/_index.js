@@ -1,8 +1,8 @@
 
 "use strict";
 
-let octomap_srv_client = require('./octomap_srv_client.js')
+let octomap = require('./octomap.js')
 
 module.exports = {
-  octomap_srv_client: octomap_srv_client,
+  octomap: octomap,
 };

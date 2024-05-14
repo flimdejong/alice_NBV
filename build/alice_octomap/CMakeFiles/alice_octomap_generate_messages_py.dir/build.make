@@ -53,22 +53,22 @@ CMAKE_BINARY_DIR = /home/flimdejong/catkin_ws/build
 # Include the progress variables for this target.
 include alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/progress.make
 
-alice_octomap/CMakeFiles/alice_octomap_generate_messages_py: /home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv/_octomap_srv_client.py
+alice_octomap/CMakeFiles/alice_octomap_generate_messages_py: /home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv/_octomap.py
 alice_octomap/CMakeFiles/alice_octomap_generate_messages_py: /home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv/__init__.py
 
 
-/home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv/_octomap_srv_client.py: /opt/ros/noetic/lib/genpy/gensrv_py.py
-/home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv/_octomap_srv_client.py: /home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/flimdejong/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python code from SRV alice_octomap/octomap_srv_client"
-	cd /home/flimdejong/catkin_ws/build/alice_octomap && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p alice_octomap -o /home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv
+/home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv/_octomap.py: /opt/ros/noetic/lib/genpy/gensrv_py.py
+/home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv/_octomap.py: /home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/flimdejong/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python code from SRV alice_octomap/octomap"
+	cd /home/flimdejong/catkin_ws/build/alice_octomap && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p alice_octomap -o /home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv
 
 /home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
-/home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv/__init__.py: /home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv/_octomap_srv_client.py
+/home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv/__init__.py: /home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv/_octomap.py
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/flimdejong/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python srv __init__.py for alice_octomap"
 	cd /home/flimdejong/catkin_ws/build/alice_octomap && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv --initpy
 
 alice_octomap_generate_messages_py: alice_octomap/CMakeFiles/alice_octomap_generate_messages_py
-alice_octomap_generate_messages_py: /home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv/_octomap_srv_client.py
+alice_octomap_generate_messages_py: /home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv/_octomap.py
 alice_octomap_generate_messages_py: /home/flimdejong/catkin_ws/devel/lib/python3/dist-packages/alice_octomap/srv/__init__.py
 alice_octomap_generate_messages_py: alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/build.make
 

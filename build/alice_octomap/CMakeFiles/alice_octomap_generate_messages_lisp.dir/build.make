@@ -53,16 +53,16 @@ CMAKE_BINARY_DIR = /home/flimdejong/catkin_ws/build
 # Include the progress variables for this target.
 include alice_octomap/CMakeFiles/alice_octomap_generate_messages_lisp.dir/progress.make
 
-alice_octomap/CMakeFiles/alice_octomap_generate_messages_lisp: /home/flimdejong/catkin_ws/devel/share/common-lisp/ros/alice_octomap/srv/octomap_srv_client.lisp
+alice_octomap/CMakeFiles/alice_octomap_generate_messages_lisp: /home/flimdejong/catkin_ws/devel/share/common-lisp/ros/alice_octomap/srv/octomap.lisp
 
 
-/home/flimdejong/catkin_ws/devel/share/common-lisp/ros/alice_octomap/srv/octomap_srv_client.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
-/home/flimdejong/catkin_ws/devel/share/common-lisp/ros/alice_octomap/srv/octomap_srv_client.lisp: /home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/flimdejong/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Lisp code from alice_octomap/octomap_srv_client.srv"
-	cd /home/flimdejong/catkin_ws/build/alice_octomap && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap_srv_client.srv -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p alice_octomap -o /home/flimdejong/catkin_ws/devel/share/common-lisp/ros/alice_octomap/srv
+/home/flimdejong/catkin_ws/devel/share/common-lisp/ros/alice_octomap/srv/octomap.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/home/flimdejong/catkin_ws/devel/share/common-lisp/ros/alice_octomap/srv/octomap.lisp: /home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/flimdejong/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Lisp code from alice_octomap/octomap.srv"
+	cd /home/flimdejong/catkin_ws/build/alice_octomap && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/flimdejong/catkin_ws/src/alice_octomap/srv/octomap.srv -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p alice_octomap -o /home/flimdejong/catkin_ws/devel/share/common-lisp/ros/alice_octomap/srv
 
 alice_octomap_generate_messages_lisp: alice_octomap/CMakeFiles/alice_octomap_generate_messages_lisp
-alice_octomap_generate_messages_lisp: /home/flimdejong/catkin_ws/devel/share/common-lisp/ros/alice_octomap/srv/octomap_srv_client.lisp
+alice_octomap_generate_messages_lisp: /home/flimdejong/catkin_ws/devel/share/common-lisp/ros/alice_octomap/srv/octomap.lisp
 alice_octomap_generate_messages_lisp: alice_octomap/CMakeFiles/alice_octomap_generate_messages_lisp.dir/build.make
 
 .PHONY : alice_octomap_generate_messages_lisp

@@ -506,6 +506,32 @@ alice_octomap_generate_messages_cpp/fast:
 .PHONY : alice_octomap_generate_messages_cpp/fast
 
 #=============================================================================
+# Target rules for targets named _alice_octomap_generate_messages_check_deps_octomap
+
+# Build rule for target.
+_alice_octomap_generate_messages_check_deps_octomap: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _alice_octomap_generate_messages_check_deps_octomap
+.PHONY : _alice_octomap_generate_messages_check_deps_octomap
+
+# fast build rule for target.
+_alice_octomap_generate_messages_check_deps_octomap/fast:
+	$(MAKE) -f alice_octomap/CMakeFiles/_alice_octomap_generate_messages_check_deps_octomap.dir/build.make alice_octomap/CMakeFiles/_alice_octomap_generate_messages_check_deps_octomap.dir/build
+.PHONY : _alice_octomap_generate_messages_check_deps_octomap/fast
+
+#=============================================================================
+# Target rules for targets named geometry_msgs_generate_messages_py
+
+# Build rule for target.
+geometry_msgs_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 geometry_msgs_generate_messages_py
+.PHONY : geometry_msgs_generate_messages_py
+
+# fast build rule for target.
+geometry_msgs_generate_messages_py/fast:
+	$(MAKE) -f alice_octomap/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make alice_octomap/CMakeFiles/geometry_msgs_generate_messages_py.dir/build
+.PHONY : geometry_msgs_generate_messages_py/fast
+
+#=============================================================================
 # Target rules for targets named alice_octomap_generate_messages
 
 # Build rule for target.
@@ -558,19 +584,6 @@ octomap_msgs_generate_messages_eus/fast:
 .PHONY : octomap_msgs_generate_messages_eus/fast
 
 #=============================================================================
-# Target rules for targets named geometry_msgs_generate_messages_py
-
-# Build rule for target.
-geometry_msgs_generate_messages_py: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 geometry_msgs_generate_messages_py
-.PHONY : geometry_msgs_generate_messages_py
-
-# fast build rule for target.
-geometry_msgs_generate_messages_py/fast:
-	$(MAKE) -f alice_octomap/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make alice_octomap/CMakeFiles/geometry_msgs_generate_messages_py.dir/build
-.PHONY : geometry_msgs_generate_messages_py/fast
-
-#=============================================================================
 # Target rules for targets named geometry_msgs_generate_messages_lisp
 
 # Build rule for target.
@@ -582,6 +595,19 @@ geometry_msgs_generate_messages_lisp: cmake_check_build_system
 geometry_msgs_generate_messages_lisp/fast:
 	$(MAKE) -f alice_octomap/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make alice_octomap/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build
 .PHONY : geometry_msgs_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named alice_octomap_generate_messages_py
+
+# Build rule for target.
+alice_octomap_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 alice_octomap_generate_messages_py
+.PHONY : alice_octomap_generate_messages_py
+
+# fast build rule for target.
+alice_octomap_generate_messages_py/fast:
+	$(MAKE) -f alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/build.make alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/build
+.PHONY : alice_octomap_generate_messages_py/fast
 
 #=============================================================================
 # Target rules for targets named octomap_msgs_generate_messages_py
@@ -636,45 +662,6 @@ octomap_msgs_generate_messages_lisp/fast:
 .PHONY : octomap_msgs_generate_messages_lisp/fast
 
 #=============================================================================
-# Target rules for targets named _alice_octomap_generate_messages_check_deps_octomap_srv_client
-
-# Build rule for target.
-_alice_octomap_generate_messages_check_deps_octomap_srv_client: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 _alice_octomap_generate_messages_check_deps_octomap_srv_client
-.PHONY : _alice_octomap_generate_messages_check_deps_octomap_srv_client
-
-# fast build rule for target.
-_alice_octomap_generate_messages_check_deps_octomap_srv_client/fast:
-	$(MAKE) -f alice_octomap/CMakeFiles/_alice_octomap_generate_messages_check_deps_octomap_srv_client.dir/build.make alice_octomap/CMakeFiles/_alice_octomap_generate_messages_check_deps_octomap_srv_client.dir/build
-.PHONY : _alice_octomap_generate_messages_check_deps_octomap_srv_client/fast
-
-#=============================================================================
-# Target rules for targets named alice_octomap_generate_messages_nodejs
-
-# Build rule for target.
-alice_octomap_generate_messages_nodejs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 alice_octomap_generate_messages_nodejs
-.PHONY : alice_octomap_generate_messages_nodejs
-
-# fast build rule for target.
-alice_octomap_generate_messages_nodejs/fast:
-	$(MAKE) -f alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/build.make alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/build
-.PHONY : alice_octomap_generate_messages_nodejs/fast
-
-#=============================================================================
-# Target rules for targets named octomap_msgs_generate_messages_nodejs
-
-# Build rule for target.
-octomap_msgs_generate_messages_nodejs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 octomap_msgs_generate_messages_nodejs
-.PHONY : octomap_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-octomap_msgs_generate_messages_nodejs/fast:
-	$(MAKE) -f alice_octomap/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/build.make alice_octomap/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/build
-.PHONY : octomap_msgs_generate_messages_nodejs/fast
-
-#=============================================================================
 # Target rules for targets named alice_octomap_gencpp
 
 # Build rule for target.
@@ -727,30 +714,17 @@ alice_octomap_geneus/fast:
 .PHONY : alice_octomap_geneus/fast
 
 #=============================================================================
-# Target rules for targets named alice_octomap_generate_messages_py
+# Target rules for targets named alice_octomap_gennodejs
 
 # Build rule for target.
-alice_octomap_generate_messages_py: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 alice_octomap_generate_messages_py
-.PHONY : alice_octomap_generate_messages_py
+alice_octomap_gennodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 alice_octomap_gennodejs
+.PHONY : alice_octomap_gennodejs
 
 # fast build rule for target.
-alice_octomap_generate_messages_py/fast:
-	$(MAKE) -f alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/build.make alice_octomap/CMakeFiles/alice_octomap_generate_messages_py.dir/build
-.PHONY : alice_octomap_generate_messages_py/fast
-
-#=============================================================================
-# Target rules for targets named octo_binary_pub
-
-# Build rule for target.
-octo_binary_pub: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 octo_binary_pub
-.PHONY : octo_binary_pub
-
-# fast build rule for target.
-octo_binary_pub/fast:
-	$(MAKE) -f alice_octomap/CMakeFiles/octo_binary_pub.dir/build.make alice_octomap/CMakeFiles/octo_binary_pub.dir/build
-.PHONY : octo_binary_pub/fast
+alice_octomap_gennodejs/fast:
+	$(MAKE) -f alice_octomap/CMakeFiles/alice_octomap_gennodejs.dir/build.make alice_octomap/CMakeFiles/alice_octomap_gennodejs.dir/build
+.PHONY : alice_octomap_gennodejs/fast
 
 #=============================================================================
 # Target rules for targets named alice_octomap_generate_messages_lisp
@@ -766,32 +740,6 @@ alice_octomap_generate_messages_lisp/fast:
 .PHONY : alice_octomap_generate_messages_lisp/fast
 
 #=============================================================================
-# Target rules for targets named alice_octomap_gennodejs
-
-# Build rule for target.
-alice_octomap_gennodejs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 alice_octomap_gennodejs
-.PHONY : alice_octomap_gennodejs
-
-# fast build rule for target.
-alice_octomap_gennodejs/fast:
-	$(MAKE) -f alice_octomap/CMakeFiles/alice_octomap_gennodejs.dir/build.make alice_octomap/CMakeFiles/alice_octomap_gennodejs.dir/build
-.PHONY : alice_octomap_gennodejs/fast
-
-#=============================================================================
-# Target rules for targets named octomap_srv_client
-
-# Build rule for target.
-octomap_srv_client: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 octomap_srv_client
-.PHONY : octomap_srv_client
-
-# fast build rule for target.
-octomap_srv_client/fast:
-	$(MAKE) -f alice_octomap/CMakeFiles/octomap_srv_client.dir/build.make alice_octomap/CMakeFiles/octomap_srv_client.dir/build
-.PHONY : octomap_srv_client/fast
-
-#=============================================================================
 # Target rules for targets named alice_octomap_genlisp
 
 # Build rule for target.
@@ -803,6 +751,45 @@ alice_octomap_genlisp: cmake_check_build_system
 alice_octomap_genlisp/fast:
 	$(MAKE) -f alice_octomap/CMakeFiles/alice_octomap_genlisp.dir/build.make alice_octomap/CMakeFiles/alice_octomap_genlisp.dir/build
 .PHONY : alice_octomap_genlisp/fast
+
+#=============================================================================
+# Target rules for targets named alice_octomap_generate_messages_nodejs
+
+# Build rule for target.
+alice_octomap_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 alice_octomap_generate_messages_nodejs
+.PHONY : alice_octomap_generate_messages_nodejs
+
+# fast build rule for target.
+alice_octomap_generate_messages_nodejs/fast:
+	$(MAKE) -f alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/build.make alice_octomap/CMakeFiles/alice_octomap_generate_messages_nodejs.dir/build
+.PHONY : alice_octomap_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named octomap_msgs_generate_messages_nodejs
+
+# Build rule for target.
+octomap_msgs_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 octomap_msgs_generate_messages_nodejs
+.PHONY : octomap_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+octomap_msgs_generate_messages_nodejs/fast:
+	$(MAKE) -f alice_octomap/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/build.make alice_octomap/CMakeFiles/octomap_msgs_generate_messages_nodejs.dir/build
+.PHONY : octomap_msgs_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named octoStateServer
+
+# Build rule for target.
+octoStateServer: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 octoStateServer
+.PHONY : octoStateServer
+
+# fast build rule for target.
+octoStateServer/fast:
+	$(MAKE) -f alice_octomap/CMakeFiles/octoStateServer.dir/build.make alice_octomap/CMakeFiles/octoStateServer.dir/build
+.PHONY : octoStateServer/fast
 
 #=============================================================================
 # Target rules for targets named trajectory_msgs_generate_messages_py
@@ -1467,29 +1454,28 @@ help:
 	@echo "... rosgraph_msgs_generate_messages_py"
 	@echo "... _catkin_empty_exported_target"
 	@echo "... alice_octomap_generate_messages_cpp"
+	@echo "... _alice_octomap_generate_messages_check_deps_octomap"
+	@echo "... geometry_msgs_generate_messages_py"
 	@echo "... alice_octomap_generate_messages"
 	@echo "... alice_octomap_genpy"
 	@echo "... geometry_msgs_generate_messages_cpp"
 	@echo "... octomap_msgs_generate_messages_eus"
-	@echo "... geometry_msgs_generate_messages_py"
 	@echo "... geometry_msgs_generate_messages_lisp"
+	@echo "... alice_octomap_generate_messages_py"
 	@echo "... octomap_msgs_generate_messages_py"
 	@echo "... octomap_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... octomap_msgs_generate_messages_lisp"
-	@echo "... _alice_octomap_generate_messages_check_deps_octomap_srv_client"
-	@echo "... alice_octomap_generate_messages_nodejs"
-	@echo "... octomap_msgs_generate_messages_nodejs"
 	@echo "... alice_octomap_gencpp"
 	@echo "... geometry_msgs_generate_messages_nodejs"
 	@echo "... alice_octomap_generate_messages_eus"
 	@echo "... alice_octomap_geneus"
-	@echo "... alice_octomap_generate_messages_py"
-	@echo "... octo_binary_pub"
-	@echo "... alice_octomap_generate_messages_lisp"
 	@echo "... alice_octomap_gennodejs"
-	@echo "... octomap_srv_client"
+	@echo "... alice_octomap_generate_messages_lisp"
 	@echo "... alice_octomap_genlisp"
+	@echo "... alice_octomap_generate_messages_nodejs"
+	@echo "... octomap_msgs_generate_messages_nodejs"
+	@echo "... octoStateServer"
 	@echo "... trajectory_msgs_generate_messages_py"
 	@echo "... trajectory_msgs_generate_messages_lisp"
 	@echo "... gazebo_msgs_generate_messages_lisp"

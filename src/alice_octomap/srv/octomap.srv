@@ -1,0 +1,5 @@
+#Service receives no input
+
+---
+int32 occupied_voxels
+int32 total_voxels
