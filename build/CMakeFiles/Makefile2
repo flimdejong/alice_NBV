@@ -54,9 +54,9 @@ CMAKE_BINARY_DIR = /home/flimdejong/catkin_ws/build
 
 # The main recursive "all" target.
 all: gtest/all
+all: alice_moveit/all
 all: alice_control/all
 all: alice_gazebo/all
-all: alice_moveit/all
 all: alice_octomap/all
 all: alice_rl/all
 all: alice_scripts/all
@@ -66,9 +66,9 @@ all: alice_description/all
 
 # The main recursive "preinstall" target.
 preinstall: gtest/preinstall
+preinstall: alice_moveit/preinstall
 preinstall: alice_control/preinstall
 preinstall: alice_gazebo/preinstall
-preinstall: alice_moveit/preinstall
 preinstall: alice_octomap/preinstall
 preinstall: alice_rl/preinstall
 preinstall: alice_scripts/preinstall
@@ -83,9 +83,9 @@ clean: CMakeFiles/clean_test_results.dir/clean
 clean: CMakeFiles/tests.dir/clean
 clean: CMakeFiles/download_extra_data.dir/clean
 clean: gtest/clean
+clean: alice_moveit/clean
 clean: alice_control/clean
 clean: alice_gazebo/clean
-clean: alice_moveit/clean
 clean: alice_octomap/clean
 clean: alice_rl/clean
 clean: alice_scripts/clean
@@ -605,6 +605,33 @@ gtest/googletest/CMakeFiles/gtest.dir/clean:
 .PHONY : gtest/googletest/CMakeFiles/gtest.dir/clean
 
 #=============================================================================
+# Target rules for target alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir
+
+# All Build rule for target.
+alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/all:
+	$(MAKE) -f alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build.make alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/depend
+	$(MAKE) -f alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build.make alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/flimdejong/catkin_ws/build/CMakeFiles --progress-num= "Built target _catkin_empty_exported_target"
+.PHONY : alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/all
+
+# Build rule for subdir invocation for target.
+alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/flimdejong/catkin_ws/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/flimdejong/catkin_ws/build/CMakeFiles 0
+.PHONY : alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/rule
+
+# Convenience name for target.
+_catkin_empty_exported_target: alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/rule
+
+.PHONY : _catkin_empty_exported_target
+
+# clean rule for target.
+alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/clean:
+	$(MAKE) -f alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build.make alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/clean
+.PHONY : alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/clean
+
+#=============================================================================
 # Target rules for target alice_control/CMakeFiles/std_msgs_generate_messages_py.dir
 
 # All Build rule for target.
@@ -1008,33 +1035,6 @@ rosgraph_msgs_generate_messages_py: alice_control/CMakeFiles/rosgraph_msgs_gener
 alice_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/clean:
 	$(MAKE) -f alice_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make alice_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/clean
 .PHONY : alice_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/clean
-
-#=============================================================================
-# Target rules for target alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir
-
-# All Build rule for target.
-alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/all:
-	$(MAKE) -f alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build.make alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/depend
-	$(MAKE) -f alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build.make alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/flimdejong/catkin_ws/build/CMakeFiles --progress-num= "Built target _catkin_empty_exported_target"
-.PHONY : alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/all
-
-# Build rule for subdir invocation for target.
-alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/flimdejong/catkin_ws/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/flimdejong/catkin_ws/build/CMakeFiles 0
-.PHONY : alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/rule
-
-# Convenience name for target.
-_catkin_empty_exported_target: alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/rule
-
-.PHONY : _catkin_empty_exported_target
-
-# clean rule for target.
-alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/clean:
-	$(MAKE) -f alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/build.make alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/clean
-.PHONY : alice_moveit/CMakeFiles/_catkin_empty_exported_target.dir/clean
 
 #=============================================================================
 # Target rules for target alice_octomap/CMakeFiles/alice_octomap_generate_messages_cpp.dir

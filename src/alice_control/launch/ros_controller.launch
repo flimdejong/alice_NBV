@@ -16,10 +16,9 @@
         output="screen" args="arm_controller joint_state_controller" ns="alice" />
 
     <!-- Start the joint state publisher -->
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-        <param name="use_gui" value="false" />
-        <rosparam param="source_list">[/joint_states]</rosparam>
-    </node>
+    <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <remap from="/joint_states" to="/alice/joint_states" />
+    </node> -->
 
     <!-- Launch joint_state_publisher_gui -->
     <!-- <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="joint_state_publisher_gui">
