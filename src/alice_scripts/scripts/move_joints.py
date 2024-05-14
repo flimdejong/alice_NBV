@@ -1,7 +1,8 @@
+#! /usr/bin/env python
+
 import rospy
 import sys
 import moveit_commander
-import moveit_msgs
 
 def move_end_effector(target_joint_angles):
 

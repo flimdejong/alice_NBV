@@ -8,12 +8,10 @@
 bool convertOcTree(alice_octomap::octomap::Request &req, alice_octomap::octomap::Response &res)
 {
 
-    ROS_INFO("Creating client to send a request");
+    ROS_INFO("Creating client to send a request to octomap_binary");
 
     // Create a service call to retrieve octomap information
     octomap_msgs::GetOctomap srv;
-
-    ROS_INFO("Attempting to call service");
 
     //Create a NodeHandle for the client
     ros::NodeHandle nh;
@@ -53,8 +51,8 @@ bool convertOcTree(alice_octomap::octomap::Request &req, alice_octomap::octomap:
                 }
             }
 
-            std::cout << "amount of voxels: " << totalVoxels << std::endl;
-            std::cout << "amount of occupied voxels: " << occupiedVoxels << std::endl;
+            // std::cout << "amount of voxels: " << totalVoxels << std::endl;
+            // std::cout << "amount of occupied voxels: " << occupiedVoxels << std::endl;
 
             //res is the response from calling the server, what information do I get?
             res.occupied_voxels = occupiedVoxels;
@@ -73,7 +71,7 @@ bool convertOcTree(alice_octomap::octomap::Request &req, alice_octomap::octomap:
     {
 
         // Service call failed
-        ROS_ERROR("Failed to call GetOctomap service");
+        ROS_ERROR("Failed to call octomap_binary service");
 
         //return false if there was an error
         return false;
@@ -83,14 +81,14 @@ bool convertOcTree(alice_octomap::octomap::Request &req, alice_octomap::octomap:
 
 int main(int argc, char **argv) {
 
+    ROS_INFO("Starting octoStateServer");
+
     // This nodes is a server that once called will send a client call to the octomap_binary server.
     // It returns the state of the octomap
     ros::init(argc, argv, "getOctoState");
 
     // Create a global ROS handle (nh)
     ros::NodeHandle nh;
-
-    ROS_INFO("Creating server");
 
     // Create a server to send the information from the client to another node.
     // It takes as input the result of convertOcTree

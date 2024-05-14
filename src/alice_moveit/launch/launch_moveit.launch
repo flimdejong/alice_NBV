@@ -6,7 +6,6 @@
     <!-- Launches the path planning from moveit-->
     <include file="$(find alice_moveit)/launch/move_group.launch">
         <!-- Pass arguments or set parameters if needed -->
-
     </include>
 
     <!-- Launches visualisation -->
