@@ -28,6 +28,7 @@ class RobotArmEnv(gymnasium.Env):
         self.observation_space = spaces.Box(low=0, high=1000, shape=(1,), dtype=int)
         
         # Define the action space (joint angles)
+        #For now we can try to only move a single arm
         self.action_space = spaces.Box(low=0.5, high=1.5, shape=(4,), dtype=float)
 
         # Initialize the MoveIt commander
@@ -86,6 +87,9 @@ class RobotArmEnv(gymnasium.Env):
         # Plan and execute the motion
         plan = move_group.go(wait=True)
 
+        # Wait for the motion to complete, just arbitrary 5 sec for now.
+        rospy.sleep(5)
+
         # Check if the planning and execution were successful
         if plan:
             rospy.loginfo("Motion planning and execution succeeded!")
@@ -93,13 +97,10 @@ class RobotArmEnv(gymnasium.Env):
             rospy.logerr("Motion planning and execution failed!")
 
         
-        
     def step(self, action):
 
         #Apply the action
         #Actions are the joint positions (base_joint, shoulder_joint, elbow_joint, wrist_pitch_joint)
-
-
 
         # #We create a ROS publisher to send the information to our moveIt service node.
         # joint_pub = rospy.Publisher('joint_pub_rl', Float32MultiArray, queue_size=10)
@@ -128,20 +129,32 @@ class RobotArmEnv(gymnasium.Env):
         #Placeholder for info
         info = {}
 
-        return self.state, reward, info
+        terminated = self.is_terminated()
+        truncated = self.is_truncated()
+
+        return self.state, reward, terminated, truncated, info
         
     
     def reset(self, seed=None):
         # Reset the environment to an initial state
 
-        rospy.loginfo("Resetting")
+        rospy.loginfo("Resetting state")
 
         initial_pos = [0.0, 1.5708, 0.0, 0.0]
         self.move_joints(initial_pos)
 
-        while self.state != 80:
-            rospy.loginfo("Waiting for initial state...")
-            rospy.sleep(1.0)
+        rospy.loginfo("Resetting octomap")
+
+        #Here we reset the state of the octomap
+        self.state = 0
+
+        #State should now be 80
+        self.get_state()
+
+        # while self.state != 80:
+        #     #After the arm returned to base position, get the state again. It should return 80
+        #     rospy.loginfo("Waiting for initial state...")
+        #     rospy.sleep(1.0)
 
         return self.state, {}
     

@@ -17,6 +17,6 @@ model.save("alice_mvp")
 # Run trained agent
 obs = vec_env.reset()
 for i in range(10):
-    action, _state = model.predict(obs, deterministic=True)
+    action = model.predict(obs, deterministic=True)
     print(f"Predicted action: {action}")  # Print the predicted action
     obs, reward, done, info = vec_env.step(action)
