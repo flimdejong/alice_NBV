@@ -551,8 +551,78 @@
       </plugin>
       <pose>0 0 0.03 0 -0 0</pose>
     </model>
+    <state world_name='default'>
+      <sim_time>3407 659000000</sim_time>
+      <real_time>1280 596099510</real_time>
+      <wall_time>1716367664 668762857</wall_time>
+      <iterations>1250300</iterations>
+      <model name='alice'>
+        <pose>-0 -0 0.03 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='base_cyllinder'>
+          <pose>-0 -0 0.03 0 -0 0</pose>
+          <velocity>-0 -0 -0 0 -0 0</velocity>
+          <acceleration>-0 -0 0 0 -0 0</acceleration>
+          <wrench>-0 -0 0 0 -0 0</wrench>
+        </link>
+        <link name='elbow_link'>
+          <pose>-0.056683 -3.2e-05 0.214405 -1.11767 -0 -1.57023</pose>
+          <velocity>0 0 -0 0 -0 0</velocity>
+          <acceleration>-0 -0 -0 0 -0 0</acceleration>
+          <wrench>-0 -0 -0 0 -0 0</wrench>
+        </link>
+        <link name='rotating_base'>
+          <pose>0 -0 0.03 -0 -0 -1.57023</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -0 0 -0 0</acceleration>
+          <wrench>0 0 -0 0 -0 0</wrench>
+        </link>
+        <link name='shoulder_link'>
+          <pose>-0.002 -1e-06 0.102 0.452775 -0 -1.57023</pose>
+          <velocity>-0 0 0 0 -0 0</velocity>
+          <acceleration>-0 0 0 0 -0 0</acceleration>
+          <wrench>-0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='wrist_link'>
+          <pose>0.055702 3.2e-05 0.269127 -1.57327 -0 -1.57023</pose>
+          <velocity>0 -0 -0 0 -0 0</velocity>
+          <acceleration>-0 0 -0 0 -0 0</acceleration>
+          <wrench>-0 0 -0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ground_plane'>
+        <pose>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='unit_box'>
+        <pose>0.996332 -4.3e-05 0.087858 2e-06 -2e-06 -0.807603</pose>
+        <scale>0.200848 0.199975 0.175714</scale>
+        <link name='link'>
+          <pose>0.996332 -4.3e-05 0.087858 2e-06 -2e-06 -0.807603</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0.860847 -0.021022 2.26086 -2.90268 -0.373365 -3.14157</acceleration>
+          <wrench>0.860847 -0.021022 2.26086 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>-1.49801 -0.50484 0.924791 -0 0.370202 0.223924</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
     <model name='unit_box'>
-      <pose>1.54366 1.49679 0.5 0 -0 0</pose>
+      <pose>1.33607 -0.176697 0.5 0 -0 0</pose>
       <link name='link'>
         <inertial>
           <mass>1</mass>
@@ -569,7 +639,7 @@
         <collision name='collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>0.999994 0.999999 1.00001</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -589,7 +659,7 @@
         <visual name='visual'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>0.999994 0.999999 1.00001</size>
             </box>
           </geometry>
           <material>
@@ -604,75 +674,5 @@
         <kinematic>0</kinematic>
       </link>
     </model>
-    <state world_name='default'>
-      <sim_time>1240 75000000</sim_time>
-      <real_time>1268 929194639</real_time>
-      <wall_time>1715090292 955747339</wall_time>
-      <iterations>1240075</iterations>
-      <model name='alice'>
-        <pose>0 -0 0.03 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name='base_cyllinder'>
-          <pose>0 -0 0.03 0 -0 0</pose>
-          <velocity>-0 -0 -0 0 -0 0</velocity>
-          <acceleration>-0 -0 -0 0 -0 0</acceleration>
-          <wrench>-0 -0 -0 0 -0 0</wrench>
-        </link>
-        <link name='elbow_link'>
-          <pose>-0.056683 -3.2e-05 0.214405 -1.11767 -0 -1.57023</pose>
-          <velocity>0 -0 0 0 1e-06 0</velocity>
-          <acceleration>-0 0 -0 1e-06 -0 1e-06</acceleration>
-          <wrench>-0 0 -0 0 -0 0</wrench>
-        </link>
-        <link name='rotating_base'>
-          <pose>-0 0 0.03 0 -0 -1.57023</pose>
-          <velocity>-0 -0 -0 0 -0 0</velocity>
-          <acceleration>0 -0 0 -2.2e-05 -0.032366 0</acceleration>
-          <wrench>0 -0 0 0 -0 0</wrench>
-        </link>
-        <link name='shoulder_link'>
-          <pose>-0.002 -1e-06 0.102 0.452775 -0 -1.57023</pose>
-          <velocity>-0 -0 -0 0 1e-06 0</velocity>
-          <acceleration>0 -0 0 0 -0 0</acceleration>
-          <wrench>0 -0 0 0 -0 0</wrench>
-        </link>
-        <link name='wrist_link'>
-          <pose>0.055702 3.1e-05 0.269127 -1.57327 -0 -1.57023</pose>
-          <velocity>0 0 -0 0 1e-06 0</velocity>
-          <acceleration>-0 -0 0 -2.58966 0.050896 -0.01378</acceleration>
-          <wrench>-0 -0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='ground_plane'>
-        <pose>0 0 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose>0 0 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='unit_box'>
-        <pose>1.54366 1.49679 0.5 -0 -0 -0</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose>1.54366 1.49679 0.5 -0 -0 -0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>-0.004709 -9.78112 9.78158 0.712677 -0.009414 -4.3e-05</acceleration>
-          <wrench>-0.004709 -9.78112 9.78158 0 -0 0</wrench>
-        </link>
-      </model>
-      <light name='sun'>
-        <pose>0 0 10 0 -0 0</pose>
-      </light>
-    </state>
-    <gui fullscreen='0'>
-      <camera name='user_camera'>
-        <pose>-4.8865 -0.651302 6.21636 0 0.755643 0.087377</pose>
-        <view_controller>orbit</view_controller>
-        <projection_type>perspective</projection_type>
-      </camera>
-    </gui>
   </world>
 </sdf>

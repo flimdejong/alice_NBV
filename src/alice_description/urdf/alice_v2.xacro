@@ -4,10 +4,11 @@
     <!-- For gazebo ros control -->
     <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/alice</robotNamespace>
         </plugin>
     </gazebo>
 
-    <!-- <gazebo reference="base_cyllinder">
+    <gazebo reference="base_cyllinder">
         <turnGravityOff>true</turnGravityOff>
     </gazebo>
 
@@ -29,7 +30,7 @@
 
     <gazebo reference="camera_link">
         <turnGravityOff>true</turnGravityOff>
-    </gazebo> -->
+    </gazebo>
 
     <!-- The rescaling of 0.001 is necessary because gazebo takes all inputs as meters -->
     <!-- Meaning 100mm will be seen as 100m, hence rescaling is needed -->
@@ -222,7 +223,7 @@
     <joint name="camera_joint" type="fixed">
         <parent link="wrist_link" />
         <child link="camera_link" />
-        <origin rpy="0 0 0" xyz="0 0 0.073" />
+        <origin rpy="1.5707 1.5707 1.5707" xyz="0.038 0 0.03" />
     </joint>
 
 

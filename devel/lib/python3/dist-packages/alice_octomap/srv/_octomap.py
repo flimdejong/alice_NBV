@@ -11,9 +11,7 @@ class octomapRequest(genpy.Message):
   _md5sum = "d41d8cd98f00b204e9800998ecf8427e"
   _type = "alice_octomap/octomapRequest"
   _has_header = False  # flag to mark the presence of a Header object
-  _full_text = """#Service receives no input
-
-"""
+  _full_text = """"""
   __slots__ = []
   _slot_types = []
 
@@ -103,14 +101,18 @@ import struct
 
 
 class octomapResponse(genpy.Message):
-  _md5sum = "d6c656edb646bcaf655c3aa23e2812b3"
+  _md5sum = "e49c62c1add6ce5ed13e188a48e66fc4"
   _type = "alice_octomap/octomapResponse"
   _has_header = False  # flag to mark the presence of a Header object
-  _full_text = """int32 occupied_voxels
-int32 total_voxels
+  _full_text = """int32 total_voxels
+int32 occupied_voxels
+float64[] x_values
+float64[] y_values
+float64[] z_values
+bool[] occupancy
 """
-  __slots__ = ['occupied_voxels','total_voxels']
-  _slot_types = ['int32','int32']
+  __slots__ = ['total_voxels','occupied_voxels','x_values','y_values','z_values','occupancy']
+  _slot_types = ['int32','int32','float64[]','float64[]','float64[]','bool[]']
 
   def __init__(self, *args, **kwds):
     """
@@ -120,7 +122,7 @@ int32 total_voxels
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       occupied_voxels,total_voxels
+       total_voxels,occupied_voxels,x_values,y_values,z_values,occupancy
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -129,13 +131,25 @@ int32 total_voxels
     if args or kwds:
       super(octomapResponse, self).__init__(*args, **kwds)
       # message fields cannot be None, assign default values for those that are
-      if self.occupied_voxels is None:
-        self.occupied_voxels = 0
       if self.total_voxels is None:
         self.total_voxels = 0
+      if self.occupied_voxels is None:
+        self.occupied_voxels = 0
+      if self.x_values is None:
+        self.x_values = []
+      if self.y_values is None:
+        self.y_values = []
+      if self.z_values is None:
+        self.z_values = []
+      if self.occupancy is None:
+        self.occupancy = []
     else:
-      self.occupied_voxels = 0
       self.total_voxels = 0
+      self.occupied_voxels = 0
+      self.x_values = []
+      self.y_values = []
+      self.z_values = []
+      self.occupancy = []
 
   def _get_types(self):
     """
@@ -150,7 +164,23 @@ int32 total_voxels
     """
     try:
       _x = self
-      buff.write(_get_struct_2i().pack(_x.occupied_voxels, _x.total_voxels))
+      buff.write(_get_struct_2i().pack(_x.total_voxels, _x.occupied_voxels))
+      length = len(self.x_values)
+      buff.write(_struct_I.pack(length))
+      pattern = '<%sd'%length
+      buff.write(struct.Struct(pattern).pack(*self.x_values))
+      length = len(self.y_values)
+      buff.write(_struct_I.pack(length))
+      pattern = '<%sd'%length
+      buff.write(struct.Struct(pattern).pack(*self.y_values))
+      length = len(self.z_values)
+      buff.write(_struct_I.pack(length))
+      pattern = '<%sd'%length
+      buff.write(struct.Struct(pattern).pack(*self.z_values))
+      length = len(self.occupancy)
+      buff.write(_struct_I.pack(length))
+      pattern = '<%sB'%length
+      buff.write(struct.Struct(pattern).pack(*self.occupancy))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -166,7 +196,40 @@ int32 total_voxels
       _x = self
       start = end
       end += 8
-      (_x.occupied_voxels, _x.total_voxels,) = _get_struct_2i().unpack(str[start:end])
+      (_x.total_voxels, _x.occupied_voxels,) = _get_struct_2i().unpack(str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      pattern = '<%sd'%length
+      start = end
+      s = struct.Struct(pattern)
+      end += s.size
+      self.x_values = s.unpack(str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      pattern = '<%sd'%length
+      start = end
+      s = struct.Struct(pattern)
+      end += s.size
+      self.y_values = s.unpack(str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      pattern = '<%sd'%length
+      start = end
+      s = struct.Struct(pattern)
+      end += s.size
+      self.z_values = s.unpack(str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      pattern = '<%sB'%length
+      start = end
+      s = struct.Struct(pattern)
+      end += s.size
+      self.occupancy = s.unpack(str[start:end])
+      self.occupancy = list(map(bool, self.occupancy))
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -180,7 +243,23 @@ int32 total_voxels
     """
     try:
       _x = self
-      buff.write(_get_struct_2i().pack(_x.occupied_voxels, _x.total_voxels))
+      buff.write(_get_struct_2i().pack(_x.total_voxels, _x.occupied_voxels))
+      length = len(self.x_values)
+      buff.write(_struct_I.pack(length))
+      pattern = '<%sd'%length
+      buff.write(self.x_values.tostring())
+      length = len(self.y_values)
+      buff.write(_struct_I.pack(length))
+      pattern = '<%sd'%length
+      buff.write(self.y_values.tostring())
+      length = len(self.z_values)
+      buff.write(_struct_I.pack(length))
+      pattern = '<%sd'%length
+      buff.write(self.z_values.tostring())
+      length = len(self.occupancy)
+      buff.write(_struct_I.pack(length))
+      pattern = '<%sB'%length
+      buff.write(self.occupancy.tostring())
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -197,7 +276,40 @@ int32 total_voxels
       _x = self
       start = end
       end += 8
-      (_x.occupied_voxels, _x.total_voxels,) = _get_struct_2i().unpack(str[start:end])
+      (_x.total_voxels, _x.occupied_voxels,) = _get_struct_2i().unpack(str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      pattern = '<%sd'%length
+      start = end
+      s = struct.Struct(pattern)
+      end += s.size
+      self.x_values = numpy.frombuffer(str[start:end], dtype=numpy.float64, count=length)
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      pattern = '<%sd'%length
+      start = end
+      s = struct.Struct(pattern)
+      end += s.size
+      self.y_values = numpy.frombuffer(str[start:end], dtype=numpy.float64, count=length)
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      pattern = '<%sd'%length
+      start = end
+      s = struct.Struct(pattern)
+      end += s.size
+      self.z_values = numpy.frombuffer(str[start:end], dtype=numpy.float64, count=length)
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      pattern = '<%sB'%length
+      start = end
+      s = struct.Struct(pattern)
+      end += s.size
+      self.occupancy = numpy.frombuffer(str[start:end], dtype=numpy.bool, count=length)
+      self.occupancy = list(map(bool, self.occupancy))
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -214,6 +326,6 @@ def _get_struct_2i():
     return _struct_2i
 class octomap(object):
   _type          = 'alice_octomap/octomap'
-  _md5sum = 'd6c656edb646bcaf655c3aa23e2812b3'
+  _md5sum = 'e49c62c1add6ce5ed13e188a48e66fc4'
   _request_class  = octomapRequest
   _response_class = octomapResponse

@@ -24,22 +24,42 @@ struct octomapResponse_
   typedef octomapResponse_<ContainerAllocator> Type;
 
   octomapResponse_()
-    : occupied_voxels(0)
-    , total_voxels(0)  {
+    : total_voxels(0)
+    , occupied_voxels(0)
+    , x_values()
+    , y_values()
+    , z_values()
+    , occupancy()  {
     }
   octomapResponse_(const ContainerAllocator& _alloc)
-    : occupied_voxels(0)
-    , total_voxels(0)  {
+    : total_voxels(0)
+    , occupied_voxels(0)
+    , x_values(_alloc)
+    , y_values(_alloc)
+    , z_values(_alloc)
+    , occupancy(_alloc)  {
   (void)_alloc;
     }
 
 
 
+   typedef int32_t _total_voxels_type;
+  _total_voxels_type total_voxels;
+
    typedef int32_t _occupied_voxels_type;
   _occupied_voxels_type occupied_voxels;
 
-   typedef int32_t _total_voxels_type;
-  _total_voxels_type total_voxels;
+   typedef std::vector<double, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<double>> _x_values_type;
+  _x_values_type x_values;
+
+   typedef std::vector<double, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<double>> _y_values_type;
+  _y_values_type y_values;
+
+   typedef std::vector<double, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<double>> _z_values_type;
+  _z_values_type z_values;
+
+   typedef std::vector<uint8_t, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<uint8_t>> _occupancy_type;
+  _occupancy_type occupancy;
 
 
 
@@ -70,8 +90,12 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::alice_octomap::octomapResponse_<ContainerAllocator1> & lhs, const ::alice_octomap::octomapResponse_<ContainerAllocator2> & rhs)
 {
-  return lhs.occupied_voxels == rhs.occupied_voxels &&
-    lhs.total_voxels == rhs.total_voxels;
+  return lhs.total_voxels == rhs.total_voxels &&
+    lhs.occupied_voxels == rhs.occupied_voxels &&
+    lhs.x_values == rhs.x_values &&
+    lhs.y_values == rhs.y_values &&
+    lhs.z_values == rhs.z_values &&
+    lhs.occupancy == rhs.occupancy;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -104,12 +128,12 @@ struct IsMessage< ::alice_octomap::octomapResponse_<ContainerAllocator> const>
 
 template <class ContainerAllocator>
 struct IsFixedSize< ::alice_octomap::octomapResponse_<ContainerAllocator> >
-  : TrueType
+  : FalseType
   { };
 
 template <class ContainerAllocator>
 struct IsFixedSize< ::alice_octomap::octomapResponse_<ContainerAllocator> const>
-  : TrueType
+  : FalseType
   { };
 
 template <class ContainerAllocator>
@@ -128,12 +152,12 @@ struct MD5Sum< ::alice_octomap::octomapResponse_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "d6c656edb646bcaf655c3aa23e2812b3";
+    return "e49c62c1add6ce5ed13e188a48e66fc4";
   }
 
   static const char* value(const ::alice_octomap::octomapResponse_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xd6c656edb646bcafULL;
-  static const uint64_t static_value2 = 0x655c3aa23e2812b3ULL;
+  static const uint64_t static_value1 = 0xe49c62c1add6ce5eULL;
+  static const uint64_t static_value2 = 0xd13e188a48e66fc4ULL;
 };
 
 template<class ContainerAllocator>
@@ -152,8 +176,12 @@ struct Definition< ::alice_octomap::octomapResponse_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "int32 occupied_voxels\n"
-"int32 total_voxels\n"
+    return "int32 total_voxels\n"
+"int32 occupied_voxels\n"
+"float64[] x_values\n"
+"float64[] y_values\n"
+"float64[] z_values\n"
+"bool[] occupancy\n"
 ;
   }
 
@@ -172,8 +200,12 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
-      stream.next(m.occupied_voxels);
       stream.next(m.total_voxels);
+      stream.next(m.occupied_voxels);
+      stream.next(m.x_values);
+      stream.next(m.y_values);
+      stream.next(m.z_values);
+      stream.next(m.occupancy);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -192,10 +224,34 @@ struct Printer< ::alice_octomap::octomapResponse_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::alice_octomap::octomapResponse_<ContainerAllocator>& v)
   {
-    s << indent << "occupied_voxels: ";
-    Printer<int32_t>::stream(s, indent + "  ", v.occupied_voxels);
     s << indent << "total_voxels: ";
     Printer<int32_t>::stream(s, indent + "  ", v.total_voxels);
+    s << indent << "occupied_voxels: ";
+    Printer<int32_t>::stream(s, indent + "  ", v.occupied_voxels);
+    s << indent << "x_values[]" << std::endl;
+    for (size_t i = 0; i < v.x_values.size(); ++i)
+    {
+      s << indent << "  x_values[" << i << "]: ";
+      Printer<double>::stream(s, indent + "  ", v.x_values[i]);
+    }
+    s << indent << "y_values[]" << std::endl;
+    for (size_t i = 0; i < v.y_values.size(); ++i)
+    {
+      s << indent << "  y_values[" << i << "]: ";
+      Printer<double>::stream(s, indent + "  ", v.y_values[i]);
+    }
+    s << indent << "z_values[]" << std::endl;
+    for (size_t i = 0; i < v.z_values.size(); ++i)
+    {
+      s << indent << "  z_values[" << i << "]: ";
+      Printer<double>::stream(s, indent + "  ", v.z_values[i]);
+    }
+    s << indent << "occupancy[]" << std::endl;
+    for (size_t i = 0; i < v.occupancy.size(); ++i)
+    {
+      s << indent << "  occupancy[" << i << "]: ";
+      Printer<uint8_t>::stream(s, indent + "  ", v.occupancy[i]);
+    }
   }
 };
 

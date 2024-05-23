@@ -29,23 +29,55 @@ bool convertOcTree(alice_octomap::octomap::Request &req, alice_octomap::octomap:
         // octomap now contains the (full) octomap from the service call
         octomap_msgs::Octomap octomap = srv.response.map;
 
+        // Define the bounding box
+        octomap::point3d min(0, -1, 0);
+        octomap::point3d max(2, 1, 1); // Coordinates are in meters
+
         // Convert the octomap into an octree for easier processing
         // octree is a pointer variable. Dynamic_cast casts the result of msgToMap(octomap) which is of type AbstractOcTree to type Octree
         octomap::AbstractOcTree *abstract_octree = octomap_msgs::msgToMap(octomap);
         octomap::OcTree *octree = dynamic_cast<octomap::OcTree *>(abstract_octree);
+
+        // Create vectors to store the XYZ coordinates + occupancy information
+        std::vector<double> x_values;
+        std::vector<double> y_values;
+        std::vector<double> z_values;
+
+        //It's called unsigned char but it actually is <bool> kinda
+        std::vector<unsigned char> occupancy;
 
         // Checks if the pointer variable octree is not a NULL pointer (so conversion is )
         if (octree)
         {
             int totalVoxels = 0;
             int occupiedVoxels = 0;
+            int maxDepth = 5;
 
-            for (octomap::OcTree::leaf_iterator it = octree->begin_leafs(), end = octree->end_leafs(); it != end; ++it)
+            for (octomap::OcTree::leaf_bbx_iterator it = octree->begin_leafs_bbx(min,max), end = octree->end_leafs_bbx(); it != end; ++it)
             {
 
+                double x = it.getX();
+                double y = it.getY();
+                double z = it.getZ();
+
+                //Check if node is occupied
+                bool is_occupied = octree->isNodeOccupied(*it);
+
+                //For each node, push the data into the vectors
+                // x_values.push_back(x);
+                // y_values.push_back(y);
+                // z_values.push_back(z);
+                // occupancy.push_back(is_occupied);
+
+                std::cout << "X-Coordinate: " << x << std::endl;
+                // std::cout << "Y-Coordinate: " << y << std::endl;
+                // std::cout << "Z-Coordinate: " << z << std::endl;
+
+                //To count total voxels
                 totalVoxels++;
 
-                if (octree->isNodeOccupied(*it))
+                //If it is occupied, add it to the occupiedVoxels vector
+                if (is_occupied)
                 {
                     occupiedVoxels++;
                 }
@@ -55,10 +87,13 @@ bool convertOcTree(alice_octomap::octomap::Request &req, alice_octomap::octomap:
             // std::cout << "amount of occupied voxels: " << occupiedVoxels << std::endl;
 
             //res is the response from calling the server, what information do I get?
-            res.occupied_voxels = occupiedVoxels;
             res.total_voxels = totalVoxels;
+            res.occupied_voxels = occupiedVoxels;
+            res.x_values = x_values;
+            res.y_values = y_values;
+            res.z_values = z_values;
+            res.occupancy = occupancy;
 
-            
             delete octree;
         }
 
@@ -83,9 +118,9 @@ int main(int argc, char **argv) {
 
     ROS_INFO("Starting octoStateServer");
 
-    // This nodes is a server that once called will send a client call to the octomap_binary server.
+    // This node is a server that once called will send a client call to the octomap_binary server.
     // It returns the state of the octomap
-    ros::init(argc, argv, "getOctoState");
+    ros::init(argc, argv, "octoStateServer");
 
     // Create a global ROS handle (nh)
     ros::NodeHandle nh;

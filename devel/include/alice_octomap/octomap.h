@@ -40,7 +40,7 @@ template<>
 struct MD5Sum< ::alice_octomap::octomap > {
   static const char* value()
   {
-    return "d6c656edb646bcaf655c3aa23e2812b3";
+    return "e49c62c1add6ce5ed13e188a48e66fc4";
   }
 
   static const char* value(const ::alice_octomap::octomap&) { return value(); }

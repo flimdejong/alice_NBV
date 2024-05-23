@@ -3,7 +3,7 @@
     <!-- This file spawns the controllers, joint state publishers and robot state publishers -->
 
     <!-- Specify the URDF file -->
-    <param name="robot_description" command="cat '$(find alice_description)/urdf/alice_v1.xacro'" />
+    <param name="robot_description" command="cat '$(find alice_description)/urdf/alice_v2.xacro'" />
 
     <!-- To activate sim time -->
     <param name="/use_sim_time" value="true" />
@@ -21,13 +21,16 @@
     </node> -->
 
     <!-- Launch joint_state_publisher_gui -->
-    <!-- <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="joint_state_publisher_gui">
+    <!-- <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"
+    name="joint_state_publisher_gui">
         <remap from="/joint_states" to="/alice/joint_states" />
     </node> -->
 
     <!-- convert joint states to TF transforms for rviz, etc -->
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
-        <!-- The remap is to make sure robot_state-publisher is receiving information from /alice/joint_states (change of namespace) -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+        respawn="false" output="screen">
+        <!-- The remap is to make sure robot_state-publisher is receiving information from
+        /alice/joint_states (change of namespace) -->
         <remap from="/joint_states" to="/alice/joint_states" />
     </node>
 

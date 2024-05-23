@@ -130,8 +130,7 @@ struct Definition< ::alice_octomap::octomapRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "#Service receives no input\n"
-"\n"
+    return "\n"
 ;
   }
 

@@ -16,10 +16,6 @@ def move_end_effector(target_joint_angles):
     move_group.set_pose_reference_frame("base_cyllinder")  # Replace with your robot's base frame
     move_group.set_end_effector_link("camera_link")  # Replace with your end effector link
 
-    # Set the start state to the current state
-    start_state = robot.get_current_state()
-    move_group.set_start_state(start_state)
-
     # Set the joint angles for the arm
     move_group.set_joint_value_target(target_joint_angles)
 

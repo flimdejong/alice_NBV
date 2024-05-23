@@ -1,22 +1,24 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3.8
 
-from env import RobotArmEnv
+from env_mvp import RobotArmEnv
 import gymnasium as gym
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import DummyVecEnv
+from stable_baselines3 import DQN
 
 vec_env = DummyVecEnv([lambda: RobotArmEnv()])
-model = PPO("MlpPolicy", vec_env, verbose=1)
+
+model = PPO("MultiInputPolicy", vec_env, verbose=1, device="cpu")
 
 # Train the agent and display a progress bar
-model.learn(total_timesteps=100, progress_bar=True)
+model.learn(total_timesteps=10, progress_bar=True, log_interval=4)
 
 # Save the agent
 model.save("alice_mvp")
 
-# Run trained agent
-obs = vec_env.reset()
-for i in range(10):
-    action = model.predict(obs, deterministic=True)
-    print(f"Predicted action: {action}")  # Print the predicted action
-    obs, reward, done, info = vec_env.step(action)
+obs, info = vec_env.reset()
+while True:
+    action, _states = model.predict(obs, deterministic=True)
+    obs, reward, terminated, truncated, info = vec_env.step(action)
+    if terminated or truncated:
+        obs, info = vec_env.reset()
