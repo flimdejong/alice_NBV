@@ -407,6 +407,12 @@ alice_control_BINARY_DIR:STATIC=/home/flimdejong/catkin_ws/build/alice_control
 alice_control_SOURCE_DIR:STATIC=/home/flimdejong/catkin_ws/src/alice_control
 
 //Value Computed by CMake
+alice_depth_BINARY_DIR:STATIC=/home/flimdejong/catkin_ws/build/alice_depth
+
+//Value Computed by CMake
+alice_depth_SOURCE_DIR:STATIC=/home/flimdejong/catkin_ws/src/alice_depth
+
+//Value Computed by CMake
 alice_description_BINARY_DIR:STATIC=/home/flimdejong/catkin_ws/build/alice_description
 
 //Value Computed by CMake
@@ -753,7 +759,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=11
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=12
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

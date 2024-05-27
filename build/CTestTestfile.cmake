@@ -7,6 +7,7 @@
 subdirs("gtest")
 subdirs("alice_moveit")
 subdirs("alice_control")
+subdirs("alice_depth")
 subdirs("alice_gazebo")
 subdirs("alice_octomap")
 subdirs("alice_rl")

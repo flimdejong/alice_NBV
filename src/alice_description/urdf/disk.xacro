@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="alice">
+
+    <!-- For gazebo ros control -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/alice</robotNamespace>
+        </plugin>
+    </gazebo>
+
+    <!-- Disk is the rotating disk -->
+    <link name="base_disk">
+        <visual>
+            <geometry>
+                <!-- Create small disk-->
+                <cylinder length="0.001" radius="0.05" />
+            </geometry>
+            <material name="black" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
+        </visual>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <mass value="100" />
+            <inertia ixx="0.0702" ixy="0" ixz="0" iyy="0.0702" iyz="0"
+                izz="0.1404" />
+        </inertial>
+        <collision>
+            <geometry>
+                <cylinder length="0.0005" radius="0.04" />
+            </geometry>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+        </collision>
+    </link>
+
+    <link name="rotating_disk">
+        <visual>
+            <geometry>
+                <!-- Create small disk-->
+                <cylinder length="0.001" radius="0.05" />
+            </geometry>
+            <material name="black" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
+        </visual>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <mass value="100" />
+            <inertia ixx="0.0702" ixy="0" ixz="0" iyy="0.0702" iyz="0"
+                izz="0.1404" />
+        </inertial>
+        <collision>
+            <geometry>
+                <cylinder length="0.0005" radius="0.04" />
+            </geometry>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+        </collision>
+    </link>
+
+    <!-- Base joint is the rotating thing -->
+    <joint name="base_joint" type="revolute">
+        <axis xyz="0 0 -1" />
+        <limit effort="1.0" lower="0.0" upper="3.1416" velocity="1.0" />
+        <origin rpy="0 0 0" xyz="0 0 0" />
+        <parent link="base_cyllinder" />
+        <child link="rotating_base" />
+        <dynamics damping="0.1" friction="0.001" />
+    </joint>
+    <joint name="shoulder_joint" type="revolute">
+        <axis xyz="1 0 0" />
+        <limit effort="1.0" lower="0.2618" upper="2.8798" velocity="1.0" />
+        <origin rpy="-1.5708 0 0" xyz="0 -.002 0.072" />
+        <parent link="rotating_base" />
+        <child link="shoulder_link" />
+        <dynamics damping="0.1" friction="0.001" />
+    </joint>
+    <joint name="elbow_joint" type="revolute">
+        <axis xyz="1 0 0" />
+        <limit effort="1.0" lower="0" upper="3.1416" velocity="1.0" />
+        <origin rpy="-1.5708 0 0" xyz="0 0 0.125" />
+        <parent link="shoulder_link" />
+        <child link="elbow_link" />
+        <dynamics damping="0.1" friction="0.001" />
+    </joint>
+    <joint name="wrist_pitch_joint" type="revolute">
+        <axis xyz="1 0 0" />
+        <limit effort="1.0" lower="0" upper="3.1416" velocity="1.0" />
+        <origin rpy="-1.5708 0 0" xyz="0 0 0.125" />
+        <parent link="elbow_link" />
+        <child link="wrist_link" />
+        <dynamics damping="0.1" friction="0.001" />
+    </joint>
+    <joint name="camera_joint" type="fixed">
+        <parent link="wrist_link" />
+        <child link="camera_link" />
+        <origin rpy="1.5707 1.5707 1.5707" xyz="0.038 0 0.03" />
+    </joint>
+
+    <!-- Fixed world -->
+    <link name="world" />
+    <joint name="world_joint" type="fixed">
+        <parent link="world" />
+        <child link="base_cyllinder" />
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+    </joint>
