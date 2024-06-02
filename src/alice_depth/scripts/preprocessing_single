@@ -1,0 +1,46 @@
+import open3d as o3d
+import numpy as np
+
+# Set the input and output directories
+input_dir = ""
+output_dir = "processed_pcd"
+
+# Load the point cloud from the .pcd file
+pcd = o3d.io.read_point_cloud("coordinate_test.pcd")
+
+# Print the point cloud details
+print(pcd)
+
+# Apply depth thresholding
+depth_threshold = 0.6  # Adjust the threshold based on your scene
+
+#Set voxel size
+voxel_size = 0.0005
+
+pcd_without_background = pcd.select_by_index(np.where(np.asarray(pcd.points)[:, 2] < depth_threshold)[0])
+
+#Downsizing now
+downpcd = pcd_without_background.voxel_down_sample(voxel_size)
+#3d.visualization.draw_geometries([downpcd])
+
+#Applying plane segmentation using RANSAC
+plane_model, inliers = downpcd.segment_plane(distance_threshold=0.03, ransac_n=3, num_iterations=1000)
+a, b, c, d = plane_model
+
+# Extract floor points
+floor_cloud = downpcd.select_by_index(inliers)
+
+# Remove floor points from the original point cloud
+remaining_cloud = downpcd.select_by_index(inliers, invert=True)
+
+#Statistical outlier removal
+cl, ind = remaining_cloud.remove_statistical_outlier(nb_neighbors=20, std_ratio=0.2)
+
+#cl, ind = remaining_cloud.remove_statistical_outlier(nb_neighbors=30, std_ratio=0.005)
+
+# Visualize the results
+o3d.visualization.draw_geometries([cl])
+
+# Save the point cloud
+output_path = "processed_pcd/coordinate_test.pcd"
+o3d.io.write_point_cloud(output_path, cl)
