@@ -30,11 +30,17 @@
     <gazebo reference="wrist_link_roll">
         <turnGravityOff>true</turnGravityOff>
     </gazebo>
+
+    <gazebo reference="camera_mount">
+        <turnGravityOff>true</turnGravityOff>
+    </gazebo>
+    
+    
     <!-- The rescaling of 0.001 is necessary because gazebo takes all inputs as meters -->
     <!-- Meaning 100mm will be seen as 100m, hence rescaling is needed -->
 
     <!-- The base link is the cyllinder at the bottom-->
-    <link name="base_cyllinder">
+    <link name="base_link">
         <visual>
             <geometry>
                 <cylinder length="0.003" radius=".053" />
@@ -169,6 +175,27 @@
         </inertial>
     </link>
 
+    <link name="camera_mount">
+        <visual>
+            <geometry>
+                <mesh filename="package://alice_description/stl/alice_camera_mount_v3.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="green" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://alice_description/stl/alice_camera_mount_v3.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+        </collision>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <mass value="0.059" />
+            <inertia ixx="0.000348958333333" ixy="0" ixz="0" iyy="0.000348958333333" iyz="0" izz="3.125e-05" />
+        </inertial>
+    </link>
+
     <!-- Create the link (or like item) -->
     <!-- <link name="camera_link">
         <visual>
@@ -210,7 +237,7 @@
         <axis xyz="0 0 -1" />
         <limit effort="1.0" lower="0.0" upper="3.1416" velocity="1.0" />
         <origin rpy="0 0 0" xyz="0 0 0" />
-        <parent link="base_cyllinder" />
+        <parent link="base_link" />
         <child link="rotating_base" />
         <dynamics damping="0.1" friction="0.001" />
     </joint>
@@ -239,13 +266,20 @@
         <dynamics damping="0.1" friction="0.001" />
     </joint>
     <joint name="wrist_roll_joint" type="revolute">
-        <axis xyz="0 1 0" />
+        <axis xyz="0 0 1" />
         <limit effort="1.0" lower="0" upper="3.1416" velocity="1.0" />
-        <origin rpy="0 0 0" xyz="0.006 0 0.062" />
+        <origin rpy="0 0 1.5708" xyz="-0.001 0.003 0.062" />
         <parent link="wrist_link_pitch" />
         <child link="wrist_link_roll" />
         <dynamics damping="0.1" friction="0.001" />
     </joint>
+    <joint name="camera_mount_joint" type="fixed">
+        <origin rpy="0 1.5708 1.5708" xyz="0.035 -0.001 0.042" />
+        <parent link="wrist_link_roll" />
+        <child link="camera_mount" />
+    </joint>
+
+
     <!-- <joint name="camera_joint" type="fixed">
         <parent link="wrist_link_roll" />
         <child link="camera_link" />
@@ -289,6 +323,10 @@
         <selfCollide>true</selfCollide>
         <material>Gazebo/White</material>
     </gazebo>
+    <gazebo reference="camera_mount_link">
+        <selfCollide>true</selfCollide>
+        <material>Gazebo/Green</material>
+    </gazebo>
     <!-- <gazebo reference="camera_link">
         <selfCollide>true</selfCollide>
         <material>Gazebo/Black</material>
@@ -310,7 +348,7 @@
     <link name="world" />
     <joint name="world_joint" type="fixed">
         <parent link="world" />
-        <child link="base_cyllinder" />
+        <child link="base_link" />
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
     </joint>
 
