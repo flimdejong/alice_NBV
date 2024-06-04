@@ -7,7 +7,7 @@
         </plugin>
     </gazebo>
 
-    <!-- <gazebo reference="base_cyllinder">
+    <gazebo reference="base_cyllinder">
         <turnGravityOff>true</turnGravityOff>
     </gazebo>
 
@@ -23,14 +23,13 @@
         <turnGravityOff>true</turnGravityOff>
     </gazebo>
 
-    <gazebo reference="wrist_link">
+    <gazebo reference="wrist_link_pitch">
         <turnGravityOff>true</turnGravityOff>
     </gazebo>
 
-    <gazebo reference="camera_link">
+    <gazebo reference="wrist_link_roll">
         <turnGravityOff>true</turnGravityOff>
-    </gazebo> -->
-
+    </gazebo>
     <!-- The rescaling of 0.001 is necessary because gazebo takes all inputs as meters -->
     <!-- Meaning 100mm will be seen as 100m, hence rescaling is needed -->
 
@@ -40,7 +39,7 @@
             <geometry>
                 <cylinder length="0.003" radius=".053" />
             </geometry>
-            <material name="black" />
+            <material name="orange" />
             <origin rpy="0 0 0" xyz="0 0 0" />
         </visual>
         <inertial>
@@ -126,7 +125,7 @@
                 izz="0.00004818" />
         </inertial>
     </link>
-    <link name="wrist_link">
+    <link name="wrist_link_pitch">
         <visual>
             <geometry>
                 <mesh filename="package://alice_description/stl/braccio_wrist_pitch.stl"
@@ -149,9 +148,29 @@
                 izz="1.4021e-05" />
         </inertial>
     </link>
+    <link name="wrist_link_roll">
+        <visual>
+            <geometry>
+                <mesh filename="package://alice_description/stl/braccio_wrist_roll.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="white" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://alice_description/stl/braccio_wrist_roll.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+        </collision>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <mass value="0.059" />
+            <inertia ixx="0.000348958333333" ixy="0" ixz="0" iyy="0.000348958333333" iyz="0" izz="3.125e-05" />
+        </inertial>
+    </link>
 
     <!-- Create the link (or like item) -->
-    <link name="camera_link">
+    <!-- <link name="camera_link">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
@@ -170,19 +189,19 @@
             <inertia ixx="0.0" ixy="0" ixz="0" iyy="0" iyz="0"
                 izz="0" />
         </inertial>
-    </link>
+    </link> -->
 
 
     <!-- Add alternative way to look at your camera -->
     <!-- We need to turn it 90 degrees in yaw, CCW -->
-    <link name="camera_link_optical">
+    <!-- <link name="camera_link_optical">
     </link>
 
     <joint name="camera_optical_joint" type="fixed">
         <parent link="camera_link" />
         <child link="camera_link_optical" />
         <origin xyz="0 0 0" rpy="-3.14 -1.5707 -1.5707" />
-    </joint>
+    </joint> -->
     <!-- Add alternative way to look at your camera -->
 
 
@@ -216,14 +235,22 @@
         <limit effort="1.0" lower="0" upper="3.1416" velocity="1.0" />
         <origin rpy="-1.5708 0 0" xyz="0 0 0.125" />
         <parent link="elbow_link" />
-        <child link="wrist_link" />
+        <child link="wrist_link_pitch" />
         <dynamics damping="0.1" friction="0.001" />
     </joint>
-    <joint name="camera_joint" type="fixed">
-        <parent link="wrist_link" />
+    <joint name="wrist_roll_joint" type="revolute">
+        <axis xyz="0 1 0" />
+        <limit effort="1.0" lower="0" upper="3.1416" velocity="1.0" />
+        <origin rpy="0 0 0" xyz="0.006 0 0.062" />
+        <parent link="wrist_link_pitch" />
+        <child link="wrist_link_roll" />
+        <dynamics damping="0.1" friction="0.001" />
+    </joint>
+    <!-- <joint name="camera_joint" type="fixed">
+        <parent link="wrist_link_roll" />
         <child link="camera_link" />
         <origin rpy="0 0 0" xyz="0 0 0.073" />
-    </joint>
+    </joint> -->
 
 
     <gazebo reference="base_cyllinder">
@@ -236,7 +263,7 @@
         <mu1>1</mu1>
         <mu2>1</mu2>
         <selfCollide>true</selfCollide>
-        <material>Gazebo/Green</material>
+        <material>Gazebo/Orange</material>
     </gazebo>
     <gazebo reference="shoulder_link">
         <mu1>1</mu1>
@@ -248,18 +275,24 @@
         <mu1>1</mu1>
         <mu2>1</mu2>
         <selfCollide>true</selfCollide>
-        <material>Gazebo/Blue</material>
+        <material>Gazebo/Orange</material>
     </gazebo>
-    <gazebo reference="wrist_link">
+    <gazebo reference="wrist_link_pitch">
         <mu1>1</mu1>
         <mu2>1</mu2>
         <selfCollide>true</selfCollide>
-        <material>Gazebo/Red</material>
+        <material>Gazebo/Orange</material>
     </gazebo>
-    <gazebo reference="camera_link">
+    <gazebo reference="wrist_link_roll">
+        <mu1>1</mu1>
+        <mu2>1</mu2>
+        <selfCollide>true</selfCollide>
+        <material>Gazebo/White</material>
+    </gazebo>
+    <!-- <gazebo reference="camera_link">
         <selfCollide>true</selfCollide>
         <material>Gazebo/Black</material>
-    </gazebo>
+    </gazebo> -->
 
     <!-- Specify colors-->
     <material name="orange">
