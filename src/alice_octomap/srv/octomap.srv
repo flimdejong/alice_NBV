@@ -1,7 +1,0 @@
----
-int32 total_voxels
-int32 occupied_voxels
-float64[] x_values
-float64[] y_values
-float64[] z_values
-bool[] occupancy
