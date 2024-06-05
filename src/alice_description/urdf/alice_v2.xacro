@@ -152,7 +152,7 @@
     </link>
 
 
-    <!-- <link name="wrist_link_roll">
+    <link name="wrist_link_roll">
         <visual>
             <geometry>
                 <mesh filename="package://alice_description/stl/braccio_wrist_roll.stl" scale="0.001 0.001 0.001" />
@@ -171,7 +171,7 @@
             <mass value="0.1" />
             <inertia ixx="0.000348958333333" ixy="0" ixz="0" iyy="0.000348958333333" iyz="0" izz="3.125e-05" />
         </inertial>
-    </link> -->
+    </link>
 
 
     <!-- Add alternative way to look at your camera -->

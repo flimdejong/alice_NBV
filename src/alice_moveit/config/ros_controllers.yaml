@@ -1,15 +1,34 @@
-controller_list:
-  - name: alice/arm_controller
-    action_ns: follow_joint_trajectory
-    type: FollowJointTrajectory
-    default: true
-    joints:
-      - base_joint
-      - shoulder_joint
-      - elbow_joint
-      - wrist_pitch_joint
-
-trajectory_execution:
-  allowed_execution_duration_scaling: 1.4
-  allowed_goal_duration_margin: 0.8
-  allowed_start_tolerance: 0.02
+arm_controller:
+  type: effort_controllers/JointTrajectoryController
+  joints:
+    - base_joint
+    - shoulder_joint
+    - elbow_joint
+    - wrist_pitch_joint
+    - wrist_roll_joint
+  gains:
+    base_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    shoulder_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    elbow_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    wrist_pitch_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    wrist_roll_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1

@@ -7,5 +7,5 @@ moveit_setup_assistant_config:
     relative_path: config/alice.srdf
   CONFIG:
     author_name: Flim de Jong
-    author_email: flimdejong@gmail.com
-    generated_timestamp: 1716379880
+    author_email: flimdejong@proton.me
+    generated_timestamp: 1717585841
