@@ -3,7 +3,7 @@
     <!-- This file spawns the controllers, joint state publishers and robot state publishers -->
 
     <!-- Specify the URDF file -->
-    <param name="robot_description" command="cat '$(find alice_description)/urdf/alice_v2.xacro'" />
+    <param name="robot_description" command="xacro '$(find alice_description)/urdf/alice_v1.xacro'" />
 
     <!-- To activate sim time -->
     <param name="/use_sim_time" value="true" />

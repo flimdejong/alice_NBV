@@ -4,6 +4,7 @@
     <!-- For gazebo ros control -->                                                                                                                                                   
     <gazebo>                                                                                                                             
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/alice</robotNamespace>
         </plugin>
     </gazebo>
 
@@ -180,7 +181,7 @@
             <geometry>
                 <mesh filename="package://alice_description/stl/alice_camera_mount_v3.stl" scale="0.001 0.001 0.001" />
             </geometry>
-            <material name="green" />
+            <material name="black" />
             <origin rpy="0 0 0" xyz="0 0 0" />
         </visual>
         <collision>
@@ -268,7 +269,6 @@
     <joint name="wrist_roll_joint" type="revolute">
         <axis xyz="1 0 0" />
         <limit effort="1.0" lower="0" upper="3.1416" velocity="1.0" />
-        <!-- <origin rpy="0 1.5708 0" xyz="-0.019 0.012 0.1117" /> -->
         <origin rpy="0 1.5708 0" xyz="-0.0007 -0.003 0.111"/>
         <parent link="wrist_link_pitch" />
         <child link="wrist_link_roll" />
@@ -279,14 +279,6 @@
         <parent link="wrist_link_roll" />
         <child link="camera_mount" />
     </joint>
-
-
-    <!-- <joint name="camera_joint" type="fixed">
-        <parent link="wrist_link_roll" />
-        <child link="camera_link" />
-        <origin rpy="0 0 0" xyz="0 0 0.073" />
-    </joint> -->
-
 
     <!-- Add the D435 Camera -->
     <xacro:arg name="use_nominal_extrinsics" default="false" />
@@ -450,6 +442,16 @@
             <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
         </joint>
         <actuator name="wrist_pitch_joint_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_wrist_roll_joint">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="wrist_roll_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="wrist_roll_joint_motor">
             <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>

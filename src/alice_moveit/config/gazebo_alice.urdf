@@ -159,7 +159,7 @@
             <geometry>
                 <mesh filename="package://alice_description/stl/alice_camera_mount_v3.stl" scale="0.001 0.001 0.001" />
             </geometry>
-            <material name="green" />
+            <material name="black" />
             <origin rpy="0 0 0" xyz="0 0 0" />
         </visual>
         <collision>
@@ -456,4 +456,3 @@
         </actuator>
     </transmission>
 </robot>
-

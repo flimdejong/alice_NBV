@@ -7,6 +7,10 @@ controller_list:
       - elbow_joint
       - wrist_pitch_joint
       - wrist_roll_joint
+  - name: fake_camera_ee_controller
+    type: $(arg fake_execution_type)
+    joints:
+      []
 initial:  # Define initial robot poses per group
   - group: arm
     pose: Home
