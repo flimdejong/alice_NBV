@@ -5,11 +5,12 @@
     <!-- Specify the URDF file -->
     <param name="robot_description" command="xacro '$(find alice_description)/urdf/alice_v1.xacro'" />
 
-    <!-- To activate sim time -->
-    <param name="/use_sim_time" value="true" />
-
     <!-- Load joint controller configurations from YAML file to parameter server -->
     <rosparam file="$(find alice_control)/config/ros_controller.yaml" command="load" />
+
+    <!-- Load the controller manager -->
+    <node name="controller_manager" pkg="controller_manager" type="controller_manager" respawn="false"
+    output="screen" args="spawn arm_controller" ns="alice" />
 
     <!-- load the controllers -->
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"

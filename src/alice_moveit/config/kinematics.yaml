@@ -5,3 +5,9 @@ arm:
   goal_joint_tolerance: 0.0001
   goal_position_tolerance: 0.0001
   goal_orientation_tolerance: 0.001
+  joint_names:
+    - base_joint
+    - shoulder_joint
+    - elbow_joint
+    - wrist_pitch_joint
+    - wrist_roll_joint

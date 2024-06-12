@@ -1,0 +1,10 @@
+alice:
+  # Trajectory Controllers -------------------------------------
+  arm_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - base_joint
+      - shoulder_joint
+      - elbow_joint
+      - wrist_pitch_joint
+      - wrist_roll_joint

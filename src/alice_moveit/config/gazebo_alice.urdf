@@ -7,7 +7,7 @@
     <!-- For gazebo ros control -->
     <gazebo>
         <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
-            <robotNamespace>/</robotNamespace>
+            <robotNamespace>/alice</robotNamespace>
         </plugin>
     </gazebo>
     <gazebo reference="base_cyllinder">
@@ -242,8 +242,7 @@
     <joint name="wrist_roll_joint" type="revolute">
         <axis xyz="1 0 0" />
         <limit effort="1.0" lower="0" upper="3.1416" velocity="1.0" />
-        <!-- <origin rpy="0 1.5708 0" xyz="-0.019 0.012 0.1117" /> -->
-        <origin rpy="0 1.5708 0" xyz="-0.0007 -0.003 0.111" />
+        <origin rpy="3.14159 1.5708 0" xyz="-0.0007 -0.003 0.111" />
         <parent link="wrist_link_pitch" />
         <child link="wrist_link_roll" />
         <dynamics damping="0.1" friction="0.001" />
@@ -253,11 +252,6 @@
         <parent link="wrist_link_roll" />
         <child link="camera_mount" />
     </joint>
-    <!-- <joint name="camera_joint" type="fixed">
-        <parent link="wrist_link_roll" />
-        <child link="camera_link" />
-        <origin rpy="0 0 0" xyz="0 0 0.073" />
-    </joint> -->
     <material name="aluminum">
         <color rgba="0.5 0.5 0.5 1" />
     </material>
@@ -356,7 +350,7 @@
     <joint name="world_joint" type="fixed">
         <parent link="world" />
         <child link="base_link" />
-        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+        <origin rpy="0.925025 0.0 0.0" xyz="0.0 0.0 0.0" />
     </joint>
     <!-- Gazebo reference for depth camera -->
     <gazebo reference="camera_link_optical">

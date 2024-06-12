@@ -269,7 +269,7 @@
     <joint name="wrist_roll_joint" type="revolute">
         <axis xyz="1 0 0" />
         <limit effort="1.0" lower="0" upper="3.1416" velocity="1.0" />
-        <origin rpy="0 1.5708 0" xyz="-0.0007 -0.003 0.111"/>
+        <origin rpy="3.14159 1.5708 0" xyz="-0.0007 -0.003 0.111"/>
         <parent link="wrist_link_pitch" />
         <child link="wrist_link_roll" />
         <dynamics damping="0.1" friction="0.001" />
@@ -351,7 +351,7 @@
     <joint name="world_joint" type="fixed">
         <parent link="world" />
         <child link="base_link" />
-        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+        <origin rpy="0 0.0 0.925025" xyz="0.0 0.0 0.0" />
     </joint>
 
 

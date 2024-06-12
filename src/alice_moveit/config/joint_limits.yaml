@@ -13,12 +13,12 @@ joint_limits:
     max_velocity: 1
     has_acceleration_limits: false
     max_acceleration: 0
-  elbow_joint:
+  shoulder_joint:
     has_velocity_limits: true
     max_velocity: 1
     has_acceleration_limits: false
     max_acceleration: 0
-  shoulder_joint:
+  elbow_joint:
     has_velocity_limits: true
     max_velocity: 1
     has_acceleration_limits: false
