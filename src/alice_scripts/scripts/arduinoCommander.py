@@ -18,7 +18,7 @@ def joint_angles_callback(msg):
 rospy.init_node('arduinoCommander')
 
 # Subscribe to /joint_angles topic and call joint_angles_callback when messages arrive
-rospy.Subscriber("/alice/joint_angles_arduino", Float64MultiArray, joint_angles_callback)
+rospy.Subscriber("/alice/joint_states_arduino", Float64MultiArray, joint_angles_callback)
 
 # Run the script
 rospy.spin()

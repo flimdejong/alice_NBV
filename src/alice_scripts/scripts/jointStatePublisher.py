@@ -36,7 +36,7 @@ def joint_state_publisher():
     moveit_listener = rospy.Subscriber('/move_group/fake_controller_joint_states', JointState, moveit_callback, queue_size=10)
 
     # Publishes to the arduinoCommander node
-    pub_arduinoCommander = rospy.Publisher('/alice/joint_angles_arduino', Float64MultiArray, queue_size=10)
+    pub_arduinoCommander = rospy.Publisher('/alice/joint_states_arduino', Float64MultiArray, queue_size=10)
 
     rate = rospy.Rate(10)  # 10 Hz
 
