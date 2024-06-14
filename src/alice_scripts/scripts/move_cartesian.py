@@ -44,35 +44,31 @@ print("============ End effector link: %s" % eef_link)
 print("Printing joint positions: ")
 print (move_group.get_current_pose())
 
+# Define the target pose
+target_pose = geometry_msgs.msg.Pose()
+target_pose.position.x = -0.05
+target_pose.position.y = 0.25
+target_pose.position.z = 0.18
+target_pose.orientation.x = 0.0
+target_pose.orientation.y = 0.0
+target_pose.orientation.z = 0.0
+target_pose.orientation.w = 1.0
 
-#Set a pose goal
-pose_goal = geometry_msgs.msg.Pose()
-
-#Pose
-pose_goal.orientation.x = 0.6066062028281202
-pose_goal.orientation.y = 0.1630868366228961
-pose_goal.orientation.z = 0.767120582212731
-pose_goal.orientation.w = 0.13022139131643296
-
-#Translation
-pose_goal.position.x = -0.007045948116474077
-pose_goal.position.y = 0.018825984527860093
-pose_goal.position.z = 0.33320933951400644
-
+# Set the joint value target with approximate IK
+move_group.set_joint_value_target(target_pose, True)
 
 # Plan and execute the motion
-move_group.set_pose_target(pose_goal)
 plan = move_group.go(wait=True)
 
-# Check if the planning was successful
+# Check if the planning and execution was successful
 if plan:
-    print("Motion planning succeeded!")
+    print("Motion planning and execution succeeded!")
 else:
-    print("Motion planning failed!")
+    print("Motion planning and execution failed!")
 
-
-# Calling `stop()` ensures that there is no residual movement
+# Stop any residual movement
 move_group.stop()
-# It is always good to clear your targets after planning with poses.
-# Note: there is no equivalent function for clear_joint_value_targets().
+
+# Clear the targets
 move_group.clear_pose_targets()
+move_group.clear_joint_value_targets()

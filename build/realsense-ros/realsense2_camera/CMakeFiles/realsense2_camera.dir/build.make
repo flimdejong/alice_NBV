@@ -109,7 +109,7 @@ realsense2_camera_EXTERNAL_OBJECTS =
 /home/flimdejong/catkin_ws/devel/lib/librealsense2_camera.so: realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera.dir/src/base_realsense_node.cpp.o
 /home/flimdejong/catkin_ws/devel/lib/librealsense2_camera.so: realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera.dir/src/t265_realsense_node.cpp.o
 /home/flimdejong/catkin_ws/devel/lib/librealsense2_camera.so: realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera.dir/build.make
-/home/flimdejong/catkin_ws/devel/lib/librealsense2_camera.so: /usr/lib/x86_64-linux-gnu/librealsense2.so.2.55.1
+/home/flimdejong/catkin_ws/devel/lib/librealsense2_camera.so: /usr/local/lib/librealsense2.so.2.55.1
 /home/flimdejong/catkin_ws/devel/lib/librealsense2_camera.so: /opt/ros/noetic/lib/libnodeletlib.so
 /home/flimdejong/catkin_ws/devel/lib/librealsense2_camera.so: /opt/ros/noetic/lib/libbondcpp.so
 /home/flimdejong/catkin_ws/devel/lib/librealsense2_camera.so: /usr/lib/x86_64-linux-gnu/libuuid.so
@@ -196,7 +196,7 @@ realsense2_camera_EXTERNAL_OBJECTS =
 /home/flimdejong/catkin_ws/devel/lib/librealsense2_camera.so: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.71.0
 /home/flimdejong/catkin_ws/devel/lib/librealsense2_camera.so: /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.71.0
 /home/flimdejong/catkin_ws/devel/lib/librealsense2_camera.so: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4
-/home/flimdejong/catkin_ws/devel/lib/librealsense2_camera.so: /usr/lib/x86_64-linux-gnu/librsutils.a
+/home/flimdejong/catkin_ws/devel/lib/librealsense2_camera.so: /usr/local/lib/librsutils.a
 /home/flimdejong/catkin_ws/devel/lib/librealsense2_camera.so: realsense-ros/realsense2_camera/CMakeFiles/realsense2_camera.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/flimdejong/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX shared library /home/flimdejong/catkin_ws/devel/lib/librealsense2_camera.so"
 	cd /home/flimdejong/catkin_ws/build/realsense-ros/realsense2_camera && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/realsense2_camera.dir/link.txt --verbose=$(VERBOSE)

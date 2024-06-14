@@ -8,4 +8,4 @@ moveit_setup_assistant_config:
   CONFIG:
     author_name: Flim de Jong
     author_email: flimdejong@proton.me
-    generated_timestamp: 1718180863
+    generated_timestamp: 1718288529

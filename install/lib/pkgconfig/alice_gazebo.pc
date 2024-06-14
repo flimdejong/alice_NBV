@@ -1,8 +1,0 @@
-prefix=/home/flimdejong/catkin_ws/install
-
-Name: alice_gazebo
-Description: Description of alice_gazebo
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

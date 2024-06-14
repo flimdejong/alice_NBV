@@ -5,15 +5,8 @@
     <!-- Start the joint_state_publisher node -->
     <node name="joint_state_publisher" pkg="alice_scripts" type="jointStatePublisher.py"/>
 
-    <!-- Load joint controller configurations from YAML file to parameter server -->
-    <!-- <rosparam file="$(find alice_control)/config/ros_controller.yaml" command="load" /> -->
-
-    <!-- <node name="controller_manager" pkg="controller_manager" type="controller_manager" required="true" output="screen">
-        <rosparam file="$(find alice_control)/config/ros_controller_real.yaml" command="load" ns="alice" />
-    </node> -->
-
-    <!-- <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-    output="screen" args="arm_controller"/> -->
+    <!-- Start the arduino_commander node -->
+    <!-- <node name="arduino_commander" pkg="alice_scripts" type="arduinoCommander.py"/> -->
 
     <!-- convert joint states to TF transforms for rviz, etc -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
@@ -28,8 +21,7 @@
     <include file="$(dirname)/move_group_fake_controller.launch">
     </include>
 
-    <!-- Static transform for real-life matching -->
-    <!-- <node pkg="tf" type="static_transform_publisher" name="map_to_base_link"
-      args="0 0 0 0.925025 0 0 world base_link 100" /> -->
+    <!-- Launch rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" />
 
 </launch>

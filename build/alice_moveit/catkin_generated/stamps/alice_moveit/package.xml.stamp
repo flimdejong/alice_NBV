@@ -5,14 +5,14 @@
   <description>
      An automatically generated package with all the configuration and launch files for using the alice with the MoveIt Motion Planning Framework
   </description>
-  <author email="flimdejong@gmail.com">Flim de Jong</author>
-  <maintainer email="flimdejong@gmail.com">Flim de Jong</maintainer>
+  <author email="flimdejong@proton.me">Flim de Jong</author>
+  <maintainer email="flimdejong@proton.me">Flim de Jong</maintainer>
 
   <license>BSD</license>
 
   <url type="website">http://moveit.ros.org/</url>
-  <url type="bugtracker">https://github.com/ros-planning/moveit/issues</url>
-  <url type="repository">https://github.com/ros-planning/moveit</url>
+  <url type="bugtracker">https://github.com/moveit/moveit/issues</url>
+  <url type="repository">https://github.com/moveit/moveit</url>
 
   <buildtool_depend>catkin</buildtool_depend>
 

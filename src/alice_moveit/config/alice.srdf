@@ -10,43 +10,38 @@
     <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
     <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
     <group name="arm">
-        <chain base_link="base_link" tip_link="camera_link"/>
+        <chain base_link="base_link" tip_link="camera_bottom_screw_frame"/>
     </group>
-
     <group name="camera_ee">
-        <link name="camera_link" />
-      </group>
-
+        <link name="camera_bottom_screw_frame"/>
+    </group>
     <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="y-normal(53)" group="arm">
+        <joint name="base_joint" value="0.925025"/>
+        <joint name="elbow_joint" value="0"/>
+        <joint name="shoulder_joint" value="1.1655"/>
+        <joint name="wrist_pitch_joint" value="1.9956"/>
+        <joint name="wrist_roll_joint" value="1.5708"/>
+    </group_state>
     <group_state name="Home" group="arm">
-        <joint name="base_joint" value="1.5708"/>
-        <joint name="elbow_joint" value="0.4863"/>
-        <joint name="shoulder_joint" value="1.5708"/>
-        <joint name="wrist_pitch_joint" value="1.0845"/>
-        <joint name="wrist_roll_joint" value="1.5708"/>
-    </group_state>
-    <group_state name="test" group="arm">
         <joint name="base_joint" value="0"/>
-        <joint name="elbow_joint" value="0.5702"/>
+        <joint name="elbow_joint" value="1.5708"/>
         <joint name="shoulder_joint" value="1.5708"/>
-        <joint name="wrist_pitch_joint" value="0.9559"/>
+        <joint name="wrist_pitch_joint" value="1.5708"/>
         <joint name="wrist_roll_joint" value="1.5708"/>
     </group_state>
-
-
-    <group_state name="53" group="arm">
-        <joint name="base_joint" value="2.49582"/>
-        <joint name="elbow_joint" value="0.5702"/>
-        <joint name="shoulder_joint" value="1.5708"/>
-        <joint name="wrist_pitch_joint" value="0.9559"/>
+    <group_state name="y-high" group="arm">
+        <joint name="base_joint" value="0.925025"/>
+        <joint name="elbow_joint" value="0"/>
+        <joint name="shoulder_joint" value="1.3052"/>
+        <joint name="wrist_pitch_joint" value="1.8783"/>
         <joint name="wrist_roll_joint" value="1.5708"/>
     </group_state>
-
-    <group_state name="0" group="arm">
-        <joint name="base_joint" value="0"/>
-        <joint name="elbow_joint" value="0.5702"/>
-        <joint name="shoulder_joint" value="1.5708"/>
-        <joint name="wrist_pitch_joint" value="0.9559"/>
+    <group_state name="x-normal" group="arm">
+        <joint name="base_joint" value="2.495"/>
+        <joint name="elbow_joint" value="3.1416"/>
+        <joint name="shoulder_joint" value="2.0226"/>
+        <joint name="wrist_pitch_joint" value="1.1236"/>
         <joint name="wrist_roll_joint" value="1.5708"/>
     </group_state>
     <group_state name="x-high" group="arm">
@@ -57,14 +52,13 @@
         <joint name="wrist_roll_joint" value="1.5708"/>
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="camera_ee" parent_link="camera_link" group="arm"/>
+    <end_effector name="camera_ee" parent_link="camera_bottom_screw_frame" group="arm"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="base_link" link2="camera_mount" reason="Never"/>
     <disable_collisions link1="base_link" link2="elbow_link" reason="Never"/>
     <disable_collisions link1="base_link" link2="rotating_base" reason="Adjacent"/>
     <disable_collisions link1="base_link" link2="shoulder_link" reason="Never"/>
     <disable_collisions link1="base_link" link2="wrist_link_pitch" reason="Never"/>
-    <disable_collisions link1="camera_link" link2="camera_mount" reason="Adjacent"/>
     <disable_collisions link1="camera_link" link2="elbow_link" reason="Never"/>
     <disable_collisions link1="camera_link" link2="shoulder_link" reason="Never"/>
     <disable_collisions link1="camera_link" link2="wrist_link_pitch" reason="Never"/>
@@ -83,4 +77,5 @@
     <disable_collisions link1="shoulder_link" link2="wrist_link_pitch" reason="Never"/>
     <disable_collisions link1="shoulder_link" link2="wrist_link_roll" reason="Never"/>
     <disable_collisions link1="wrist_link_pitch" link2="wrist_link_roll" reason="Adjacent"/>
+    <disable_collisions link1="camera_link" link2="camera_mount" reason="User"/>
 </robot>

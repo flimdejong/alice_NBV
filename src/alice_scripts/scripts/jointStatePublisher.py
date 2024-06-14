@@ -8,7 +8,7 @@ import math
 # The robot always defaults to this first
 default_joint_state = JointState()
 default_joint_state.name = ['base_joint', 'shoulder_joint', 'elbow_joint', 'wrist_pitch_joint', 'wrist_roll_joint']
-default_joint_state.position = [1.57, 1.57, 0, 0, 0]
+default_joint_state.position = [0, 1.5708, 1.5708, 1.5708, 1.5708] #Angle = 0, pointing straight up
 
 
 # Function that is called to change joint_state
