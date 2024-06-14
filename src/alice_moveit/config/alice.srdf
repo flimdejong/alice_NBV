@@ -51,6 +51,20 @@
         <joint name="wrist_pitch_joint" value="1.2633"/>
         <joint name="wrist_roll_joint" value="1.5708"/>
     </group_state>
+    <group_state name="y_test" group="arm">
+        <joint name="base_joint" value="0.994838"/>
+        <joint name="elbow_joint" value="2.3176"/>
+        <joint name="shoulder_joint" value="1.9083"/>
+        <joint name="wrist_pitch_joint" value="2.0086"/>
+        <joint name="wrist_roll_joint" value="1.5708"/>
+    </group_state>
+    <group_state name="-x_test" group="arm">
+        <joint name="base_joint" value="2.5656"/>
+        <joint name="elbow_joint" value="1.2704"/>
+        <joint name="shoulder_joint" value="0.9355"/>
+        <joint name="wrist_pitch_joint" value="0.9614"/>
+        <joint name="wrist_roll_joint" value="1.5708"/>
+    </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="camera_ee" parent_link="camera_bottom_screw_frame" group="arm"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->

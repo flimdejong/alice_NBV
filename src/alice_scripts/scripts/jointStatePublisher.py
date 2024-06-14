@@ -47,6 +47,15 @@ def joint_state_publisher():
         #Convert to angles
         joint_angles_arduino = Float64MultiArray()
         joint_angles_arduino.data = [math.degrees(angle) for angle in joint_state.position]
+
+        # Check and cap the joint angle in the second index
+        if joint_angles_arduino.data[1] < 30:
+            joint_angles_arduino.data[1] = 30
+            rospy.logerr("Joint angle of shoulder is lower than 30 degrees. Capping to 30 degrees.")
+        elif joint_angles_arduino.data[1] > 150:
+            joint_angles_arduino.data[1] = 150
+            rospy.logerr("Joint angle of shoulder is higher than 150 degrees. Capping to 150 degrees.")
+
         pub_arduinoCommander.publish(joint_angles_arduino)
 
         rospy.sleep(0.1)
