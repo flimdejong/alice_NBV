@@ -17,7 +17,7 @@ def get_joint_values(end_effector_pose):
         ik_request = PositionIKRequest()
         ik_request.group_name = 'arm'
         ik_request.robot_state = RobotState()
-        ik_request.robot_state.joint_state.name = ['base_joint', 'shoulder_joint', 'elbow_joint', 'wrist_pitch_joint', 'wrist_roll_joint']
+        ik_request.robot_state.joint_state.name = ['base_joint', 'elbow_joint', 'shoulder_joint', 'wrist_pitch_joint', 'wrist_roll_joint']
         ik_request.pose_stamped = PoseStamped()
         ik_request.pose_stamped.header.frame_id = 'base_link'
         ik_request.pose_stamped.pose = end_effector_pose
@@ -50,13 +50,13 @@ if __name__ == '__main__':
     # Example end effector pose
     end_effector_pose = PoseStamped()
     end_effector_pose.header.frame_id = 'base_link'
-    end_effector_pose.pose.position.x = 0.227
-    end_effector_pose.pose.position.y = 0.127
-    end_effector_pose.pose.position.z = 0.197
-    end_effector_pose.pose.orientation.x = 0.0
-    end_effector_pose.pose.orientation.y = 0.0
+    end_effector_pose.pose.position.x = -0.197
+    end_effector_pose.pose.position.y = -0.207
+    end_effector_pose.pose.position.z = 0.244
+    end_effector_pose.pose.orientation.x = 0.880
+    end_effector_pose.pose.orientation.y = -0.476
     end_effector_pose.pose.orientation.z = 0.0
-    end_effector_pose.pose.orientation.w = 1.0
+    end_effector_pose.pose.orientation.w = 0.0
     
     joint_values = get_joint_values(end_effector_pose.pose)
     

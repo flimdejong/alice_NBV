@@ -22,6 +22,6 @@
     </include>
 
     <!-- Launch rviz -->
-    <node pkg="rviz" type="rviz" name="rviz" />
+    <node pkg="rviz" type="rviz" name="rviz" args="-d home/flimdejong/catkin_ws/src/alice_moveit/config/move_commander.rviz" output="screen" />
 
 </launch>

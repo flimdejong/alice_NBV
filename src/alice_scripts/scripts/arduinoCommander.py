@@ -10,9 +10,11 @@ ser = serial.Serial('/dev/ttyACM0', 57600)
 # Callback function
 def joint_angles_callback(msg):
     joint_values = msg.data  # msg is a Float64MultiArray
-    joint_str = ','.join(map(str, joint_values))  # Converts array to comma-separated string
+    rounded_values = [round(value, 2) for value in joint_values]
+    joint_str = ','.join(map(str, rounded_values)) + '\n' 
     ser.write(joint_str.encode())  # Send the string over serial
     print("Sending message")
+
 
 # Initialize the ROS node
 rospy.init_node('arduinoCommander')

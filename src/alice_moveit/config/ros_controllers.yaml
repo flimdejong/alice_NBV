@@ -9,8 +9,3 @@ controller_list:
       - elbow_joint
       - wrist_pitch_joint
       - wrist_roll_joint
-
-trajectory_execution:
-  allowed_execution_duration_scaling: 1.4
-  allowed_goal_duration_margin: 0.8
-  allowed_start_tolerance: 0.02

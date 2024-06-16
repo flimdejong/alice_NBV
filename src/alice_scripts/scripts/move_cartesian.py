@@ -24,9 +24,11 @@ scene = moveit_commander.PlanningSceneInterface()
 #Set group to move
 group_name = "arm"
 move_group = moveit_commander.MoveGroupCommander(group_name)
+move_group.set_planner_id("RRTstar")
+move_group.set_planning_time(10)
 
-move_group.set_goal_tolerance(0.5)
-move_group.set_num_planning_attempts(20)
+move_group.set_goal_position_tolerance(0.0001)
+move_group.set_num_planning_attempts(10)
 
 #################################
 ##### Get robot information #####
@@ -46,16 +48,24 @@ print (move_group.get_current_pose())
 
 # Define the target pose
 target_pose = geometry_msgs.msg.Pose()
-target_pose.position.x = -0.05
-target_pose.position.y = 0.25
-target_pose.position.z = 0.18
-target_pose.orientation.x = 0.0
-target_pose.orientation.y = 0.0
-target_pose.orientation.z = 0.0
-target_pose.orientation.w = 1.0
+# target_pose.position.x = 0.264
+# target_pose.position.y = 0.066
+# target_pose.position.z = 0.234
+# target_pose.orientation.x = 0.707
+# target_pose.orientation.y = 0.707
+# target_pose.orientation.z = 0.0
+# target_pose.orientation.w = 0
+
+target_pose.position.x = 0.066
+target_pose.position.y = 0.272
+target_pose.position.z = 0.260
+target_pose.orientation.x = 0
+target_pose.orientation.y = 0
+target_pose.orientation.z = 0
+target_pose.orientation.w = 1
 
 # Set the joint value target with approximate IK
-move_group.set_joint_value_target(target_pose, True)
+move_group.set_joint_value_target(target_pose, 'camera_link', True)
 
 # Plan and execute the motion
 plan = move_group.go(wait=True)
@@ -71,4 +81,4 @@ move_group.stop()
 
 # Clear the targets
 move_group.clear_pose_targets()
-move_group.clear_joint_value_targets()
+#move_group.clear_joint_value_targets()
