@@ -31,6 +31,9 @@ def joint_state_publisher():
     # First time program runs, use default joint state
     joint_state = default_joint_state
 
+    # Intialize prev_joint_state to the current joint_state
+    prev_joint_state = joint_state
+
     joint_state.name = ['base_joint', 'elbow_joint', 'shoulder_joint', 'wrist_pitch_joint', 'wrist_roll_joint']
     
     moveit_listener = rospy.Subscriber('/move_group/fake_controller_joint_states', JointState, moveit_callback, queue_size=10)
@@ -38,8 +41,10 @@ def joint_state_publisher():
     # Publishes to the arduinoCommander node
     pub_arduinoCommander = rospy.Publisher('/alice/joint_states_arduino', Float64MultiArray, queue_size=10)
 
-    ## Counter for arduino
-    counter = 0
+    # Flags
+    movement_completed = False
+    published_joint_angles = False
+
 
     while not rospy.is_shutdown():
         # Convert to angles
@@ -54,17 +59,30 @@ def joint_state_publisher():
             joint_angles_arduino.data[2] = 150
             rospy.logerr("Joint angle of shoulder is higher than 150 degrees. Capping to 150 degrees.")
 
-        # Publish to arduino every 2 seconds
-        if counter == 20:
+
+        # Check if the joint positions have changed
+        # If arm is moving, both false
+        if joint_state.position != prev_joint_state:
+            movement_completed = False
+            published_joint_angles = False
+            prev_joint_state = joint_state.position
+            
+        else:
+            # If arm is standing still, set movement_completed to true.
+            movement_completed = True
+
+        # Publish to Arduino if the movement is completed and joint angles haven't been published yet
+        if movement_completed and not published_joint_angles:
             pub_arduinoCommander.publish(joint_angles_arduino)
-            counter = 0
+            published_joint_angles = True
+            
 
         # Publish the joint_state message
         joint_state.header.stamp = rospy.Time.now()
         pub_robotState.publish(joint_state)
 
-        counter += 1
         rospy.sleep(0.1)  # Sleep for 0.1 seconds to control the overall loop rate
+
 
 
 if __name__ == '__main__':

@@ -23,33 +23,40 @@
         <joint name="wrist_pitch_joint" value="1.5708"/>
         <joint name="wrist_roll_joint" value="1.5708"/>
     </group_state>
-    <group_state name="x_test" group="arm">
+    <group_state name="x_low" group="arm">
         <joint name="base_joint" value="0.994838"/>
-        <joint name="elbow_joint" value="2.3176"/>
-        <joint name="shoulder_joint" value="1.9083"/>
-        <joint name="wrist_pitch_joint" value="2.0086"/>
+        <joint name="elbow_joint" value="3.0186"/>
+        <joint name="shoulder_joint" value="2.3719"/>
+        <joint name="wrist_pitch_joint" value="0.8776"/>
         <joint name="wrist_roll_joint" value="1.5708"/>
     </group_state>
-    <group_state name="y_test" group="arm">
+    <group_state name="y_low" group="arm">
         <joint name="base_joint" value="2.5656"/>
-        <joint name="elbow_joint" value="1.2704"/>
-        <joint name="shoulder_joint" value="0.9355"/>
-        <joint name="wrist_pitch_joint" value="0.9614"/>
+        <joint name="elbow_joint" value="0.246"/>
+        <joint name="shoulder_joint" value="0.6875"/>
+        <joint name="wrist_pitch_joint" value="2.2584"/>
         <joint name="wrist_roll_joint" value="1.5708"/>
     </group_state>
-    <group_state name="shoulder_test" group="arm">
-        <joint name="base_joint" value="0"/>
-        <joint name="elbow_joint" value="1.5708"/>
-        <joint name="shoulder_joint" value="2.5508"/>
-        <joint name="wrist_pitch_joint" value="1.5708"/>
+    <group_state name="x-mid" group="arm">
+        <joint name="base_joint" value="0.994838"/>
+        <joint name="elbow_joint" value="2.9236"/>
+        <joint name="shoulder_joint" value="2.0328"/>
+        <joint name="wrist_pitch_joint" value="1.336"/>
         <joint name="wrist_roll_joint" value="1.5708"/>
     </group_state>
-    <group_state name="shoulder_test_1" group="arm">
-        <joint name="base_joint" value="0"/>
-        <joint name="elbow_joint" value="1.5708"/>
-        <joint name="shoulder_joint" value="0.5794"/>
-        <joint name="wrist_pitch_joint" value="1.5708"/>
+    <group_state name="y-mid" group="arm">
+        <joint name="base_joint" value="2.5656"/>
+        <joint name="elbow_joint" value="0.7602"/>
+        <joint name="shoulder_joint" value="0.8813"/>
+        <joint name="wrist_pitch_joint" value="1.4814"/>
         <joint name="wrist_roll_joint" value="1.5708"/>
+    </group_state>
+    <group_state name="x-high" group="arm">
+        <joint name="base_joint" value="1.1739"/>
+        <joint name="elbow_joint" value="2.5155"/>
+        <joint name="shoulder_joint" value="1.798"/>
+        <joint name="wrist_pitch_joint" value="1.9789"/>
+        <joint name="wrist_roll_joint" value="1.8783"/>
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="camera_ee" parent_link="camera_link" group="arm"/>

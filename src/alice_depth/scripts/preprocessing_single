@@ -1,46 +1,55 @@
 import open3d as o3d
 import numpy as np
+import os
 
-# Set the input and output directories
-input_dir = ""
-output_dir = "processed_pcd"
+base_dir = "/home/flimdejong/catkin_ws"  # Replace with the appropriate base directory
+input_dir = os.path.join(base_dir, "stanford_bunny")
+output_dir = os.path.join(base_dir, "stanford_bunny_processed")
+
+# Create the output directory if it doesn't exist
+os.makedirs(output_dir, exist_ok=True)
 
 # Load the point cloud from the .pcd file
-pcd = o3d.io.read_point_cloud("coordinate_test.pcd")
+pcd_file = os.path.join(input_dir, "stanford_bunny_x_mid.pcd")
+pcd = o3d.io.read_point_cloud(pcd_file)
 
 # Print the point cloud details
 print(pcd)
 
 # Apply depth thresholding
-depth_threshold = 0.6  # Adjust the threshold based on your scene
-
-#Set voxel size
-voxel_size = 0.0005
-
+depth_threshold = 0.4
 pcd_without_background = pcd.select_by_index(np.where(np.asarray(pcd.points)[:, 2] < depth_threshold)[0])
 
-#Downsizing now
-downpcd = pcd_without_background.voxel_down_sample(voxel_size)
-#3d.visualization.draw_geometries([downpcd])
+# Applying plane segmentation using RANSAC (for floor removal)
+# To find the plane with the largest support in the point cloud, we can use segment_plane. 
+# The method has three arguments: distance_threshold defines the maximum distance a point can have to an estimated plane to be considered an inlier
+# ransac_n defines the number of points that are randomly sampled to estimate a plane, and num_iterations
+plane_model, inliers = pcd_without_background.segment_plane(distance_threshold=0.001, ransac_n=3, num_iterations=1000)
 
-#Applying plane segmentation using RANSAC
-plane_model, inliers = downpcd.segment_plane(distance_threshold=0.03, ransac_n=3, num_iterations=1000)
-a, b, c, d = plane_model
+# Remove floor points from the point cloud
+remaining_cloud = pcd_without_background.select_by_index(inliers, invert=True)
 
-# Extract floor points
-floor_cloud = downpcd.select_by_index(inliers)
+# Statistical outlier removal
+# nb_neighbors, which specifies how many neighbors are taken into account in order to calculate the average distance for a given point.
+# std_ratio, which allows setting the threshold level based on the standard deviation of the average distances across the point cloud. 
+# The lower this number the more aggressive the filter will be.
 
-# Remove floor points from the original point cloud
-remaining_cloud = downpcd.select_by_index(inliers, invert=True)
+cl, ind = remaining_cloud.remove_statistical_outlier(nb_neighbors=35, std_ratio=0.005)
 
-#Statistical outlier removal
-cl, ind = remaining_cloud.remove_statistical_outlier(nb_neighbors=20, std_ratio=0.2)
+# Set the point cloud color to black
+cl.paint_uniform_color([0, 0, 0])
 
-#cl, ind = remaining_cloud.remove_statistical_outlier(nb_neighbors=30, std_ratio=0.005)
+# Set the point size
+vis = o3d.visualization.Visualizer()
+vis.create_window()
+vis.add_geometry(cl)
+render_option = vis.get_render_option()
+render_option.point_size = 1.5
 
 # Visualize the results
-o3d.visualization.draw_geometries([cl])
+vis.run()
+vis.destroy_window()
 
 # Save the point cloud
-output_path = "processed_pcd/coordinate_test.pcd"
-o3d.io.write_point_cloud(output_path, cl)
+output_file = os.path.join(output_dir, "stanford_bunny_mid.pcd")
+o3d.io.write_point_cloud(output_file, cl)

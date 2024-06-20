@@ -133,11 +133,11 @@ if __name__ == "__main__":
     print(received_open3d_cloud)
 
     # write to file
-    output_filename = "stanford_bunny_1.pcd"
-    stanford_bunny_path = "/catkin_ws/stanford_bunny"
+    output_filename = "stanford_bunny_x_high.pcd"
+    stanford_bunny_path = "/home/flimdejong/catkin_ws/stanford_bunny"
     file_path = os.path.join(stanford_bunny_path, output_filename)
 
-    open3d.io.write_point_cloud(output_filename, received_open3d_cloud)
+    open3d.io.write_point_cloud(file_path, received_open3d_cloud)
 
     current_directory = os.path.abspath(os.getcwd())
     rospy.loginfo("-- Current working directory: " + current_directory)
