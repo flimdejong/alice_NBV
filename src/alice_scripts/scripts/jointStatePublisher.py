@@ -41,17 +41,12 @@ def joint_state_publisher():
     # Publishes to the arduinoCommander node
     pub_arduinoCommander = rospy.Publisher('/alice/joint_states_arduino', Float64MultiArray, queue_size=10)
 
-    # Flags
-    movement_completed = False
-    published_joint_angles = False
-
-
     while not rospy.is_shutdown():
         # Convert to angles
         joint_angles_arduino = Float64MultiArray()
         joint_angles_arduino.data = [math.degrees(angle) for angle in joint_state.position]
 
-        # Check and cap the joint angle in the second index
+        # Check and cap the joint angle in index [2], pos 3
         if joint_angles_arduino.data[2] < 30:
             joint_angles_arduino.data[2] = 30
             rospy.logerr("Joint angle of shoulder is lower than 30 degrees. Capping to 30 degrees.")
@@ -59,30 +54,11 @@ def joint_state_publisher():
             joint_angles_arduino.data[2] = 150
             rospy.logerr("Joint angle of shoulder is higher than 150 degrees. Capping to 150 degrees.")
 
-
-        # Check if the joint positions have changed
-        # If arm is moving, both false
-        if joint_state.position != prev_joint_state:
-            movement_completed = False
-            published_joint_angles = False
-            prev_joint_state = joint_state.position
-            
-        else:
-            # If arm is standing still, set movement_completed to true.
-            movement_completed = True
-
-        # Publish to Arduino if the movement is completed and joint angles haven't been published yet
-        if movement_completed and not published_joint_angles:
-            pub_arduinoCommander.publish(joint_angles_arduino)
-            published_joint_angles = True
-            
-
         # Publish the joint_state message
         joint_state.header.stamp = rospy.Time.now()
         pub_robotState.publish(joint_state)
 
         rospy.sleep(0.1)  # Sleep for 0.1 seconds to control the overall loop rate
-
 
 
 if __name__ == '__main__':

@@ -15,9 +15,6 @@ find_package(catkin REQUIRED COMPONENTS
   tf2_ros
 )
 
-add_executable(forwardKinematics scripts/forwardKinematics.cpp)
-target_link_libraries(forwardKinematics ${catkin_LIBRARIES})
-
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 

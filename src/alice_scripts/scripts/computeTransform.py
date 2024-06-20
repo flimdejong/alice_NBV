@@ -6,10 +6,10 @@ import numpy as np
 import time
 import tf2_msgs
 import tf.transformations as tr # For quartenion 
-from sensor_msgs.msg import JointState
+from std_msgs.msg import Bool
+from std_msgs.msg import Float64MultiArray, MultiArrayDimension
 
-movement_complete = False
-prev_joint_states = None
+move_completed = False
 
 # Provide the transfrom from source to target.
 def get_transform(source_frame, target_frame, tf_buffer):
@@ -92,29 +92,40 @@ def quaternion_rotation_matrix(Q):
                             
     return rot_matrix
 
-def joint_states_callback(msg):
-    global movement_complete, prev_joint_states
-    
-    # Get the current joint states
-    current_joint_states = msg.position
-    
-    # Check if there are previous joint states
-    if prev_joint_states is not None:
-        # Compare current joint states with previous joint states
-        if np.allclose(current_joint_states, prev_joint_states):
-            # If joint states are the same, movement is complete
-            movement_complete = True
-        else:
-            # If joint states are different, movement is still in progress
-            movement_complete = False
-    
-    # Update previous joint states with current joint states
-    prev_joint_states = current_joint_states
+def move_completed_cb(msg):
+    global move_completed
+    move_completed = msg.data
+    rospy.loginfo("Move completed: %s", move_completed)
 
 def main():
+    global move_completed
+
     rospy.init_node('computeTransform')
     buffer = tf2_ros.Buffer()
     listener = tf2_ros.TransformListener(buffer)
+
+    # Publisher for transformation matrix
+    transform_pub = rospy.Publisher('/transformation_matrix', Float64MultiArray, queue_size=10)
+
+    # Subscriber for move_completed topic
+    move_completed_sub = rospy.Subscriber('/move_completed', Bool, move_completed_cb)
+
+
+    ####################
+    ###### Pose 1 ######
+    ####################
+
+    # Wait for first movement to finish
+    rospy.loginfo("Waiting for move_completed to call...")
+
+    # While move_completed is False, sleep. Once it turns True, code moves forward
+    while not move_completed:
+        rospy.sleep(0.1)
+
+    # Set to false again
+    move_completed = False
+    
+    rospy.loginfo("Waiting for TF")
 
     rospy.wait_for_message('/tf', tf2_msgs.msg.TFMessage)
 
@@ -123,51 +134,72 @@ def main():
     # Get the transformation matrix from world to pose1
     translation1, rotation1 = get_transform('world', 'camera_link', buffer)
 
-    # Subscribe to the joint states topic
-    joint_states_sub = rospy.Subscriber('/alice/joint_states', JointState, joint_states_callback)
+    rospy.loginfo("Received TF for pose1")
 
-    # Wait for the movement to finish
-    rospy.loginfo("Waiting for movement to finish...")
-    while not movement_complete:
-        rospy.sleep(0.1)
+    while not rospy.is_shutdown():
+        ####################
+        ###### Pose 2 ######
+        ####################
 
-    # Set execution_complete on False again.
+        # Wait for first movement to finish
+        rospy.loginfo("Waiting for move_completed to call for next pose...")
 
-    ####################
-    ###### Pose 2 ######
-    ####################
+        # While move_completed is False, sleep. Once it turns True, code moves forward
+        while not move_completed:
+            rospy.sleep(0.1)
 
-    # Clear buffer
-    buffer.clear() 
+        move_completed = False
 
-    # Get the transformation matrix from world to pose2
-    translation2, rotation2 = get_transform('world', 'camera_link', buffer)
+        # Clear buffer
+        buffer.clear() 
 
-    # Convert quaternions to rotation matrices
-    transformation_matrix_1 = tr.quaternion_matrix(rotation1)
-    transformation_matrix_2 = tr.quaternion_matrix(rotation2)
+        rospy.loginfo("Waiting for TF")
 
-    # Fill last column and all rows
-    transformation_matrix_1[:3, 3] = translation1
-    transformation_matrix_2[:3, 3] = translation2
+        rospy.wait_for_message('/tf', tf2_msgs.msg.TFMessage)
 
-    # Compute the relative transformation from pose1 to pose2
-    relative_transform = np.linalg.inv(transformation_matrix_1) @ transformation_matrix_2
+        rospy.loginfo("Finding TF for pose2")
 
-    print("Transform 1: ")
-    print("This should match tf_echo!!")
-    print(transformation_matrix_1)
+        # Get the transformation matrix from world to pose2
+        translation2, rotation2 = get_transform('world', 'camera_link', buffer)
 
-    print("Transform 2: ")
-    print(transformation_matrix_2)
+        # Convert quaternions to rotation matrices
+        transformation_matrix_1 = tr.quaternion_matrix(rotation1)
+        transformation_matrix_2 = tr.quaternion_matrix(rotation2)
 
-    # Print the relative transformation matrix
-    print("Relative transformation matrix from source to target:")
-    print(relative_transform)
+        # Fill last column and all rows
+        transformation_matrix_1[:3, 3] = translation1
+        transformation_matrix_2[:3, 3] = translation2
 
-    # Taking inverse to get TF from target to source
-    print("target to source")
-    print(np.linalg.inv(relative_transform))
+        # Compute the relative transformation from pose1 to pose2
+        relative_transform = np.linalg.inv(transformation_matrix_1) @ transformation_matrix_2
+
+        print("Transform 1: ")
+        print("This should match tf_echo!!")
+        print(transformation_matrix_1)
+
+        print("Transform 2: ")
+        print(transformation_matrix_2)
+
+        # Print the relative transformation matrix
+        print("Relative transformation matrix from source to target:")
+        print(relative_transform)
+
+        # Taking inverse to get TF from target to source (pose2 to pose1), overload variable
+        print("target to source")
+        print(np.linalg.inv(relative_transform))
+
+        # Create a Float64MultiArray message
+        transform_msg = Float64MultiArray()
+        transform_msg.layout.dim = [MultiArrayDimension('rows', 4, 4),
+                                    MultiArrayDimension('cols', 4, 4)]
+        transform_msg.data = relative_transform.flatten().tolist()
+
+        # Publish the transformation matrix
+        transform_pub.publish(transform_msg)
+
+        # Make the source pose of the next iteration the pose of pose2 of the current one
+        translation1 = translation2
+        rotation1 = rotation2
 
 
 if __name__ == '__main__':

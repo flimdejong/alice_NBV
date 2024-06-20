@@ -432,6 +432,12 @@ actionlib_DIR:PATH=/opt/ros/noetic/share/actionlib/cmake
 actionlib_msgs_DIR:PATH=/opt/ros/noetic/share/actionlib_msgs/cmake
 
 //Value Computed by CMake
+alice_commander_BINARY_DIR:STATIC=/home/flimdejong/catkin_ws/build/alice_commander
+
+//Value Computed by CMake
+alice_commander_SOURCE_DIR:STATIC=/home/flimdejong/catkin_ws/src/alice_commander
+
+//Value Computed by CMake
 alice_control_BINARY_DIR:STATIC=/home/flimdejong/catkin_ws/build/alice_control
 
 //Value Computed by CMake
@@ -972,7 +978,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=28
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=29
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

@@ -168,21 +168,6 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-alice_scripts/CMakeFiles/forwardKinematics.dir/rule:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_scripts/CMakeFiles/forwardKinematics.dir/rule
-.PHONY : alice_scripts/CMakeFiles/forwardKinematics.dir/rule
-
-# Convenience name for target.
-forwardKinematics: alice_scripts/CMakeFiles/forwardKinematics.dir/rule
-
-.PHONY : forwardKinematics
-
-# fast build rule for target.
-forwardKinematics/fast:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_scripts/CMakeFiles/forwardKinematics.dir/build.make alice_scripts/CMakeFiles/forwardKinematics.dir/build
-.PHONY : forwardKinematics/fast
-
-# Convenience name for target.
 alice_scripts/CMakeFiles/tf2_msgs_generate_messages_py.dir/rule:
 	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 alice_scripts/CMakeFiles/tf2_msgs_generate_messages_py.dir/rule
 .PHONY : alice_scripts/CMakeFiles/tf2_msgs_generate_messages_py.dir/rule
@@ -407,33 +392,6 @@ tf2_msgs_generate_messages_cpp/fast:
 	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_scripts/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/build.make alice_scripts/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/build
 .PHONY : tf2_msgs_generate_messages_cpp/fast
 
-scripts/forwardKinematics.o: scripts/forwardKinematics.cpp.o
-
-.PHONY : scripts/forwardKinematics.o
-
-# target to build an object file
-scripts/forwardKinematics.cpp.o:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_scripts/CMakeFiles/forwardKinematics.dir/build.make alice_scripts/CMakeFiles/forwardKinematics.dir/scripts/forwardKinematics.cpp.o
-.PHONY : scripts/forwardKinematics.cpp.o
-
-scripts/forwardKinematics.i: scripts/forwardKinematics.cpp.i
-
-.PHONY : scripts/forwardKinematics.i
-
-# target to preprocess a source file
-scripts/forwardKinematics.cpp.i:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_scripts/CMakeFiles/forwardKinematics.dir/build.make alice_scripts/CMakeFiles/forwardKinematics.dir/scripts/forwardKinematics.cpp.i
-.PHONY : scripts/forwardKinematics.cpp.i
-
-scripts/forwardKinematics.s: scripts/forwardKinematics.cpp.s
-
-.PHONY : scripts/forwardKinematics.s
-
-# target to generate assembly for a file
-scripts/forwardKinematics.cpp.s:
-	cd /home/flimdejong/catkin_ws/build && $(MAKE) -f alice_scripts/CMakeFiles/forwardKinematics.dir/build.make alice_scripts/CMakeFiles/forwardKinematics.dir/scripts/forwardKinematics.cpp.s
-.PHONY : scripts/forwardKinematics.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -445,7 +403,6 @@ help:
 	@echo "... install"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... forwardKinematics"
 	@echo "... tf2_msgs_generate_messages_py"
 	@echo "... tf2_msgs_generate_messages_nodejs"
 	@echo "... actionlib_generate_messages_eus"
@@ -463,9 +420,6 @@ help:
 	@echo "... test"
 	@echo "... actionlib_msgs_generate_messages_lisp"
 	@echo "... tf2_msgs_generate_messages_cpp"
-	@echo "... scripts/forwardKinematics.o"
-	@echo "... scripts/forwardKinematics.i"
-	@echo "... scripts/forwardKinematics.s"
 .PHONY : help
 
 

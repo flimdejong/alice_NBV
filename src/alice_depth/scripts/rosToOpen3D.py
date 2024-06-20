@@ -25,7 +25,7 @@ import numpy as np
 from ctypes import * # convert float to uint32
 
 import rospy
-from std_msgs.msg import Header
+from std_msgs.msg import Header, Bool
 from sensor_msgs.msg import PointCloud2, PointField
 import sensor_msgs.point_cloud2 as pc2
 
@@ -107,8 +107,17 @@ def convertCloudFromRosToOpen3d(ros_cloud):
     # return
     return open3d_cloud
 
+def move_completed_cb(msg):
+    global move_completed
+    move_completed = msg.data
+    rospy.loginfo("Move completed: %s", move_completed)
+
+
 # -- Example of usage
 if __name__ == "__main__":
+    move_completed = False
+    flag = True
+
     rospy.init_node('ROS_To_Open3D', anonymous=True)
 
     # Topic under which ROS publishes the PC2
@@ -117,27 +126,55 @@ if __name__ == "__main__":
     # -- Set subscriber
     global received_ros_cloud
     received_ros_cloud = None
+
     def callback(ros_cloud):
         global received_ros_cloud
         received_ros_cloud=ros_cloud
         rospy.loginfo("-- Received ROS PointCloud2 message.")
-    rospy.Subscriber(topic_name, PointCloud2, callback)      
-    
+
+    # Subscriber for PC2 topic
+    rospy.Subscriber(topic_name, PointCloud2, callback)
+
+    # Subscriber for move_completed topic
+    move_completed_sub = rospy.Subscriber('/move_completed', Bool, move_completed_cb)
+
     # -- Wait until a PointCloud2 message is received
     while received_ros_cloud is None and not rospy.is_shutdown():
         rospy.loginfo("-- Not receiving ROS PointCloud2 message yet ...")
         rospy.sleep(1)
 
-    # -- After subscribing the ros cloud, convert it back to open3d, and draw
-    received_open3d_cloud = convertCloudFromRosToOpen3d(received_ros_cloud)
-    print(received_open3d_cloud)
 
-    # write to file
-    output_filename = "stanford_bunny_x_high.pcd"
-    stanford_bunny_path = "/home/flimdejong/catkin_ws/stanford_bunny"
-    file_path = os.path.join(stanford_bunny_path, output_filename)
+    # Previous code was all either setups or checks
 
-    open3d.io.write_point_cloud(file_path, received_open3d_cloud)
+    while flag == True:
+        # While move_completed is False, sleep. Once it turns True, code moves forward
+        while not move_completed:
+            rospy.sleep(0.1)
 
-    current_directory = os.path.abspath(os.getcwd())
-    rospy.loginfo("-- Current working directory: " + current_directory)
+        move_completed = False
+
+        # -- After subscribing the ros cloud, convert it back to open3d, and draw
+        received_open3d_cloud = convertCloudFromRosToOpen3d(received_ros_cloud)
+        print(received_open3d_cloud)
+
+
+        ##### Save file #####
+
+        # Define the prefix for the output filename
+        prefix = "stanford_bunny_run_1"
+
+        # Specify the output directory path
+        stanford_bunny_path = "/home/flimdejong/catkin_ws/PC/stanford_bunny_run_1"
+
+        # Find the next available number for the output filename
+        counter = 1
+        while True:
+            output_filename = f"{prefix}_{counter}.pcd"
+            file_path = os.path.join(stanford_bunny_path, output_filename)
+            if not os.path.exists(file_path):
+                break
+            counter += 1
+
+        # Write the point cloud to the file
+        open3d.io.write_point_cloud(file_path, received_open3d_cloud)
+
