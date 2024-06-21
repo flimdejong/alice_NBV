@@ -29,6 +29,9 @@ from std_msgs.msg import Header, Bool
 from sensor_msgs.msg import PointCloud2, PointField
 import sensor_msgs.point_cloud2 as pc2
 
+# Import preprocessing file
+from preprocessing_single_auto import preprocess_pc
+
 # The data structure of each point in ros PointCloud2: 16 bits = x + y + z + rgb
 FIELDS_XYZ = [
     PointField(name='x', offset=0, datatype=PointField.FLOAT32, count=1),
@@ -112,69 +115,85 @@ def move_completed_cb(msg):
     move_completed = msg.data
     rospy.loginfo("Move completed: %s", move_completed)
 
-
 # -- Example of usage
 if __name__ == "__main__":
+
+    # Boolean flags
     move_completed = False
     flag = True
 
+    # Initialize nodes
     rospy.init_node('ROS_To_Open3D', anonymous=True)
+    rospy.init_node("preprocessing_status", anonymous=True) # Node that publishes True if preprocessing is done.
+
+    preprocessing_status_pub = rospy.Publisher('/preprocessing_status', Bool, queue_size=10)
 
     # Topic under which ROS publishes the PC2
     topic_name = "/camera/depth/color/points"
-
-    # -- Set subscriber
-    global received_ros_cloud
-    received_ros_cloud = None
-
-    def callback(ros_cloud):
-        global received_ros_cloud
-        received_ros_cloud=ros_cloud
-        rospy.loginfo("-- Received ROS PointCloud2 message.")
-
-    # Subscriber for PC2 topic
-    rospy.Subscriber(topic_name, PointCloud2, callback)
 
     # Subscriber for move_completed topic
     move_completed_sub = rospy.Subscriber('/move_completed', Bool, move_completed_cb)
 
     # -- Wait until a PointCloud2 message is received
-    while received_ros_cloud is None and not rospy.is_shutdown():
-        rospy.loginfo("-- Not receiving ROS PointCloud2 message yet ...")
-        rospy.sleep(1)
-
+    # while received_ros_cloud is None and not rospy.is_shutdown():
+    #     rospy.loginfo("-- Not receiving ROS PointCloud2 message yet ...")
+    #     rospy.sleep(1)
 
     # Previous code was all either setups or checks
 
-    while flag == True:
+    # Loop infinite amount of times
+    while flag:
+
         # While move_completed is False, sleep. Once it turns True, code moves forward
         while not move_completed:
             rospy.sleep(0.1)
 
-        move_completed = False
+        # If move_completed is True, which means we need to capture a PC, continue
+        if move_completed:
 
-        # -- After subscribing the ros cloud, convert it back to open3d, and draw
-        received_open3d_cloud = convertCloudFromRosToOpen3d(received_ros_cloud)
-        print(received_open3d_cloud)
+            rospy.loginfo("-- Waiting for a single ROS PointCloud2 message...")
+            received_ros_cloud = rospy.wait_for_message(topic_name, PointCloud2)
+
+            # Reset move_completed for next iteration
+            move_completed = False
+
+            # -- After subscribing the ros cloud, convert it back to open3d, and draw
+            received_open3d_cloud = convertCloudFromRosToOpen3d(received_ros_cloud)
+            print(received_open3d_cloud)
 
 
-        ##### Save file #####
+            ##### Save file #####
 
-        # Define the prefix for the output filename
-        prefix = "stanford_bunny_run_1"
+            # Define the prefix for the output filename
+            prefix = "stanford_bunny_run"
 
-        # Specify the output directory path
-        stanford_bunny_path = "/home/flimdejong/catkin_ws/PC/stanford_bunny_run_1"
+            # Specify the output directory path
+            stanford_bunny_path = "/home/flimdejong/catkin_ws/PC/stanford_bunny_run_1"
 
-        # Find the next available number for the output filename
-        counter = 1
-        while True:
-            output_filename = f"{prefix}_{counter}.pcd"
-            file_path = os.path.join(stanford_bunny_path, output_filename)
-            if not os.path.exists(file_path):
-                break
-            counter += 1
+            stanford_bunny_path_processed = "/home/flimdejong/catkin_ws/PC/stanford_bunny_run_1_processed"
 
-        # Write the point cloud to the file
-        open3d.io.write_point_cloud(file_path, received_open3d_cloud)
+            # Find the next available number for the output filename
+            counter = 1
+            while True:
+                output_filename = f"{prefix}_{counter}.pcd"
+                file_path = os.path.join(stanford_bunny_path, output_filename)
+                if not os.path.exists(file_path):
+                    break
+                counter += 1
+
+            # Write the point cloud to the file
+            open3d.io.write_point_cloud(file_path, received_open3d_cloud)
+
+            # Preprocess and save the point cloud
+            processed_file_path = os.path.join(stanford_bunny_path_processed, f"{prefix}_{counter}_processed.pcd")
+            preprocess_pc(file_path, processed_file_path)
+
+            # Publish preprocessing status True when done
+            preprocessing_status_pub.publish(True)
+
+            rospy.sleep(1.0)
+
+
+
+
 

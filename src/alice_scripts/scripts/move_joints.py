@@ -21,8 +21,9 @@ def move_end_effector_cb(target_joint_angles):
     # Check if the planning and execution were successful
     if plan:
         rospy.loginfo("Motion planning and execution succeeded!")
-        rospy.sleep(5)
         rospy.loginfo("Waiting 5 seconds to give the depth camera and physical robot some time to move")
+        rospy.sleep(5)
+        rospy.loginfo("Done")
 
         move_completed_pub.publish(True)
     else:

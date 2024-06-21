@@ -2,6 +2,8 @@ import open3d as o3d
 import numpy as np
 import copy
 import os
+import rospy
+from std_msgs.msg import Bool, Float64MultiArray, MultiArrayDimension
 
 def draw_registration_result(source, target, transformation):
     source_temp = copy.deepcopy(source)
@@ -89,156 +91,220 @@ def filter_non_symmetric_points(pcd, radius, height, threshold):
     mask = distances > threshold
     return pcd.select_by_index(np.where(mask)[0])
 
+def preprocessing_status_cb(msg):
+    global preprocessing_status
+    preprocessing_status = msg.data
+    rospy.loginfo("Preprocessing completed: %s", preprocessing_status)
+
+def transform_cb(msg):
+    global relative_transform
+    flattened_data = msg.data
+
+    print("Transform received")
+
+    # Convert the flattened list back to a matrix
+    relative_transform = np.array(flattened_data).reshape((4, 4))
+
+# Set relative_transform matrix to zeros, for initialization and checking.
+relative_transform = np.zeros((4, 4))
+
+# Subscriber that listens to the status of preprocessing
+preprocessing_status_sub = rospy.Subscriber('/preprocessing_status', Bool, preprocessing_status_cb)
+
+# subscriber that listens to the relative transforms
+transform_sub = rospy.Subscriber('/transformation_matrix', Float64MultiArray, transform_cb)
+
 # Define the transformation matrix to align ROS and Open3D coordinate systems
 ros_to_open3d_transform = np.array([[0, 0, 1, 0],
                                     [-1, 0, 0, 0],
                                     [0, -1, 0, 0],
                                     [0, 0, 0, 1]])
 
-base_dir = "/home/flimdejong/catkin_ws"
-input_dir = os.path.join(base_dir, "stanford_bunny_processed")
+base_dir = "/home/flimdejong/catkin_ws/PC"
+input_dir = os.path.join(base_dir, "stanford_bunny_run_1_processed")
 
-source_file = os.path.join(input_dir, "stanford_bunny_low.pcd")
-target_file = os.path.join(input_dir, "stanford_bunny_mid.pcd")
+source_file = os.path.join(input_dir, "stanford_bunny_run_1_processed_1.pcd")
 
-# Load the source and target point clouds from the .pcd files
+# Load the initial pointcloud as source
 source = o3d.io.read_point_cloud(source_file)
-target = o3d.io.read_point_cloud(target_file)
 
-# # Filter the non-symmetric part of the source mug
-# radius = 0.04  # Adjust the radius based on your mug's dimensions
-# height = 0.17  # Adjust the height based on your mug's dimensions
-# threshold = 0.04  # Adjust the distance threshold as needed
-# source_ransac = filter_non_symmetric_points(source, radius, height, threshold)
+# Start counter for merge at 1. This specific the ID of the merge
+merged_count = 1
 
-# # Filter the non-symmetric part of the target mug
-# target_ransac = filter_non_symmetric_points(target, radius, height, threshold)
+# Initialize the counter, start at 2 since we load the first one as 1
+target_count = 2
 
-# o3d.visualization.draw_geometries([source_ransac])
-# o3d.visualization.draw_geometries([target_ransac])
+# Set prefix for saving the merged PC's
+prefix = "stanford_bunny_run_1_processed_merged_"
 
-# source.rotate(source.get_rotation_matrix_from_xyz((0, np.pi / 3.8, 0)), center=(0, 0, 0))
+# Initialize preprocessing_status boolean
+preprocessing_status = False
 
-# # Compute the centers of the source and target point clouds
-# source_centroid = np.mean(np.asarray(source_ransac.points), axis=0)
-# target_centroid = np.mean(np.asarray(target_ransac.points), axis=0)
-
-# print(f'Center of source_center: {source_centroid}')
-# print(f'Center of target_center: {target_centroid}')
-
-# # Translate the source and target point clouds to align their centers
-# source.translate(-source_centroid)
-# target.translate(-target_centroid)
-
-# print(f'Center of source_center after: {source.get_center()}')
-# print(f'Center of target_center after: {target.get_center()}')
-
-# #o3d.visualization.draw([source, target])
-
-# Apply the transformation to align with Open3D coordinate system
-
-#Set voxel size
+# Set voxel size for global registration
 voxel_size = 0.005
 
-# This TF matrix is from Pose1 (x_low) to Pose2 (x_high)
-transformation_matrix = [
- [ 9.99964044e-01, -4.38864689e-04,  8.46871074e-03, -4.32650074e-04],
- [ 6.98888227e-04,  9.99527615e-01, -3.07255412e-02, -9.34659714e-03],
- [-8.45122589e-03,  3.07303551e-02,  9.99491982e-01, -6.90924362e-02],
- [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,  1.00000000e+00]]
+while True:
+    # While preprocessing_status is False, sleep. Once it turns True, code moves forward
+    while not preprocessing_status:
+        rospy.sleep(0.1)
+
+    # Also check if the relative_transform matrix is populated, wait until it is.
+    while np.all(relative_transform == 0):
+        rospy.sleep(0.1)
+
+    # Check if a new pointcloud file exists, starts at processed_2
+    target_file = os.path.join(input_dir, f"stanford_bunny_run_1_processed_{target_count}.pcd")
+    if os.path.exists(target_file):
+
+        # Load the new pointcloud
+        target = o3d.io.read_point_cloud(target)
+
+        # Now we have source and target. Source is the one we get first, we will transform target onto source
+
+        #Transform it all into Open3D coordinate plane from ROS coordinate plane
+        source.transform(ros_to_open3d_transform)
+        target.transform(ros_to_open3d_transform)
+
+        # Apply the transform to target to make it align with source
+        target.transform(relative_transform)
 
 
-# Create coordinate frame geometries
-coord_frame_1 = o3d.geometry.TriangleMesh.create_coordinate_frame(size=0.5)
-coord_frame_2 = o3d.geometry.TriangleMesh.create_coordinate_frame(size=0.25)
+        ######################################
+        ##### Apply Global Registration ######
+        ######################################
+        """ 
+        Apply global registration for rough alignment
+        """
 
-#Transform it all into Open3D coordinate plane
-coord_frame_1.transform(ros_to_open3d_transform)
-coord_frame_2.transform(ros_to_open3d_transform)
-source.transform(ros_to_open3d_transform)
-target.transform(ros_to_open3d_transform)
+        #Preprocessing for RANSAC
+        source_ransac_down, source_ransac_fpfh = preprocess_point_cloud(source, voxel_size)
+        target_ransac_down, target_ransac_fpfh = preprocess_point_cloud(target, voxel_size)
 
+        #Global registration using RANSAC, returns global transformation matrix
+        result_ransac = execute_global_registration(source_ransac_down, target_ransac_down,
+                                                    source_ransac_fpfh, target_ransac_fpfh,
+                                                    voxel_size)
+        print(result_ransac)
 
-# Apply the transformations to the coordinate frames
-coord_frame_2.transform(transformation_matrix)
-
-# Apply the transform to target to make it align with source
-target.transform(transformation_matrix)
-
-# Visualize the transformed coordinate frames
-o3d.visualization.draw_geometries([source, target, coord_frame_1, coord_frame_2])
-
-
-#Preprocessing for RANSAC
-source_ransac_down, source_ransac_fpfh = preprocess_point_cloud(source, voxel_size)
-target_ransac_down, target_ransac_fpfh = preprocess_point_cloud(target, voxel_size)
+        # Apply the RANSAC transformation to the target point cloud for furthur refinement
+        target.transform(result_ransac.transformation)
 
 
-#Global registration using RANSAC, returns global transformation matrix
-result_ransac = execute_global_registration(source_ransac_down, target_ransac_down,
-                                            source_ransac_fpfh, target_ransac_fpfh,
-                                            voxel_size)
-print(result_ransac)
+        ######################
+        ##### Apply ICP ######
+        ######################
+        """ 
+        Apply ICP for furthur refinement
+        """
 
-# Apply the RANSAC transformation to the source point cloud
-source.transform(result_ransac.transformation)
+        #Preprocessing for ICP
+        source_down, source_fpfh = preprocess_point_cloud(source, voxel_size)
+        target_down, target_fpfh = preprocess_point_cloud(target, voxel_size)
 
-# Shows result after initial global registration
-draw_registration_result(source_ransac_down, target_ransac_down, result_ransac.transformation)
+        # Refine the alignment using ICP on the full-sized point cloud
+        target.estimate_normals()
+        result_icp = refine_registration(source, target, source_fpfh, target_fpfh,
+                                        voxel_size)
+        print(result_icp)
 
-#############################################
+        # Apply the ICP transformation to the source point cloud
+        target.transform(result_icp.transformation)
 
-#Preprocessing for ICP
-source_down, source_fpfh = preprocess_point_cloud(source, voxel_size)
-target_down, target_fpfh = preprocess_point_cloud(target, voxel_size)
+        # Combine the pointclouds
+        pcd_combined = source + target
 
-# Refine the alignment using ICP on the full-sized point cloud
-target.estimate_normals()
-result_icp = refine_registration(source, target, source_fpfh, target_fpfh,
-                                 voxel_size)
-print(result_icp)
+        # Downsample the result to 0.003 to keep pc sparse
+        pcd_combined = pcd_combined.voxel_down_sample(voxel_size=0.003)
 
-# Apply the ICP transformation to the source point cloud
-source.transform(result_icp.transformation)
+        # Generate the output filename based on the number of merged pointclouds
+        output_filename = f"{prefix}{merged_count}.pcd"
+        output_file_path = os.path.join(input_dir, output_filename)
+        o3d.io.write_point_cloud(output_file_path, pcd_combined)
 
-draw_registration_result(source, target, result_icp.transformation)
+        print(f"Merged pointcloud saved as {output_filename}")
+
+        # Increment the counter for the number of merged pointclouds + the target
+        merged_count += 1
+        target_count += 1
+
+        # Source is the combined PC, make it equal to pcd_combined to prepare for next merge
+        source = pcd_combined
+
+    else:
+        rospy.wait(0.1)
+    
+    # Reset preprocessing_status to False again
+    preprocessing_status = False
 
 
-######## Merge pointclouds #######
-##################################
+# # # This TF matrix is from Pose1 (x_low) to Pose2 (x_high)
+# # transformation_matrix = [
+# #  [ 9.99964044e-01, -4.38864689e-04,  8.46871074e-03, -4.32650074e-04],
+# #  [ 6.98888227e-04,  9.99527615e-01, -3.07255412e-02, -9.34659714e-03],
+# #  [-8.45122589e-03,  3.07303551e-02,  9.99491982e-01, -6.90924362e-02],
+# #  [ 0.00000000e+00,  0.00000000e+00,  0.00000000e+00,  1.00000000e+00]]
 
-merged_pcd = o3d.geometry.PointCloud()
 
-# Concatenate the points from the target point cloud and the registered source point cloud
-merged_pcd.points = o3d.utility.Vector3dVector(np.concatenate((target.points, source.points), axis=0))
+# # Create coordinate frame geometries
+# coord_frame_1 = o3d.geometry.TriangleMesh.create_coordinate_frame(size=0.5)
+# coord_frame_2 = o3d.geometry.TriangleMesh.create_coordinate_frame(size=0.25)
 
-# Update the normals of the merged point cloud (if required)
-merged_pcd.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=0.1, max_nn=30))
 
-# Visualize the merged point cloud
-o3d.visualization.draw_geometries([merged_pcd])
+# # Apply the transformations to the coordinate frames
+# coord_frame_2.transform(transformation_matrix)
 
-# Save the merged point cloud to a file
-output_filename = "processed_pcd/stanford_bunny_x_low_mid.pcd"
-o3d.io.write_point_cloud(output_filename, merged_pcd)
+# # Visualize the transformed coordinate frames
+# o3d.visualization.draw_geometries([source, target, coord_frame_1, coord_frame_2])
 
-# Create a visualizer object
-vis = o3d.visualization.Visualizer()
-vis.create_window()
 
-# Add the point clouds to the visualizer
-vis.add_geometry(source)
-vis.add_geometry(target)
-#vis.add_geometry(merged_pcd)
 
-# Set different colors for each point cloud
-source.paint_uniform_color([1, 0, 0])  # Red
-target.paint_uniform_color([0, 1, 0])  # Green
-merged_pcd.paint_uniform_color([1, 1, 0])  # Yellow
 
-# Run the visualization
-vis.run()
-vis.destroy_window()
+
+# # Shows result after initial global registration
+# draw_registration_result(source_ransac_down, target_ransac_down, result_ransac.transformation)
+
+# #############################################
+
+
+
+# draw_registration_result(source, target, result_icp.transformation)
+
+
+# ######## Merge pointclouds #######
+# ##################################
+
+# merged_pcd = o3d.geometry.PointCloud()
+
+# # Concatenate the points from the target point cloud and the registered source point cloud
+# merged_pcd.points = o3d.utility.Vector3dVector(np.concatenate((target.points, source.points), axis=0))
+
+# # Update the normals of the merged point cloud (if required)
+# merged_pcd.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=0.1, max_nn=30))
+
+# # Visualize the merged point cloud
+# o3d.visualization.draw_geometries([merged_pcd])
+
+# # Save the merged point cloud to a file
+# output_filename = "processed_pcd/stanford_bunny_x_low_mid.pcd"
+# o3d.io.write_point_cloud(output_filename, merged_pcd)
+
+# # Create a visualizer object
+# vis = o3d.visualization.Visualizer()
+# vis.create_window()
+
+# # Add the point clouds to the visualizer
+# vis.add_geometry(source)
+# vis.add_geometry(target)
+# #vis.add_geometry(merged_pcd)
+
+# # Set different colors for each point cloud
+# source.paint_uniform_color([1, 0, 0])  # Red
+# target.paint_uniform_color([0, 1, 0])  # Green
+# merged_pcd.paint_uniform_color([1, 1, 0])  # Yellow
+
+# # Run the visualization
+# vis.run()
+# vis.destroy_window()
 
 ##################################################
 
