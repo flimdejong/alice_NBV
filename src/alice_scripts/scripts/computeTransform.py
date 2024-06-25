@@ -9,6 +9,12 @@ import tf.transformations as tr # For quartenion
 from std_msgs.msg import Bool
 from std_msgs.msg import Float64MultiArray, MultiArrayDimension
 
+""" 
+computeTransform is a py script that listens for a movement to be completed, carries out TF 1, waits again for a move_completed call
+and carries out TF2. Then it calculates their relative transform and sends it to /transformation_matrix
+"""
+
+
 move_completed = False
 
 # Provide the transfrom from source to target.
@@ -95,7 +101,6 @@ def quaternion_rotation_matrix(Q):
 def move_completed_cb(msg):
     global move_completed
     move_completed = msg.data
-    rospy.loginfo("Move completed: %s", move_completed)
 
 def main():
     global move_completed
@@ -134,7 +139,7 @@ def main():
     # Get the transformation matrix from world to pose1
     translation1, rotation1 = get_transform('world', 'camera_link', buffer)
 
-    rospy.loginfo("Received TF for pose1")
+    rospy.logwarn("Received TF for pose1")
 
     while not rospy.is_shutdown():
         ####################
@@ -162,6 +167,8 @@ def main():
         # Get the transformation matrix from world to pose2
         translation2, rotation2 = get_transform('world', 'camera_link', buffer)
 
+        rospy.logwarn("Received TF for pose2, calculating relative TF")
+
         # Convert quaternions to rotation matrices
         transformation_matrix_1 = tr.quaternion_matrix(rotation1)
         transformation_matrix_2 = tr.quaternion_matrix(rotation2)
@@ -173,19 +180,19 @@ def main():
         # Compute the relative transformation from pose1 to pose2
         relative_transform = np.linalg.inv(transformation_matrix_1) @ transformation_matrix_2
 
-        print("Transform 1: ")
-        print("This should match tf_echo!!")
-        print(transformation_matrix_1)
+        # print("Transform 1: ")
+        # print("This should match tf_echo!!")
+        # print(transformation_matrix_1)
 
-        print("Transform 2: ")
-        print(transformation_matrix_2)
+        # print("Transform 2: ")
+        # print(transformation_matrix_2)
 
         # Print the relative transformation matrix
-        print("Relative transformation matrix from source to target:")
-        print(relative_transform)
+        # print("Relative transformation matrix from source to target:")
+        # print(relative_transform)
 
         # Taking inverse to get TF from target to source (pose2 to pose1), overload variable
-        print("target to source")
+        rospy.logwarn("Relative transform from target to source (pose2 to pose1)")
         print(np.linalg.inv(relative_transform))
 
         # Create a Float64MultiArray message

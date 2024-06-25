@@ -7,9 +7,9 @@ import os
 
 base_dir = "/home/flimdejong/catkin_ws/PC"
 #input_dir = os.path.join(base_dir, "stanford_bunny")
-input_dir = os.path.join(base_dir, "stanford_bunny_run_1")
+input_dir = os.path.join(base_dir, "stanford_bunny_run_1_merged")
 
-pcd_file = os.path.join(input_dir, "stanford_bunny_run_1_1.pcd")
+pcd_file = os.path.join(input_dir, "stanford_bunny_run_1_1_merged.pcd")
 # pcd_file = os.path.join(input_dir, "stanford_bunny_low.pcd")
 
 pcd = o3d.io.read_point_cloud(pcd_file)

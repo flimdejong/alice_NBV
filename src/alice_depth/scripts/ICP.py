@@ -1,9 +1,16 @@
+#!/usr/bin/env python3
+
 import open3d as o3d
 import numpy as np
 import copy
 import os
 import rospy
 from std_msgs.msg import Bool, Float64MultiArray, MultiArrayDimension
+
+"""
+ICP.py is a py script that takes two pointclouds, preprocesses them and finally merges them by using their relative transforms, global registration on a 
+downsampled voxel size and ICP for the final alignment.
+"""
 
 def draw_registration_result(source, target, transformation):
     source_temp = copy.deepcopy(source)
@@ -15,16 +22,16 @@ def draw_registration_result(source, target, transformation):
 
 # Preprocess functions extracts the geometric features
 def preprocess_point_cloud(pcd, voxel_size):
-    print(":: Downsample with a voxel size %.3f." % voxel_size)
+    #print(":: Downsample with a voxel size %.3f." % voxel_size)
     pcd_down = pcd.voxel_down_sample(voxel_size)
 
     radius_normal = voxel_size * 2
-    print(":: Estimate normal with search radius %.3f." % radius_normal)
+    #print(":: Estimate normal with search radius %.3f." % radius_normal)
     pcd_down.estimate_normals(
         o3d.geometry.KDTreeSearchParamHybrid(radius=radius_normal, max_nn=30))
 
     radius_feature = voxel_size * 5
-    print(":: Compute FPFH feature with search radius %.3f." % radius_feature)
+    # print(":: Compute FPFH feature with search radius %.3f." % radius_feature)
     pcd_fpfh = o3d.pipelines.registration.compute_fpfh_feature(
         pcd_down,
         o3d.geometry.KDTreeSearchParamHybrid(radius=radius_feature, max_nn=100))
@@ -33,9 +40,9 @@ def preprocess_point_cloud(pcd, voxel_size):
 def execute_global_registration(source_down, target_down, source_fpfh,
                                 target_fpfh, voxel_size):
     distance_threshold = voxel_size * 1.5
-    print(":: RANSAC registration on downsampled point clouds.")
-    print("   Since the downsampling voxel size is %.3f," % voxel_size)
-    print("   we use a liberal distance threshold %.3f." % distance_threshold)
+    # print(":: RANSAC registration on downsampled point clouds.")
+    # print("   Since the downsampling voxel size is %.3f," % voxel_size)
+    # print("   we use a liberal distance threshold %.3f." % distance_threshold)
 
     # # Define the additional translation values
     # additional_translation = np.array([0, 0.0, 0])  # Replace x, y, z with the desired translation values
@@ -68,9 +75,9 @@ def execute_fast_global_registration(source_down, target_down, source_fpfh,
 
 def refine_registration(source, target, source_fpfh, target_fpfh, voxel_size):
     distance_threshold = voxel_size * 0.4
-    print(":: Point-to-plane ICP registration is applied on original point")
-    print("   clouds to refine the alignment. This time we use a strict")
-    print("   distance threshold %.3f." % distance_threshold)
+    # print(":: Point-to-plane ICP registration is applied on original point")
+    # print("   clouds to refine the alignment. This time we use a strict")
+    # print("   distance threshold %.3f." % distance_threshold)
     result = o3d.pipelines.registration.registration_icp(
         source, target, distance_threshold, result_ransac.transformation,
         o3d.pipelines.registration.TransformationEstimationPointToPlane())
@@ -91,28 +98,34 @@ def filter_non_symmetric_points(pcd, radius, height, threshold):
     mask = distances > threshold
     return pcd.select_by_index(np.where(mask)[0])
 
-def preprocessing_status_cb(msg):
-    global preprocessing_status
-    preprocessing_status = msg.data
-    rospy.loginfo("Preprocessing completed: %s", preprocessing_status)
-
 def transform_cb(msg):
-    global relative_transform
+    global relative_transform, new_transform_received
     flattened_data = msg.data
 
-    print("Transform received")
+    #print("Transform received")
 
     # Convert the flattened list back to a matrix
     relative_transform = np.array(flattened_data).reshape((4, 4))
 
-# Set relative_transform matrix to zeros, for initialization and checking.
-relative_transform = np.zeros((4, 4))
+    # Set new_transform_received to True
+    new_transform_received = True
 
-# Subscriber that listens to the status of preprocessing
-preprocessing_status_sub = rospy.Subscriber('/preprocessing_status', Bool, preprocessing_status_cb)
+def move_completed_cb(msg):
+    global move_completed
+    move_completed = msg.data
+    #rospy.loginfo("Move completed: %s", move_completed)
+
+# Some global variables
+relative_transform = np.zeros((4, 4))
+new_transform_received = False
+move_completed = False
+
+# Intialize node
+rospy.init_node('ICP', anonymous=True)
 
 # subscriber that listens to the relative transforms
 transform_sub = rospy.Subscriber('/transformation_matrix', Float64MultiArray, transform_cb)
+move_completed_sub = rospy.Subscriber('/move_completed', Bool, move_completed_cb)
 
 # Define the transformation matrix to align ROS and Open3D coordinate systems
 ros_to_open3d_transform = np.array([[0, 0, 1, 0],
@@ -120,13 +133,34 @@ ros_to_open3d_transform = np.array([[0, 0, 1, 0],
                                     [0, -1, 0, 0],
                                     [0, 0, 0, 1]])
 
+# wait until we get a move_completed True, so we begin our sequence.
+while move_completed == False:
+    rospy.sleep(0.1)
+
 base_dir = "/home/flimdejong/catkin_ws/PC"
 input_dir = os.path.join(base_dir, "stanford_bunny_run_1_processed")
+output_dir = os.path.join(base_dir, "stanford_bunny_run_1_merged")
 
-source_file = os.path.join(input_dir, "stanford_bunny_run_1_processed_1.pcd")
+# Add try and except block to catch errors.
 
-# Load the initial pointcloud as source
-source = o3d.io.read_point_cloud(source_file)
+try:
+    # For the first run, wait a little until the first pc has been published.
+    rospy.sleep(2) 
+    source_file = os.path.join(input_dir, "stanford_bunny_run_1_1_processed.pcd")
+
+    # Load the initial pointcloud as source
+    source = o3d.io.read_point_cloud(source_file)
+
+    # Transform source into Open3D coordinate system
+    source.transform(ros_to_open3d_transform)
+
+    rospy.loginfo("First PC succesfully loaded")
+
+except FileNotFoundError:
+    print(f"Error: '{source_file}' not found")
+
+except PermissionError:
+    print("Permission error")
 
 # Start counter for merge at 1. This specific the ID of the merge
 merged_count = 1
@@ -135,106 +169,105 @@ merged_count = 1
 target_count = 2
 
 # Set prefix for saving the merged PC's
-prefix = "stanford_bunny_run_1_processed_merged_"
-
-# Initialize preprocessing_status boolean
-preprocessing_status = False
+prefix = "stanford_bunny_run_1"
+suffix = "merged"
 
 # Set voxel size for global registration
 voxel_size = 0.005
 
 while True:
-    # While preprocessing_status is False, sleep. Once it turns True, code moves forward
-    while not preprocessing_status:
-        rospy.sleep(0.1)
 
-    # Also check if the relative_transform matrix is populated, wait until it is.
-    while np.all(relative_transform == 0):
-        rospy.sleep(0.1)
+    # Code only continues if it received a new transform, this will be printed.
+    if new_transform_received:
+        new_transform_received = False  # Reset the flag
 
-    # Check if a new pointcloud file exists, starts at processed_2
-    target_file = os.path.join(input_dir, f"stanford_bunny_run_1_processed_{target_count}.pcd")
-    if os.path.exists(target_file):
+        rospy.loginfo("Transform seen, moving on to check if target file exists")
 
-        # Load the new pointcloud
-        target = o3d.io.read_point_cloud(target)
+        rospy.sleep(2)
 
-        # Now we have source and target. Source is the one we get first, we will transform target onto source
+        # Check if a new pointcloud file exists, starts at processed_2
+        target_file = os.path.join(input_dir, f"stanford_bunny_run_1_{target_count}_processed.pcd")
+        if os.path.exists(target_file):
 
-        #Transform it all into Open3D coordinate plane from ROS coordinate plane
-        source.transform(ros_to_open3d_transform)
-        target.transform(ros_to_open3d_transform)
+            rospy.loginfo ("Found the 2 PC's, starting merging")
 
-        # Apply the transform to target to make it align with source
-        target.transform(relative_transform)
+            # Load the new pointcloud
+            target = o3d.io.read_point_cloud(target_file)
 
+            # Apply the transform to target to make it align with source
+            target.transform(relative_transform)
 
-        ######################################
-        ##### Apply Global Registration ######
-        ######################################
-        """ 
-        Apply global registration for rough alignment
-        """
+            # Now we have source and target. Source is the one we get first, we will transform target onto source
 
-        #Preprocessing for RANSAC
-        source_ransac_down, source_ransac_fpfh = preprocess_point_cloud(source, voxel_size)
-        target_ransac_down, target_ransac_fpfh = preprocess_point_cloud(target, voxel_size)
+            ######################################
+            ##### Apply Global Registration ######
+            ######################################
+            """ 
+            Apply global registration for rough alignment
+            """
 
-        #Global registration using RANSAC, returns global transformation matrix
-        result_ransac = execute_global_registration(source_ransac_down, target_ransac_down,
-                                                    source_ransac_fpfh, target_ransac_fpfh,
-                                                    voxel_size)
-        print(result_ransac)
+            #Preprocessing for RANSAC
+            source_ransac_down, source_ransac_fpfh = preprocess_point_cloud(source, voxel_size)
+            target_ransac_down, target_ransac_fpfh = preprocess_point_cloud(target, voxel_size)
 
-        # Apply the RANSAC transformation to the target point cloud for furthur refinement
-        target.transform(result_ransac.transformation)
+            #Global registration using RANSAC, returns global transformation matrix
+            result_ransac = execute_global_registration(source_ransac_down, target_ransac_down,
+                                                        source_ransac_fpfh, target_ransac_fpfh,
+                                                        voxel_size)
+            print(result_ransac)
+
+            # Apply the RANSAC transformation to the target point cloud for furthur refinement
+            target.transform(result_ransac.transformation)
 
 
-        ######################
-        ##### Apply ICP ######
-        ######################
-        """ 
-        Apply ICP for furthur refinement
-        """
+            ######################
+            ##### Apply ICP ######
+            ######################
+            """ 
+            Apply ICP for furthur refinement
+            """
 
-        #Preprocessing for ICP
-        source_down, source_fpfh = preprocess_point_cloud(source, voxel_size)
-        target_down, target_fpfh = preprocess_point_cloud(target, voxel_size)
+            #Preprocessing for ICP
+            source_down, source_fpfh = preprocess_point_cloud(source, voxel_size)
+            target_down, target_fpfh = preprocess_point_cloud(target, voxel_size)
 
-        # Refine the alignment using ICP on the full-sized point cloud
-        target.estimate_normals()
-        result_icp = refine_registration(source, target, source_fpfh, target_fpfh,
-                                        voxel_size)
-        print(result_icp)
+            # Refine the alignment using ICP on the full-sized point cloud
+            target.estimate_normals()
+            result_icp = refine_registration(source, target, source_fpfh, target_fpfh,
+                                            voxel_size)
+            print(result_icp)
 
-        # Apply the ICP transformation to the source point cloud
-        target.transform(result_icp.transformation)
+            # Apply the ICP transformation to the source point cloud
+            target.transform(result_icp.transformation)
 
-        # Combine the pointclouds
-        pcd_combined = source + target
+            # Combine the pointclouds
+            pcd_combined = source + target
 
-        # Downsample the result to 0.003 to keep pc sparse
-        pcd_combined = pcd_combined.voxel_down_sample(voxel_size=0.003)
+            # Downsample the result to 0.003 to keep pc sparse
+            pcd_combined = pcd_combined.voxel_down_sample(voxel_size=0.003)
 
-        # Generate the output filename based on the number of merged pointclouds
-        output_filename = f"{prefix}{merged_count}.pcd"
-        output_file_path = os.path.join(input_dir, output_filename)
-        o3d.io.write_point_cloud(output_file_path, pcd_combined)
+            # Generate the output filename based on the number of merged pointclouds
+            output_filename = f"{prefix}_{merged_count}_{suffix}.pcd"
+            output_file_path = os.path.join(output_dir, output_filename)
+            o3d.io.write_point_cloud(output_file_path, pcd_combined)
 
-        print(f"Merged pointcloud saved as {output_filename}")
+            print(f"Merged pointcloud saved as {output_filename}")
 
-        # Increment the counter for the number of merged pointclouds + the target
-        merged_count += 1
-        target_count += 1
+            # Increment the counter for the number of merged pointclouds + the target
+            merged_count += 1
+            target_count += 1
 
-        # Source is the combined PC, make it equal to pcd_combined to prepare for next merge
-        source = pcd_combined
+            # Source is the combined PC (make it equal to the result of the n-th reconstruction)
+            source = pcd_combined
 
-    else:
-        rospy.wait(0.1)
-    
-    # Reset preprocessing_status to False again
-    preprocessing_status = False
+            # Set relative_transform matrix to zeros, for initialization and checking.
+            relative_transform = np.zeros((4, 4))
+
+        else:
+            rospy.sleep(0.1)
+        
+        # Reset preprocessing_status to False again
+        preprocessing_status = False
 
 
 # # # This TF matrix is from Pose1 (x_low) to Pose2 (x_high)

@@ -3,10 +3,10 @@
     <param name="robot_description" command="xacro '$(find alice_description)/urdf/alice_v1.xacro'" />
 
     <!-- Start the joint_state_publisher node -->
-    <node name="joint_state_publisher" pkg="alice_scripts" type="jointStatePublisher.py"/>
+    <node name="joint_state_publisher" pkg="alice_scripts" type="jointStatePublisher.py" output="screen"/>
 
     <!-- Start the arduino_commander node -->
-    <node name="arduino_commander" pkg="alice_scripts" type="arduinoCommander.py"/>
+    <node name="arduino_commander" pkg="alice_scripts" type="arduinoCommander.py" output="screen" />
 
     <!-- convert joint states to TF transforms for rviz, etc -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
@@ -22,22 +22,22 @@
     </include>
 
     <!-- Launch rviz -->
-    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find alice_commander)/config/config.rviz" output="screen" />
+    <!-- <node pkg="rviz" type="rviz" name="rviz" args="-d $(find alice_commander)/config/config.rviz" output="screen" /> -->
 
     <!-- Launch realsense_camera -->
     <include file="$(find alice_depth)/launch/rs_camera.launch">
     </include>
 
     <!-- Start the moveJoints node -->
-    <node name="move_joints" pkg="alice_scripts" type="move_joints.py"/>
+    <node name="move_joints" pkg="alice_scripts" type="move_joints.py" output="screen"/>
+
+    <!-- Start the computeTransform node -->
+    <node name="computeTransform" pkg="alice_scripts" type="computeTransform.py" output="screen"/>
 
     <!-- Start the ICP node -->
-    <node name="ICP" pkg="alice_depth" type="ICP.py"/>
-
-    <!-- Start the preprocessing_single_auto node -->
-    <node name="preprocessing_single_auto" pkg="alice_depth" type="preprocessing_single_auto.py"/>
+    <node name="ICP" pkg="alice_depth" type="ICP.py" output="screen"/>
 
     <!-- Start the rosToOpen3D node -->
-    <node name="rosToOpen3D" pkg="alice_depth" type="rosToOpen3D.py"/>
+    <node name="rosToOpen3D" pkg="alice_depth" type="rosToOpen3D.py" output="screen"/>
 
 </launch>

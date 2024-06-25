@@ -350,7 +350,7 @@
     <joint name="world_joint" type="fixed">
         <parent link="world" />
         <child link="base_link" />
-        <origin rpy="0 0 2.56563" xyz="0.0 0.0 0.0" />
+        <origin rpy="0 0 2.35619" xyz="0.0 0.0 0.0" />
     </joint>
 
     <!-- Gazebo reference for depth camera -->

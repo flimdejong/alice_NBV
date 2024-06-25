@@ -13,7 +13,7 @@ def joint_angles_callback(msg):
     rounded_values = [round(value, 2) for value in joint_values]
     joint_str = ','.join(map(str, rounded_values)) + '\n' 
     ser.write(joint_str.encode())  # Send the string over serial
-    print("Sending message")
+    rospy.logwarn("Successfully sent to arduino over Serial")
 
 
 # Initialize the ROS node

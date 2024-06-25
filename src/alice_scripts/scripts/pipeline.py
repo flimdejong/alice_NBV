@@ -36,16 +36,34 @@
 
 # Repeat
 
+# Python scripts necessary:
+# - rosToOpen3D.py --> to convert realsense PC to Open3D format
+# - moveit_execute_joint.py --> To listen for joint commands and send them to moveIt
+# - ICP.py --> To carry out ICP merging
+# - computeTransform --> To carry out transforms
+
 
 
 # Moveit listens under node called execute_joint_movement, Float64MulitArray (must be send in radians!)
 # Under move_completed, returns true or false for waiting until movement is done.
+# preprocessing_status also returns True or false
 
 
+# For x-axis send inverted commands.
 
-# To do:
-# - PC preprocessing
-# - Merging of PC's
+
+# Pos 1
+# x: 250, y: 0, z: 60
+# rostopic pub /execute_joint_movement std_msgs/Float64MultiArray "data: [0.785398, 2.58913, 2.00016, 3.05527, 1.5708"]
+
+
+# Pos 2
+# x: 250, y: 0, z: 100
+# rostopic pub /execute_joint_movement std_msgs/Float64MultiArray "data: [0.785398, 2.4634, 1.93729, 3.08679, 1.5708"]
+
+# Pos 3
+# x: 250, y: 0, z: 140
+# rostopic pub /execute_joint_movement std_msgs/Float64MultiArray "data: [0.785398, 2.36787, 1.83942, 3.07075, 1.5108"]
 
 
 

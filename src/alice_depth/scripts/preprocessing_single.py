@@ -39,67 +39,38 @@ removed_points.paint_uniform_color([1, 0, 0])  # Red color
 # Visualize the original point cloud and the removed points
 o3d.visualization.draw_geometries([remaining_cloud, removed_points])
 
+
+###############
+"""" Carry out color segmentation """
+###############
+
+# Get colors as a numpy array
+colors = np.asarray(remaining_cloud.colors)
+
+# Define color threshold for white
+white_threshold = 0.4
+
+# Check if all color channels are above the threshold
+is_white = np.all(colors > white_threshold, axis=1)
+
+# Create a new point cloud with only the white points
+remaining_cloud = remaining_cloud.select_by_index(np.where(is_white)[0])
+
+o3d.visualization.draw_geometries([remaining_cloud])
+
+
 ########################################################
 
-plane_model, inliers = remaining_cloud.segment_plane(distance_threshold=0.01, ransac_n=3, num_iterations=2000)
-
-# Remove floor points from the point cloud
-removed_points = remaining_cloud.select_by_index(inliers)
-
-# The remaining PC
-remaining_cloud = remaining_cloud.select_by_index(inliers, invert = True)
-
-# Assign a specific color to the removed points (e.g., red)
-removed_points.paint_uniform_color([0, 1, 0])  # Red color
-
-# Visualize the original point cloud and the removed points
-o3d.visualization.draw_geometries([remaining_cloud, removed_points])
-
-########################################
-
-plane_model, inliers = remaining_cloud.segment_plane(distance_threshold=0.001, ransac_n=3, num_iterations=500)
-
-# Remove floor points from the point cloud
-removed_points = remaining_cloud.select_by_index(inliers)
-
-# The remaining PC
-remaining_cloud = remaining_cloud.select_by_index(inliers, invert = True)
-
-# Assign a specific color to the removed points (e.g., red)
-removed_points.paint_uniform_color([0, 0, 1])  # blue color
-
-# Visualize the original point cloud and the removed points
-o3d.visualization.draw_geometries([remaining_cloud, removed_points])
-
-
-
-# Statistical outlier removal
+""" Statistical outlier removal """
 # nb_neighbors, which specifies how many neighbors are taken into account in order to calculate the average distance for a given point.
 # std_ratio, which allows setting the threshold level based on the standard deviation of the average distances across the point cloud. 
 # The lower this number the more aggressive the filter will be.
 
-print("Statistical oulier removal")
-cl, ind = remaining_cloud.remove_statistical_outlier(nb_neighbors=30,
-                                                    std_ratio=0.1)
+cl, ind = remaining_cloud.remove_statistical_outlier(nb_neighbors=10,
+                                                    std_ratio=0.5)
 
-# Remove floor points from the point cloud, ind is the indices of points which are NOT outliers
-removed_points = remaining_cloud.select_by_index(ind, invert = True)
-
-# The remaining PC
+# Remove stat outliers. ind is the indices of points which are inliers.
 remaining_cloud = remaining_cloud.select_by_index(ind)
 
-removed_points.paint_uniform_color([0, 1, 1])  # blue color
-# Visualize the original point cloud and all the removed points
-o3d.visualization.draw_geometries([remaining_cloud, removed_points])
 
-
-# # Set the point size
-# vis = o3d.visualization.Visualizer()
-# vis.create_window()
-# vis.add_geometry(remaining_cloud)
-# render_option = vis.get_render_option()
-# render_option.point_size = 1.5
-
-# # Visualize the results
-# vis.run()
-# vis.destroy_window()
+o3d.visualization.draw_geometries([remaining_cloud])
