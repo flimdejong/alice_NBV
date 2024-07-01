@@ -4,10 +4,7 @@ import os
 
 base_dir = "/home/flimdejong/catkin_ws/PC"  # Replace with the appropriate base directory
 input_dir = os.path.join(base_dir, "stanford_bunny_run_1")
-output_dir = os.path.join(base_dir, "stanford_bunny_processed")
-
-# Create the output directory if it doesn't exist
-os.makedirs(output_dir, exist_ok=True)
+# output_dir = os.path.join(base_dir, "stanford_bunny_processed")
 
 # Load the point cloud from the .pcd file
 pcd_file = os.path.join(input_dir, "stanford_bunny_run_1_1.pcd")
@@ -17,7 +14,7 @@ pcd = o3d.io.read_point_cloud(pcd_file)
 print(pcd)
 
 # 0.005 is too big. 0.003 is kinda fine.
-pcd = pcd.voxel_down_sample(voxel_size=0.003)
+pcd = pcd.voxel_down_sample(voxel_size=0.001)
 
 # Applying plane segmentation using RANSAC (for background removal)
 # To find the plane with the largest support in the point cloud, we can use segment_plane. 
@@ -25,7 +22,7 @@ pcd = pcd.voxel_down_sample(voxel_size=0.003)
 # ransac_n defines the number of points that are randomly sampled to estimate a plane, and num_iterations
 # Applying plane segmentation using RANSAC (for floor removal)
 
-plane_model, inliers = pcd.segment_plane(distance_threshold=0.02, ransac_n=3, num_iterations=2000)
+plane_model, inliers = pcd.segment_plane(distance_threshold=0.04, ransac_n=3, num_iterations=2000)
 
 # Remove floor points from the point cloud
 removed_points = pcd.select_by_index(inliers)
@@ -48,7 +45,7 @@ o3d.visualization.draw_geometries([remaining_cloud, removed_points])
 colors = np.asarray(remaining_cloud.colors)
 
 # Define color threshold for white
-white_threshold = 0.4
+white_threshold = 0.75
 
 # Check if all color channels are above the threshold
 is_white = np.all(colors > white_threshold, axis=1)
@@ -67,10 +64,17 @@ o3d.visualization.draw_geometries([remaining_cloud])
 # The lower this number the more aggressive the filter will be.
 
 cl, ind = remaining_cloud.remove_statistical_outlier(nb_neighbors=10,
-                                                    std_ratio=0.5)
+                                                    std_ratio=0.2)
 
 # Remove stat outliers. ind is the indices of points which are inliers.
 remaining_cloud = remaining_cloud.select_by_index(ind)
 
 
-o3d.visualization.draw_geometries([remaining_cloud])
+# Final visualization with black background
+vis = o3d.visualization.Visualizer()
+vis.create_window()
+vis.add_geometry(remaining_cloud)
+opt = vis.get_render_option()
+opt.background_color = np.asarray([0, 0, 0])  # Set background color to black
+vis.run()
+vis.destroy_window()

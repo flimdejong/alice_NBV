@@ -63,7 +63,87 @@
 
 # Pos 3
 # x: 250, y: 0, z: 140
-# rostopic pub /execute_joint_movement std_msgs/Float64MultiArray "data: [0.785398, 2.36787, 1.83942, 3.07075, 1.5108"]
+# rostopic pub /execute_joint_movement std_msgs/Float64MultiArray "data: [0.785398, 2.36787, 1.83942, 3.07075, 1.5708"]
 
 
 
+
+# Pos with 0
+# x: 280, y: 0, z: 60
+# rostopic pub /execute_joint_movement std_msgs/Float64MultiArray "data: [0.785398, 2.47085, 3.03042, 0.781914, 1.5708"]
+
+# 280, 80
+# rostopic pub /execute_joint_movement std_msgs/Float64MultiArray "data: [0.785398, 2.36279, 3.03171, 0.88869, 1.5708"]
+
+
+# Pos with 0
+# x: 270, y: 0, z: 110
+# rostopic pub /execute_joint_movement std_msgs/Float64MultiArray "data: [0.785398, 2.15808, 3.10168, 1.02342, 1.5708"]
+
+
+# Try with global registration only + full background. + don't use black == bad results
+
+
+
+
+
+
+
+# newPos
+# x: 210, y: 0, z: 280,
+# rostopic pub /execute_joint_movement std_msgs/Float64MultiArray "data: [0.785398, 2.37478, 0.976217, 2.93219, 1.8"]
+
+# newPos
+# x: 210, y: 0, z: 210
+# rostopic pub /execute_joint_movement std_msgs/Float64MultiArray "data: [0.872665, 1.50529, 3.09271, 1.68519, 1.5708"]
+
+# newPos
+# x: 160, y: 0, z: 240
+# rostopic pub /execute_joint_movement std_msgs/Float64MultiArray "data: [0.785398, 1.1844, 3.08822, 2.01056, 1.5708"]
+
+
+
+
+
+# newPos
+# x: 50, y: 0, z: 250
+# rostopic pub /execute_joint_movement std_msgs/Float64MultiArray "data: [1.0472, 0.588055, 3.05422, 2.64091, 1.8"]
+
+
+
+
+# max 40 translation
+# max 15 deg, 0.261799
+
+
+
+
+
+
+## Most broad on top position.
+# x: 30, y: 0, z: 300
+# rostopic pub /execute_joint_movement std_msgs/Float64MultiArray "data: [1.5708, 0.984257, 2.19883, 3.1001, 1.8"]
+
+
+
+
+
+
+# Purely transformations are not super effective, there is much overlap.
+# Little overlap is the biggest issue. 
+
+# So do we add full scene then or no?
+# Pros: more 
+
+
+# ICP work well with semi decent initial alignment + 
+
+
+
+# Take picture one with the most amount possible to capture
+# Then either filter the object out each time or at the end. 
+# Tried it, failed. Only solution is to take very small PC's in sequence.
+
+
+
+# Any registration also does not work. Try with just the object now.

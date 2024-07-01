@@ -14,5 +14,11 @@ pcd_file = os.path.join(input_dir, "stanford_bunny_run_1_1.pcd")
 
 pcd = o3d.io.read_point_cloud(pcd_file)
 
-# Visualize the point cloud
-o3d.visualization.draw_geometries([pcd])
+# Final visualization with black background
+vis = o3d.visualization.Visualizer()
+vis.create_window()
+vis.add_geometry(pcd)
+opt = vis.get_render_option()
+opt.background_color = np.asarray([0, 0, 0])  # Set background color to black
+vis.run()
+vis.destroy_window()

@@ -115,6 +115,8 @@ def move_completed_cb(msg):
     move_completed = msg.data
     rospy.loginfo("Move completed: %s", move_completed)
 
+run = "2"
+
 # -- Example of usage
 if __name__ == "__main__":
 
@@ -166,12 +168,17 @@ if __name__ == "__main__":
             ##### Save file #####
 
             # Define the prefix for the output filename
-            prefix = "stanford_bunny_run_1"
+            prefix = f"stanford_bunny_run_{run}"
 
             # Specify the output directory path
-            stanford_bunny_path = "/home/flimdejong/catkin_ws/PC/stanford_bunny_run_1"
+            stanford_bunny_path = f"/home/flimdejong/catkin_ws/PC/stanford_bunny_run_{run}"
 
-            stanford_bunny_path_processed = "/home/flimdejong/catkin_ws/PC/stanford_bunny_run_1_processed"
+            stanford_bunny_path_processed = f"/home/flimdejong/catkin_ws/PC/stanford_bunny_run_{run}_processed"
+
+            # Create the dirs if they are not there yet
+            os.makedirs(stanford_bunny_path, exist_ok=True)
+            os.makedirs(stanford_bunny_path_processed, exist_ok=True)
+
 
             # Find the next available number for the output filename
             counter = 1
@@ -189,6 +196,8 @@ if __name__ == "__main__":
 
             # Preprocess and save the point cloud
             processed_file_path = os.path.join(stanford_bunny_path_processed, f"{prefix}_{counter}_processed.pcd")
+
+            # Call the preprocess function
             preprocess_pc(file_path, processed_file_path)
 
             rospy.logwarn("Preprocessed PC, ready to go")

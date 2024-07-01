@@ -7,7 +7,7 @@ import time
 import tf2_msgs
 import tf.transformations as tr # For quartenion 
 from std_msgs.msg import Bool
-from std_msgs.msg import Float64MultiArray, MultiArrayDimension
+from std_msgs.msg import Float64MultiArray
 
 """ 
 computeTransform is a py script that listens for a movement to be completed, carries out TF 1, waits again for a move_completed call
@@ -193,16 +193,19 @@ def main():
 
         # Taking inverse to get TF from target to source (pose2 to pose1), overload variable
         rospy.logwarn("Relative transform from target to source (pose2 to pose1)")
-        print(np.linalg.inv(relative_transform))
+        print(relative_transform)
 
-        # Create a Float64MultiArray message
-        transform_msg = Float64MultiArray()
-        transform_msg.layout.dim = [MultiArrayDimension('rows', 4, 4),
-                                    MultiArrayDimension('cols', 4, 4)]
-        transform_msg.data = relative_transform.flatten().tolist()
+        # With tis config, transform target, not source.
 
-        # Publish the transformation matrix
-        transform_pub.publish(transform_msg)
+        # Send transform
+        msg = Float64MultiArray()
+        msg.data = relative_transform.flatten(order ='C').tolist() # Use C-style indexing
+
+        # print("after flattening:")
+        # print(msg.data)
+
+        # Publish the message
+        transform_pub.publish(msg)
 
         # Make the source pose of the next iteration the pose of pose2 of the current one
         translation1 = translation2

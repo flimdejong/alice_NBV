@@ -144,7 +144,7 @@ if __name__ == "__main__":
     ##### Save file #####
 
     # Specify the output directory path
-    stanford_bunny_path = "/home/flimdejong/catkin_ws/PC/stanford_bunny.pcd"
+    stanford_bunny_path = "/home/flimdejong/catkin_ws/PC/hsv.pcd"
 
     # Write the point cloud to the file
     open3d.io.write_point_cloud(stanford_bunny_path, received_open3d_cloud)
